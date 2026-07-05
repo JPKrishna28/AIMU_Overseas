@@ -1,0 +1,123 @@
+import { defineType, defineField } from 'sanity'
+import { EarthGlobeIcon } from '@sanity/icons'
+
+export const destinationType = defineType({
+  name: 'destination',
+  title: 'Destination',
+  type: 'document',
+  icon: EarthGlobeIcon,
+  fields: [
+    defineField({ name: 'country', type: 'string', validation: (rule) => rule.required() }),
+    defineField({ name: 'flagEmoji', type: 'string', title: 'Flag Emoji' }),
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      options: { source: 'country' },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({ name: 'heroImage', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'summary', type: 'text', description: 'Short quick-fact summary shown on cards' }),
+    defineField({
+      name: 'whyStudyPoints',
+      title: 'Why Study Here',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Bullet points shown on the destination card, e.g. "World-Class Education with Affordable Tuition"',
+    }),
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Photos shown in the polaroid stack on the destination card',
+    }),
+    defineField({ name: 'overview', type: 'array', of: [{ type: 'block' }] }),
+    defineField({ name: 'popularCourses', type: 'array', of: [{ type: 'reference', to: [{ type: 'course' }] }] }),
+    defineField({ name: 'universities', type: 'array', of: [{ type: 'reference', to: [{ type: 'university' }] }] }),
+    defineField({ name: 'tuitionFees', type: 'string', description: 'e.g. "£12,000–£25,000/year"' }),
+    defineField({ name: 'costOfLiving', type: 'string', description: 'e.g. "£900–1,200/month"' }),
+    defineField({
+      name: 'costBreakdownUSD',
+      title: 'Cost Calculator Breakdown (USD/year)',
+      type: 'object',
+      description: 'Annual estimates in USD, used by the Study Abroad Cost Calculator',
+      fields: [
+        defineField({ name: 'tuitionMin', title: 'Tuition Fees (Min)', type: 'number' }),
+        defineField({ name: 'tuitionMax', title: 'Tuition Fees (Max)', type: 'number' }),
+        defineField({ name: 'accommodationOnCampus', title: 'Accommodation (On-Campus)', type: 'number' }),
+        defineField({ name: 'accommodationOffCampus', title: 'Accommodation (Off-Campus)', type: 'number' }),
+        defineField({ name: 'foodAndLiving', title: 'Food & Living Expenses', type: 'number' }),
+        defineField({ name: 'travel', title: 'Travel Costs', type: 'number' }),
+        defineField({ name: 'healthInsurance', title: 'Health Insurance', type: 'number' }),
+        defineField({ name: 'visaFees', title: 'Visa Fees', type: 'number' }),
+        defineField({ name: 'miscellaneous', title: 'Miscellaneous Expenses', type: 'number' }),
+      ],
+    }),
+    defineField({
+      name: 'scholarships',
+      title: 'Scholarships',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'scholarship' }] }],
+    }),
+    defineField({ name: 'visaInfo', type: 'array', of: [{ type: 'block' }] }),
+    defineField({
+      name: 'visaGuidance',
+      title: 'Visa Guidance',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'processSteps',
+          title: 'Step-by-Step Process',
+          type: 'array',
+          of: [{ type: 'string' }],
+          description: 'Each item is one step in order',
+        }),
+        defineField({
+          name: 'documentsChecklist',
+          title: 'Required Documents Checklist',
+          type: 'array',
+          of: [{ type: 'string' }],
+        }),
+        defineField({ name: 'timeline', type: 'string', description: 'e.g. "3–6 weeks from application to decision"' }),
+        defineField({ name: 'financialRequirements', type: 'text' }),
+        defineField({
+          name: 'commonMistakes',
+          title: 'Common Mistakes to Avoid',
+          type: 'array',
+          of: [{ type: 'string' }],
+        }),
+        defineField({ name: 'countryTips', title: 'Country-Specific Tips', type: 'text' }),
+      ],
+    }),
+    defineField({ name: 'workRights', type: 'string', description: 'e.g. "20 hrs/week during term"' }),
+    defineField({
+      name: 'postStudyOpportunities',
+      title: 'Post-Study Opportunities',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Post-study work visa options, career prospects, PR pathways',
+    }),
+    defineField({ name: 'intakeMonths', type: 'array', of: [{ type: 'string' }] }),
+    defineField({
+      name: 'applicationDeadlines',
+      title: 'Application Deadlines',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'deadlineWindow',
+          fields: [
+            defineField({ name: 'intake', type: 'string', description: 'e.g. "September 2026"' }),
+            defineField({ name: 'opens', type: 'string', description: 'e.g. "October 2025"' }),
+            defineField({ name: 'closes', type: 'string', description: 'e.g. "June 2026"' }),
+          ],
+        },
+      ],
+    }),
+    defineField({ name: 'seoTitle', type: 'string', title: 'SEO Title' }),
+    defineField({ name: 'seoDescription', type: 'text', title: 'SEO Description' }),
+  ],
+  preview: {
+    select: { title: 'country', media: 'heroImage' },
+  },
+})

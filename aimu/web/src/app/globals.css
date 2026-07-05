@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+:root {
+  --color-navy: #0d1b2a;
+  --color-gold: #c89b3c;
+  --color-light-gray: #f4f5f7;
+  --color-emerald: #10b981;
+}
+
+@theme inline {
+  --color-navy: var(--color-navy);
+  --color-gold: var(--color-gold);
+  --color-light-gray: var(--color-light-gray);
+  --color-emerald: var(--color-emerald);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+}
+
+body {
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll-reveal: hidden until .is-visible is added by the Reveal component */
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* Hero entrance (no observer needed — plays on load) */
+.animate-hero {
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+.animate-fade {
+  animation: fade-in 0.6s ease both;
+}
+
+.animate-scale {
+  animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Smooth interactive transitions on cards/buttons */
+.hover-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -12px rgba(13, 27, 42, 0.25);
+}
+
+/* Carousel scroll behaviour */
+.snap-carousel {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.snap-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.snap-carousel > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .animate-hero,
+  .animate-fade,
+  .animate-scale {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hover-lift,
+  .hover-lift:hover {
+    transition: none;
+    transform: none;
+  }
+
+  .snap-carousel {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
