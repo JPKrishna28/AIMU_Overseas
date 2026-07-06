@@ -9,6 +9,7 @@ const PRIMARY_LINKS = [
   { href: "/universities", label: "Universities" },
   { href: "/courses", label: "Courses" },
   { href: "/scholarships", label: "Scholarships" },
+  { href: "/test-preparation", label: "Test Prep" },
 ];
 
 const TOOLS_LINKS = [

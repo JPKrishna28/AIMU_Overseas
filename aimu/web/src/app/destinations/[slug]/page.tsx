@@ -111,6 +111,73 @@ export default async function DestinationPage({
           </Section>
         )}
 
+        {/* Cities */}
+        {((destination.mainCities && destination.mainCities.length > 0) ||
+          (destination.citiesNearAirports && destination.citiesNearAirports.length > 0)) && (
+          <Section title="Popular Cities">
+            <div className="grid gap-6 sm:grid-cols-2">
+              {destination.mainCities && destination.mainCities.length > 0 && (
+                <div>
+                  <p className="font-heading font-semibold text-navy">Preferred by Indian Students</p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {destination.mainCities.map((city) => (
+                      <li key={city} className="rounded-full bg-light-gray px-4 py-2 text-sm font-medium text-navy">
+                        {city}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {destination.citiesNearAirports && destination.citiesNearAirports.length > 0 && (
+                <div>
+                  <p className="font-heading font-semibold text-navy">Cities Near Airports</p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {destination.citiesNearAirports.map((city) => (
+                      <li key={city} className="rounded-full bg-light-gray px-4 py-2 text-sm font-medium text-navy">
+                        ✈️ {city}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </Section>
+        )}
+
+        {/* Accommodation */}
+        {((destination.accommodationOptions && destination.accommodationOptions.length > 0) ||
+          destination.accommodationAverageCost) && (
+          <Section title="Accommodation">
+            {destination.accommodationOptions && destination.accommodationOptions.length > 0 && (
+              <ul className="flex flex-col gap-2">
+                {destination.accommodationOptions.map((option) => (
+                  <li key={option} className="flex gap-2 text-navy/80">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {destination.accommodationAverageCost && (
+              <p className="mt-4 text-navy/80">
+                <span className="font-semibold text-navy">Average cost:</span> {destination.accommodationAverageCost}
+              </p>
+            )}
+          </Section>
+        )}
+
+        {/* Part-time work */}
+        {(destination.partTimeJobInfo || destination.partTimeGuarantee) && (
+          <Section title="Part-Time Job Opportunities">
+            {destination.partTimeJobInfo && <p className="text-navy/80">{destination.partTimeJobInfo}</p>}
+            {destination.partTimeGuarantee && (
+              <div className="mt-4 rounded-xl bg-gold/10 p-4">
+                <p className="text-sm font-semibold text-navy">✔ {destination.partTimeGuarantee}</p>
+              </div>
+            )}
+          </Section>
+        )}
+
         {/* Tuition fees */}
         {destination.tuitionFees && (
           <Section title="Tuition Fees">

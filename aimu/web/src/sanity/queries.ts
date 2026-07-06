@@ -18,6 +18,9 @@ export const PAGE_QUERY = defineQuery(
       _key,
       _type,
       ...,
+      // Confidential items must never reach the public page payload;
+      // they are served by /api/confidential after account creation.
+      _type == "gatedFeaturesBlock" => { "items": [] },
       destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },
       courses[]->{
         _id,
@@ -48,6 +51,14 @@ export const DESTINATIONS_QUERY = defineQuery(
   `*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages }`
 );
 
+export const CONFIDENTIAL_ITEMS_QUERY = defineQuery(
+  `*[_type == "page" && count(pageBuilder[_type == "gatedFeaturesBlock"]) > 0][0]
+    .pageBuilder[_type == "gatedFeaturesBlock"][0]{
+      heading,
+      items[]{ _key, title, description }
+    }`
+);
+
 export const DESTINATION_QUERY = defineQuery(
   `*[_type == "destination" && slug.current == $slug][0]{
     _id,
@@ -60,6 +71,12 @@ export const DESTINATION_QUERY = defineQuery(
     overview,
     tuitionFees,
     costOfLiving,
+    mainCities,
+    citiesNearAirports,
+    accommodationOptions,
+    accommodationAverageCost,
+    partTimeJobInfo,
+    partTimeGuarantee,
     visaInfo,
     visaGuidance,
     workRights,

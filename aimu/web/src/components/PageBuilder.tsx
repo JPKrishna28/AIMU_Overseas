@@ -7,6 +7,8 @@ import { CourseCard } from "@/components/CourseCard";
 import { RotatingQuote } from "@/components/RotatingQuote";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
+import { VideoThumbnail } from "@/components/VideoThumbnail";
+import { GatedSection } from "@/components/GatedSection";
 
 type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
 type Block = Blocks[number];
@@ -14,6 +16,8 @@ type FeatureItem = NonNullable<Extract<Block, { _type: "features" }>["items"]>[n
 type TrustItem = NonNullable<Extract<Block, { _type: "trustBlock" }>["items"]>[number];
 type CoreValue = NonNullable<Extract<Block, { _type: "aboutBlock" }>["coreValues"]>[number];
 type Milestone = NonNullable<Extract<Block, { _type: "timelineBlock" }>["milestones"]>[number];
+type LeaderMessage = NonNullable<Extract<Block, { _type: "leadershipBlock" }>["messages"]>[number];
+type CampusTour = NonNullable<Extract<Block, { _type: "campusToursBlock" }>["tours"]>[number];
 
 function Hero(block: Extract<Block, { _type: "hero" }>) {
   const quotes = (block.rotatingQuotes ?? []).filter((q): q is string => Boolean(q));
@@ -382,6 +386,119 @@ function CtaBlock(block: Extract<Block, { _type: "ctaBlock" }>) {
   );
 }
 
+function JourneyBlock(block: Extract<Block, { _type: "journeyBlock" }>) {
+  const steps = (block.steps ?? []).filter((s): s is string => Boolean(s));
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+      {block.heading && (
+        <Reveal>
+          <h2 className="text-center text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
+        </Reveal>
+      )}
+      {block.subheading && (
+        <Reveal delay={80}>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-navy/70">{block.subheading}</p>
+        </Reveal>
+      )}
+      {steps.length > 0 && (
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-y-6">
+          {steps.map((step, index) => (
+            <Reveal key={step} delay={index * 70} className="flex items-center">
+              <div className="flex items-center gap-3 rounded-full bg-light-gray px-5 py-2.5">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold text-xs font-bold text-navy">
+                  {index + 1}
+                </span>
+                <span className="text-sm font-medium text-navy">{step}</span>
+              </div>
+              {index < steps.length - 1 && <span className="mx-2 text-gold">→</span>}
+            </Reveal>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function LeadershipBlock(block: Extract<Block, { _type: "leadershipBlock" }>) {
+  const messages = (block.messages ?? []).filter((m): m is LeaderMessage => Boolean(m));
+
+  return (
+    <section className="bg-light-gray py-16 sm:py-20">
+      <div className="mx-auto max-w-5xl px-6">
+        {block.heading && (
+          <Reveal>
+            <h2 className="text-center text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
+          </Reveal>
+        )}
+        {block.subheading && (
+          <Reveal delay={80}>
+            <p className="mx-auto mt-3 max-w-2xl text-center text-navy/70">{block.subheading}</p>
+          </Reveal>
+        )}
+        <div className="mt-12 grid gap-10 sm:grid-cols-2">
+          {messages.map((message, index) => (
+            <Reveal key={message._key} delay={index * 120}>
+              <div className="flex flex-col gap-4">
+                <VideoThumbnail
+                  photo={message.photo}
+                  videoUrl={message.videoUrl}
+                  alt={message.name ?? message.role ?? "Leadership message"}
+                  aspectClass="aspect-video"
+                />
+                <div className="text-center">
+                  <p className="text-sm font-semibold uppercase tracking-wide text-gold">{message.role}</p>
+                  {message.name && <p className="mt-1 font-heading text-lg font-bold text-navy">{message.name}</p>}
+                  {message.messageTitle && <p className="mt-1 text-navy/70">&ldquo;{message.messageTitle}&rdquo;</p>}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CampusToursBlock(block: Extract<Block, { _type: "campusToursBlock" }>) {
+  const tours = (block.tours ?? []).filter((t): t is CampusTour => Boolean(t));
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+      {block.heading && (
+        <Reveal>
+          <h2 className="text-center text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
+        </Reveal>
+      )}
+      {block.subheading && (
+        <Reveal delay={80}>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-navy/70">{block.subheading}</p>
+        </Reveal>
+      )}
+      <div className="mt-12 grid gap-8 sm:grid-cols-2">
+        {tours.map((tour, index) => (
+          <Reveal key={tour._key} delay={index * 100}>
+            <div className="flex flex-col gap-3">
+              <VideoThumbnail
+                photo={tour.thumbnail}
+                videoUrl={tour.videoUrl}
+                alt={tour.title ?? "Campus tour"}
+                aspectClass="aspect-video"
+              />
+              <h3 className="font-heading font-semibold text-navy">{tour.title}</h3>
+              {tour.description && <p className="text-sm text-navy/70">{tour.description}</p>}
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function GatedFeaturesBlock(block: Extract<Block, { _type: "gatedFeaturesBlock" }>) {
+  return <GatedSection heading={block.heading} teaser={block.teaser} unlockCtaLabel={block.unlockCtaLabel} />;
+}
+
 export function PageBuilder({ blocks }: { blocks: Blocks | null | undefined }) {
   if (!Array.isArray(blocks)) return null;
 
@@ -409,6 +526,14 @@ export function PageBuilder({ blocks }: { blocks: Blocks | null | undefined }) {
             return <TestimonialsBlock key={block._key} {...block} />;
           case "ctaBlock":
             return <CtaBlock key={block._key} {...block} />;
+          case "journeyBlock":
+            return <JourneyBlock key={block._key} {...block} />;
+          case "leadershipBlock":
+            return <LeadershipBlock key={block._key} {...block} />;
+          case "campusToursBlock":
+            return <CampusToursBlock key={block._key} {...block} />;
+          case "gatedFeaturesBlock":
+            return <GatedFeaturesBlock key={block._key} {...block} />;
           default:
             return null;
         }

@@ -11,6 +11,10 @@ import { destinationsBlockType } from './blocks/destinationsBlockType'
 import { coursesBlockType } from './blocks/coursesBlockType'
 import { testimonialsBlockType } from './blocks/testimonialsBlockType'
 import { ctaBlockType } from './blocks/ctaBlockType'
+import { journeyBlockType } from './blocks/journeyBlockType'
+import { leadershipBlockType } from './blocks/leadershipBlockType'
+import { campusToursBlockType } from './blocks/campusToursBlockType'
+import { gatedFeaturesBlockType } from './blocks/gatedFeaturesBlockType'
 
 import { destinationType } from './documents/destinationType'
 import { universityType } from './documents/universityType'
@@ -46,4 +50,8 @@ export const schemaTypes = [
   coursesBlockType,
   testimonialsBlockType,
   ctaBlockType,
+  journeyBlockType,
+  leadershipBlockType,
+  campusToursBlockType,
+  gatedFeaturesBlockType,
 ]

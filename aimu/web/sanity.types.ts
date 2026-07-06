@@ -30,6 +30,79 @@ export type Logo = {
   _type: "image";
 };
 
+export type Photo = {
+  asset?: SanityImageAssetReference;
+  media?: unknown; // Unable to locate the referenced type "photo.media" in schema
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+};
+
+export type Thumbnail = {
+  asset?: SanityImageAssetReference;
+  media?: unknown; // Unable to locate the referenced type "thumbnail.media" in schema
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+};
+
+export type GatedFeaturesBlock = {
+  _type: "gatedFeaturesBlock";
+  heading?: string;
+  teaser?: string;
+  unlockCtaLabel?: string;
+  items?: Array<{
+    title?: string;
+    description?: string;
+    _type: "gatedItem";
+    _key: string;
+  }>;
+};
+
+export type UniversityReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "university";
+};
+
+export type CampusToursBlock = {
+  _type: "campusToursBlock";
+  heading?: string;
+  subheading?: string;
+  tours?: Array<{
+    title?: string;
+    description?: string;
+    videoUrl?: string;
+    thumbnail?: Thumbnail;
+    university?: UniversityReference;
+    _type: "campusTour";
+    _key: string;
+  }>;
+};
+
+export type LeadershipBlock = {
+  _type: "leadershipBlock";
+  heading?: string;
+  subheading?: string;
+  messages?: Array<{
+    role?: string;
+    name?: string;
+    messageTitle?: string;
+    videoUrl?: string;
+    photo?: Photo;
+    _type: "leaderMessage";
+    _key: string;
+  }>;
+};
+
+export type JourneyBlock = {
+  _type: "journeyBlock";
+  heading?: string;
+  subheading?: string;
+  steps?: Array<string>;
+};
+
 export type CtaBlock = {
   _type: "ctaBlock";
   heading?: string;
@@ -214,6 +287,18 @@ export type PageBuilder = Array<
   | ({
       _key: string;
     } & CtaBlock)
+  | ({
+      _key: string;
+    } & JourneyBlock)
+  | ({
+      _key: string;
+    } & LeadershipBlock)
+  | ({
+      _key: string;
+    } & CampusToursBlock)
+  | ({
+      _key: string;
+    } & GatedFeaturesBlock)
 >;
 
 export type Lead = {
@@ -256,13 +341,6 @@ export type SiteSettings = {
     _type: "socialLink";
     _key: string;
   }>;
-};
-
-export type UniversityReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "university";
 };
 
 export type Testimonial = {
@@ -501,6 +579,19 @@ export type Course = {
   seoDescription?: string;
 };
 
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  pageBuilder?: PageBuilder;
+  seoTitle?: string;
+  seoDescription?: string;
+};
+
 export type ScholarshipReference = {
   _ref: string;
   _type: "reference";
@@ -698,6 +789,12 @@ export type Destination = {
   >;
   tuitionFees?: string;
   costOfLiving?: string;
+  mainCities?: Array<string>;
+  citiesNearAirports?: Array<string>;
+  accommodationOptions?: Array<string>;
+  accommodationAverageCost?: string;
+  partTimeJobInfo?: string;
+  partTimeGuarantee?: string;
   costBreakdownUSD?: {
     tuitionMin?: number;
     tuitionMax?: number;
@@ -767,19 +864,6 @@ export type Destination = {
     _type: "deadlineWindow";
     _key: string;
   }>;
-  seoTitle?: string;
-  seoDescription?: string;
-};
-
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  pageBuilder?: PageBuilder;
   seoTitle?: string;
   seoDescription?: string;
 };
@@ -884,6 +968,13 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Logo
+  | Photo
+  | Thumbnail
+  | GatedFeaturesBlock
+  | UniversityReference
+  | CampusToursBlock
+  | LeadershipBlock
+  | JourneyBlock
   | CtaBlock
   | TestimonialReference
   | TestimonialsBlock
@@ -900,7 +991,6 @@ export type AllSanitySchemaTypes =
   | PageBuilder
   | Lead
   | SiteSettings
-  | UniversityReference
   | Testimonial
   | SanityImageCrop
   | SanityImageHotspot
@@ -910,10 +1000,10 @@ export type AllSanitySchemaTypes =
   | Author
   | Scholarship
   | Course
+  | Page
   | ScholarshipReference
   | University
   | Destination
-  | Page
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -963,7 +1053,7 @@ export type PAGES_QUERY_RESULT = Array<{
 
 // Source: ../web/src/sanity/queries.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    seoTitle,    seoDescription,    pageBuilder[]{      _key,      _type,      ...,      destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },      courses[]->{        _id,        title,        slug,        category,        duration,        averageSalary,        topUniversities[]->{ _id, destination->{ _id, country, slug } }      },      testimonials[]->{        _id,        studentName,        headline,        photo,        quote,        counsellorName,        videoUrl,        university->{ name },        course->{ title },        destination->{ country }      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    seoTitle,    seoDescription,    pageBuilder[]{      _key,      _type,      ...,      // Confidential items must never reach the public page payload;      // they are served by /api/confidential after account creation.      _type == "gatedFeaturesBlock" => { "items": [] },      destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },      courses[]->{        _id,        title,        slug,        category,        duration,        averageSalary,        topUniversities[]->{ _id, destination->{ _id, country, slug } }      },      testimonials[]->{        _id,        studentName,        headline,        photo,        quote,        counsellorName,        videoUrl,        university->{ name },        course->{ title },        destination->{ country }      }    }  }
 export type PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
@@ -982,6 +1072,24 @@ export type PAGE_QUERY_RESULT = {
           title?: string;
           description?: string;
           _type: "coreValue";
+          _key: string;
+        }>;
+        destinations: null;
+        courses: null;
+        testimonials: null;
+      }
+    | {
+        _key: string;
+        _type: "campusToursBlock";
+        heading?: string;
+        subheading?: string;
+        tours?: Array<{
+          title?: string;
+          description?: string;
+          videoUrl?: string;
+          thumbnail?: Thumbnail;
+          university?: UniversityReference;
+          _type: "campusTour";
           _key: string;
         }>;
         destinations: null;
@@ -1080,6 +1188,17 @@ export type PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "gatedFeaturesBlock";
+        heading?: string;
+        teaser?: string;
+        unlockCtaLabel?: string;
+        items: Array<never>;
+        destinations: null;
+        courses: null;
+        testimonials: null;
+      }
+    | {
+        _key: string;
         _type: "hero";
         rotatingQuotes?: Array<string>;
         heading?: string;
@@ -1097,6 +1216,34 @@ export type PAGE_QUERY_RESULT = {
         secondaryCtaUrl?: string;
         tertiaryCtaLabel?: string;
         tertiaryCtaUrl?: string;
+        destinations: null;
+        courses: null;
+        testimonials: null;
+      }
+    | {
+        _key: string;
+        _type: "journeyBlock";
+        heading?: string;
+        subheading?: string;
+        steps?: Array<string>;
+        destinations: null;
+        courses: null;
+        testimonials: null;
+      }
+    | {
+        _key: string;
+        _type: "leadershipBlock";
+        heading?: string;
+        subheading?: string;
+        messages?: Array<{
+          role?: string;
+          name?: string;
+          messageTitle?: string;
+          videoUrl?: string;
+          photo?: Photo;
+          _type: "leaderMessage";
+          _key: string;
+        }>;
         destinations: null;
         courses: null;
         testimonials: null;
@@ -1238,8 +1385,20 @@ export type DESTINATIONS_QUERY_RESULT = Array<{
 }>;
 
 // Source: ../web/src/sanity/queries.ts
+// Variable: CONFIDENTIAL_ITEMS_QUERY
+// Query: *[_type == "page" && count(pageBuilder[_type == "gatedFeaturesBlock"]) > 0][0]    .pageBuilder[_type == "gatedFeaturesBlock"][0]{      heading,      items[]{ _key, title, description }    }
+export type CONFIDENTIAL_ITEMS_QUERY_RESULT = {
+  heading: string | null;
+  items: Array<{
+    _key: string;
+    title: string | null;
+    description: string | null;
+  }> | null;
+} | null;
+
+// Source: ../web/src/sanity/queries.ts
 // Variable: DESTINATION_QUERY
-// Query: *[_type == "destination" && slug.current == $slug][0]{    _id,    country,    flagEmoji,    slug,    heroImage,    summary,    whyStudyPoints,    overview,    tuitionFees,    costOfLiving,    visaInfo,    visaGuidance,    workRights,    postStudyOpportunities,    intakeMonths,    seoTitle,    seoDescription,    popularCourses[]->{ _id, title, slug, category },    universities[]->{ _id, name, slug, logo, city, ranking },    scholarships[]->{ _id, name, slug, type, amount, deadline }  }
+// Query: *[_type == "destination" && slug.current == $slug][0]{    _id,    country,    flagEmoji,    slug,    heroImage,    summary,    whyStudyPoints,    overview,    tuitionFees,    costOfLiving,    mainCities,    citiesNearAirports,    accommodationOptions,    accommodationAverageCost,    partTimeJobInfo,    partTimeGuarantee,    visaInfo,    visaGuidance,    workRights,    postStudyOpportunities,    intakeMonths,    seoTitle,    seoDescription,    popularCourses[]->{ _id, title, slug, category },    universities[]->{ _id, name, slug, logo, city, ranking },    scholarships[]->{ _id, name, slug, type, amount, deadline }  }
 export type DESTINATION_QUERY_RESULT = {
   _id: string;
   country: string | null;
@@ -1274,6 +1433,12 @@ export type DESTINATION_QUERY_RESULT = {
   }> | null;
   tuitionFees: string | null;
   costOfLiving: string | null;
+  mainCities: Array<string> | null;
+  citiesNearAirports: Array<string> | null;
+  accommodationOptions: Array<string> | null;
+  accommodationAverageCost: string | null;
+  partTimeJobInfo: string | null;
+  partTimeGuarantee: string | null;
   visaInfo: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1903,9 +2068,10 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "siteSettings" && _id == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "page" && defined(slug.current)] | order(title asc){ _id, title, slug }': PAGES_QUERY_RESULT;
-    '*[_type == "page" && slug.current == $slug][0]{\n    _id,\n    title,\n    seoTitle,\n    seoDescription,\n    pageBuilder[]{\n      _key,\n      _type,\n      ...,\n      destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },\n      courses[]->{\n        _id,\n        title,\n        slug,\n        category,\n        duration,\n        averageSalary,\n        topUniversities[]->{ _id, destination->{ _id, country, slug } }\n      },\n      testimonials[]->{\n        _id,\n        studentName,\n        headline,\n        photo,\n        quote,\n        counsellorName,\n        videoUrl,\n        university->{ name },\n        course->{ title },\n        destination->{ country }\n      }\n    }\n  }': PAGE_QUERY_RESULT;
+    '*[_type == "page" && slug.current == $slug][0]{\n    _id,\n    title,\n    seoTitle,\n    seoDescription,\n    pageBuilder[]{\n      _key,\n      _type,\n      ...,\n      // Confidential items must never reach the public page payload;\n      // they are served by /api/confidential after account creation.\n      _type == "gatedFeaturesBlock" => { "items": [] },\n      destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },\n      courses[]->{\n        _id,\n        title,\n        slug,\n        category,\n        duration,\n        averageSalary,\n        topUniversities[]->{ _id, destination->{ _id, country, slug } }\n      },\n      testimonials[]->{\n        _id,\n        studentName,\n        headline,\n        photo,\n        quote,\n        counsellorName,\n        videoUrl,\n        university->{ name },\n        course->{ title },\n        destination->{ country }\n      }\n    }\n  }': PAGE_QUERY_RESULT;
     '*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages }': DESTINATIONS_QUERY_RESULT;
-    '*[_type == "destination" && slug.current == $slug][0]{\n    _id,\n    country,\n    flagEmoji,\n    slug,\n    heroImage,\n    summary,\n    whyStudyPoints,\n    overview,\n    tuitionFees,\n    costOfLiving,\n    visaInfo,\n    visaGuidance,\n    workRights,\n    postStudyOpportunities,\n    intakeMonths,\n    seoTitle,\n    seoDescription,\n    popularCourses[]->{ _id, title, slug, category },\n    universities[]->{ _id, name, slug, logo, city, ranking },\n    scholarships[]->{ _id, name, slug, type, amount, deadline }\n  }': DESTINATION_QUERY_RESULT;
+    '*[_type == "page" && count(pageBuilder[_type == "gatedFeaturesBlock"]) > 0][0]\n    .pageBuilder[_type == "gatedFeaturesBlock"][0]{\n      heading,\n      items[]{ _key, title, description }\n    }': CONFIDENTIAL_ITEMS_QUERY_RESULT;
+    '*[_type == "destination" && slug.current == $slug][0]{\n    _id,\n    country,\n    flagEmoji,\n    slug,\n    heroImage,\n    summary,\n    whyStudyPoints,\n    overview,\n    tuitionFees,\n    costOfLiving,\n    mainCities,\n    citiesNearAirports,\n    accommodationOptions,\n    accommodationAverageCost,\n    partTimeJobInfo,\n    partTimeGuarantee,\n    visaInfo,\n    visaGuidance,\n    workRights,\n    postStudyOpportunities,\n    intakeMonths,\n    seoTitle,\n    seoDescription,\n    popularCourses[]->{ _id, title, slug, category },\n    universities[]->{ _id, name, slug, logo, city, ranking },\n    scholarships[]->{ _id, name, slug, type, amount, deadline }\n  }': DESTINATION_QUERY_RESULT;
     '*[_type == "destination" && defined(visaGuidance)] | order(country asc){\n    _id,\n    country,\n    flagEmoji,\n    slug,\n    visaGuidance\n  }': VISA_GUIDANCE_INDEX_QUERY_RESULT;
     '*[_type == "destination" && (defined(intakeMonths) || defined(applicationDeadlines))] | order(country asc){\n    _id,\n    country,\n    flagEmoji,\n    intakeMonths,\n    applicationDeadlines\n  }': INTAKE_CALENDAR_QUERY_RESULT;
     '*[_type == "destination" && defined(costBreakdownUSD)] | order(country asc){\n    _id,\n    country,\n    flagEmoji,\n    costBreakdownUSD,\n    universities[]->{ _id, name }\n  }': COST_CALCULATOR_QUERY_RESULT;

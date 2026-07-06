@@ -37,6 +37,43 @@ export const destinationType = defineType({
     defineField({ name: 'tuitionFees', type: 'string', description: 'e.g. "£12,000–£25,000/year"' }),
     defineField({ name: 'costOfLiving', type: 'string', description: 'e.g. "£900–1,200/month"' }),
     defineField({
+      name: 'mainCities',
+      title: 'Main Cities Preferred by Indian Students',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'citiesNearAirports',
+      title: 'Cities Near Airports',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'accommodationOptions',
+      title: 'Accommodation Options',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'e.g. "University halls", "Shared apartments", "Homestay"',
+    }),
+    defineField({
+      name: 'accommodationAverageCost',
+      title: 'Average Accommodation Cost',
+      type: 'string',
+      description: 'e.g. "£400–800/month"',
+    }),
+    defineField({
+      name: 'partTimeJobInfo',
+      title: 'Part-Time Job Opportunities',
+      type: 'text',
+      description: 'Typical part-time roles, hourly pay, where students find work',
+    }),
+    defineField({
+      name: 'partTimeGuarantee',
+      title: 'Part-Time Job Guarantee',
+      type: 'string',
+      description: 'Any guarantee/assurance offered, e.g. "Placement support within 4 weeks of arrival"',
+    }),
+    defineField({
       name: 'costBreakdownUSD',
       title: 'Cost Calculator Breakdown (USD/year)',
       type: 'object',

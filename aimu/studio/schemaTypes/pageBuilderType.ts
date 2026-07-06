@@ -15,5 +15,9 @@ export const pageBuilderType = defineType({
     defineArrayMember({ type: 'coursesBlock' }),
     defineArrayMember({ type: 'testimonialsBlock' }),
     defineArrayMember({ type: 'ctaBlock' }),
+    defineArrayMember({ type: 'journeyBlock' }),
+    defineArrayMember({ type: 'leadershipBlock' }),
+    defineArrayMember({ type: 'campusToursBlock' }),
+    defineArrayMember({ type: 'gatedFeaturesBlock' }),
   ],
 })

@@ -13,17 +13,19 @@ export function VideoThumbnail({
   photo,
   videoUrl,
   alt,
+  aspectClass = "aspect-square",
 }: {
   photo: SanityImageSource | null | undefined;
   videoUrl: string | null | undefined;
   alt: string;
+  aspectClass?: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const embedUrl = videoUrl ? getYouTubeEmbedUrl(videoUrl) : null;
 
   if (playing && embedUrl) {
     return (
-      <div className="aspect-square w-full overflow-hidden rounded-2xl shadow-lg">
+      <div className={`${aspectClass} w-full overflow-hidden rounded-2xl shadow-lg`}>
         <iframe
           src={embedUrl}
           title={alt}
@@ -36,7 +38,7 @@ export function VideoThumbnail({
   }
 
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-lg">
+    <div className={`relative ${aspectClass} w-full overflow-hidden rounded-2xl shadow-lg`}>
       {photo ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={urlFor(photo).width(800).height(800).url()} alt={alt} className="h-full w-full object-cover" />
