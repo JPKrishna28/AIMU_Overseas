@@ -4,6 +4,7 @@ import { TESTIMONIALS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { VideoThumbnail } from "@/components/VideoThumbnail";
 import { urlFor } from "@/sanity/image";
+import { countryImage } from "@/lib/stitchImages";
 import type { TESTIMONIALS_QUERY_RESULT } from "../../../sanity.types";
 
 export const metadata = { title: "Success Stories — AIMU Global" };
@@ -83,25 +84,16 @@ function JourneyStory({ story, index }: { story: Story; index: number }) {
       {/* Campus / student image */}
       <div className={`w-full md:w-[45%] ${reversed ? "order-1" : "order-1 md:order-2"}`}>
         <div className="aspect-[4/3] transform overflow-hidden rounded-xl shadow-xl transition-transform hover:scale-[1.02]">
-          {campusImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={urlFor(campusImage).width(1000).height(750).url()}
-              alt={story.destination?.country ?? ""}
-              className="h-full w-full object-cover"
-            />
-          ) : story.photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={urlFor(story.photo).width(1000).height(750).url()}
-              alt={story.studentName ?? ""}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-navy">
-              <span className="material-symbols-outlined text-6xl text-white/20">school</span>
-            </div>
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={
+              campusImage
+                ? urlFor(campusImage).width(1000).height(750).url()
+                : countryImage(story.destination?.country, index)
+            }
+            alt={story.destination?.country ?? story.studentName ?? ""}
+            className="h-full w-full object-cover"
+          />
         </div>
       </div>
     </div>

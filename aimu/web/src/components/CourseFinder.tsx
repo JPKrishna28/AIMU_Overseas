@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 import type { COURSES_QUERY_RESULT } from "../../sanity.types";
 
 type Course = COURSES_QUERY_RESULT[number];
@@ -57,27 +58,22 @@ function CheckboxGroup({
   );
 }
 
-function CourseCatalogCard({ course }: { course: Course }) {
+function CourseCatalogCard({ course, index }: { course: Course; index: number }) {
   const countries = uniqueCountries(course);
   const image = courseImage(course);
+  const fallbackImage = index % 2 === 0 ? STITCH_IMAGES.courseLab : STITCH_IMAGES.courseLibrary;
   const universityCount = (course.topUniversities ?? []).length;
   const highDemand = course.demand === "High" || course.demand === "Very High";
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-navy/10 bg-white shadow-[0_4px_20px_-2px_rgba(13,28,50,0.08)] transition-all duration-300 hover:shadow-[0_12px_30px_-4px_rgba(13,28,50,0.12)]">
       <div className="relative h-48 overflow-hidden">
-        {image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={urlFor(image).width(800).height(400).url()}
-            alt={course.title ?? ""}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-navy">
-            <span className="material-symbols-outlined text-5xl text-white/30">school</span>
-          </div>
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image ? urlFor(image).width(800).height(400).url() : fallbackImage}
+          alt={course.title ?? ""}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
         <div className="absolute left-4 top-4 flex gap-2">
           {highDemand && (
             <span className="rounded-full bg-emerald/90 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
@@ -274,8 +270,8 @@ export function CourseFinder({ courses }: { courses: COURSES_QUERY_RESULT }) {
           <p className="py-16 text-center text-navy/60">No courses match these filters.</p>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {sorted.map((course) => (
-              <CourseCatalogCard key={course._id} course={course} />
+            {sorted.map((course, index) => (
+              <CourseCatalogCard key={course._id} course={course} index={index} />
             ))}
           </div>
         )}

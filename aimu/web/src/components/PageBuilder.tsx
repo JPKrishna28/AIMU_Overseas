@@ -9,6 +9,7 @@ import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { VideoThumbnail } from "@/components/VideoThumbnail";
 import { GatedSection } from "@/components/GatedSection";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 
 type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
 type Block = Blocks[number];
@@ -29,17 +30,15 @@ function Hero(block: Extract<Block, { _type: "hero" }>) {
 
   return (
     <section className="relative flex min-h-[600px] items-center overflow-hidden bg-navy py-24 text-white sm:min-h-[85vh] sm:py-32">
-      {block.image && (
-        <div className="absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={urlFor(block.image).width(1920).url()}
-            alt=""
-            className="h-full w-full scale-105 object-cover"
-          />
-          <div className="hero-gradient absolute inset-0" />
-        </div>
-      )}
+      <div className="absolute inset-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={block.image ? urlFor(block.image).width(1920).url() : STITCH_IMAGES.homeHero}
+          alt=""
+          className="h-full w-full scale-105 object-cover"
+        />
+        <div className="hero-gradient absolute inset-0" />
+      </div>
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-12">
         <div className="max-w-2xl">
           {quotes.length > 0 && (

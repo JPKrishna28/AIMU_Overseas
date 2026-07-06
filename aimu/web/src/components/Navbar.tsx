@@ -45,7 +45,15 @@ export function Navbar() {
     };
   }, [mobileOpen]);
 
-  const linkClass = "text-sm font-medium text-navy/80 transition-colors hover:text-navy";
+  const linkClass =
+    "border-b-2 border-transparent pb-1 text-sm font-medium text-navy/80 transition-colors hover:text-navy";
+  const activeLinkClass = "border-b-2 border-gold pb-1 text-sm font-semibold text-navy";
+
+  function isActive(href: string) {
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+
+  const toolsActive = TOOLS_LINKS.some((link) => isActive(link.href));
 
   return (
     <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
@@ -57,13 +65,13 @@ export function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 lg:flex">
           {PRIMARY_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={linkClass}>
+            <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
               {link.label}
             </Link>
           ))}
 
           <div className="group relative">
-            <button type="button" className={linkClass}>
+            <button type="button" className={toolsActive ? activeLinkClass : linkClass}>
               Tools ▾
             </button>
             <div className="invisible absolute left-0 top-full flex w-48 translate-y-1 flex-col gap-1 rounded-xl border border-light-gray bg-white p-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
@@ -71,7 +79,9 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm text-navy/80 transition-colors hover:bg-light-gray hover:text-navy"
+                  className={`rounded-lg px-3 py-2 text-sm transition-colors hover:bg-light-gray hover:text-navy ${
+                    isActive(link.href) ? "bg-gold/10 font-semibold text-navy" : "text-navy/80"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -80,7 +90,7 @@ export function Navbar() {
           </div>
 
           {SECONDARY_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={linkClass}>
+            <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
               {link.label}
             </Link>
           ))}
@@ -124,7 +134,9 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-3 text-base font-medium text-navy/80 transition-colors hover:bg-light-gray hover:text-navy"
+              className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-light-gray hover:text-navy ${
+                isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/80"
+              }`}
             >
               {link.label}
             </Link>
@@ -145,7 +157,9 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="block rounded-lg px-6 py-2.5 text-sm text-navy/70 transition-colors hover:bg-light-gray hover:text-navy"
+                className={`block rounded-lg px-6 py-2.5 text-sm transition-colors hover:bg-light-gray hover:text-navy ${
+                  isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/70"
+                }`}
               >
                 {link.label}
               </Link>
@@ -156,7 +170,9 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-3 text-base font-medium text-navy/80 transition-colors hover:bg-light-gray hover:text-navy"
+              className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-light-gray hover:text-navy ${
+                isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/80"
+              }`}
             >
               {link.label}
             </Link>

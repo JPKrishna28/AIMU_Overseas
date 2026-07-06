@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { urlFor } from "@/sanity/image";
+import { countryImage } from "@/lib/stitchImages";
 import type { PAGE_QUERY_RESULT } from "../../sanity.types";
 
 type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
@@ -14,16 +15,12 @@ function DestinationCard({ destination }: { destination: Destination }) {
 
   return (
     <div className="group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
-      {coverImage ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={urlFor(coverImage).width(800).height(1000).url()}
-          alt={destination.country ?? ""}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      ) : (
-        <div className="absolute inset-0 bg-navy" />
-      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={coverImage ? urlFor(coverImage).width(800).height(1000).url() : countryImage(destination.country)}
+        alt={destination.country ?? ""}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
 
       <div className="absolute right-6 top-6">

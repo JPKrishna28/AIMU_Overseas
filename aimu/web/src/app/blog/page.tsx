@@ -4,6 +4,7 @@ import { POSTS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { ResourceArticles } from "@/components/ResourceArticles";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 
 export const metadata = { title: "Resources — AIMU Global" };
 
@@ -56,18 +57,16 @@ export default async function BlogPage() {
 
         <div className="relative w-full md:w-1/2">
           <div className="relative z-10 aspect-video overflow-hidden rounded-3xl shadow-2xl md:aspect-square">
-            {featured?.coverImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={urlFor(featured.coverImage).width(1000).height(1000).url()}
-                alt={featured.title ?? ""}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-navy">
-                <span className="material-symbols-outlined text-7xl text-white/20">menu_book</span>
-              </div>
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={
+                featured?.coverImage
+                  ? urlFor(featured.coverImage).width(1000).height(1000).url()
+                  : STITCH_IMAGES.resourcesLibrary
+              }
+              alt={featured?.title ?? ""}
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="absolute -bottom-6 -left-6 -z-0 h-32 w-32 rounded-2xl bg-gold opacity-20" />
           <div className="absolute -right-6 -top-6 -z-0 h-48 w-48 rounded-full border-2 border-navy/15" />
@@ -96,16 +95,16 @@ export default async function BlogPage() {
                   href={`/blog/${featured.slug.current}`}
                   className="group relative block h-full min-h-[320px] overflow-hidden rounded-3xl shadow-md md:min-h-[480px]"
                 >
-                  {featured.coverImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={urlFor(featured.coverImage).width(1400).height(900).url()}
-                      alt={featured.title ?? ""}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-navy" />
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={
+                      featured.coverImage
+                        ? urlFor(featured.coverImage).width(1400).height(900).url()
+                        : STITCH_IMAGES.resourcesCityscape
+                    }
+                    alt={featured.title ?? ""}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/30 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-8">
                     {featured.category && (

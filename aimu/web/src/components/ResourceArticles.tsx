@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 import type { POSTS_QUERY_RESULT } from "../../sanity.types";
 
 type Post = POSTS_QUERY_RESULT[number];
@@ -93,18 +94,16 @@ export function ResourceArticles({ posts }: { posts: POSTS_QUERY_RESULT }) {
                 <Link key={post._id} href={`/blog/${post.slug.current}`} className="group">
                   <article>
                     <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-2xl bg-light-gray">
-                      {post.coverImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={urlFor(post.coverImage).width(800).height(600).url()}
-                          alt={post.title ?? ""}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-navy">
-                          <span className="material-symbols-outlined text-5xl text-white/20">article</span>
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={
+                          post.coverImage
+                            ? urlFor(post.coverImage).width(800).height(600).url()
+                            : STITCH_IMAGES.resourcesLibrary
+                        }
+                        alt={post.title ?? ""}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
                       {post.category && (
                         <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-navy backdrop-blur-sm">
                           {post.category}

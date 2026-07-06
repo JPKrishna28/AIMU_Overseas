@@ -3,6 +3,7 @@ import { client } from "@/sanity/client";
 import { DESTINATIONS_QUERY, UNIVERSITIES_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
 
 export const metadata = { title: "Study Destinations — AIMU Global" };
 
@@ -21,22 +22,24 @@ export default async function DestinationsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[520px] items-center overflow-hidden bg-ink text-white">
+      <section className="relative flex min-h-[520px] items-center overflow-hidden bg-navy text-white">
         <div className="absolute inset-0 z-0">
-          {destinations[0]?.heroImage && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={urlFor(destinations[0].heroImage).width(1920).url()}
-              alt=""
-              className="h-full w-full object-cover opacity-40"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-transparent" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={
+              destinations[0]?.heroImage
+                ? urlFor(destinations[0].heroImage).width(1920).url()
+                : STITCH_IMAGES.destinationsHero
+            }
+            alt=""
+            className="h-full w-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-transparent" />
         </div>
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 sm:px-12">
           <div className="max-w-2xl space-y-8">
             <span
-              className="animate-hero inline-block rounded-full border border-gold/30 bg-gold/20 px-4 py-1 text-sm font-semibold text-gold-bright"
+              className="animate-hero inline-block rounded-full border border-gold px-4 py-1 text-xs font-semibold uppercase tracking-widest text-gold-bright"
               style={{ "--hero-delay": "0ms" } as React.CSSProperties}
             >
               Global Admissions {new Date().getFullYear() + 1}
@@ -97,16 +100,16 @@ export default async function DestinationsPage() {
                 <Reveal key={destination._id} delay={index * 90}>
                   <div className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)] transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(10,25,47,0.15)]">
                     <div className="relative h-64 overflow-hidden">
-                      {destination.heroImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={urlFor(destination.heroImage).width(800).height(520).url()}
-                          alt={destination.country ?? ""}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="h-full w-full bg-navy" />
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={
+                          destination.heroImage
+                            ? urlFor(destination.heroImage).width(800).height(520).url()
+                            : countryImage(destination.country, index)
+                        }
+                        alt={destination.country ?? ""}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
                       <div className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-widest text-navy">
                         {destination.flagEmoji} {destination.country}
                       </div>

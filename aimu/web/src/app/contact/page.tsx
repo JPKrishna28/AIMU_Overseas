@@ -3,6 +3,7 @@ import { SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY, DESTINATIONS_QUERY } from
 import { LeadForm } from "@/components/LeadForm";
 import { Reveal } from "@/components/Reveal";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
 
 export const metadata = { title: "Contact — AIMU Global" };
 
@@ -58,32 +59,32 @@ export default async function ContactPage() {
           </div>
 
           {/* Rotated collage */}
-          {collageImages.length > 0 && (
-            <div className="relative hidden h-[440px] lg:block">
-              <div className="absolute inset-0 translate-x-12 translate-y-6 rotate-3 transform overflow-hidden rounded-xl shadow-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={urlFor(collageImages[0]!).width(900).height(700).url()}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 -rotate-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl">
-                {collageImages[1] ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={urlFor(collageImages[1]).width(900).height(700).url()}
-                    alt=""
-                    className="h-full w-full rounded-lg object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center rounded-lg bg-navy">
-                    <span className="material-symbols-outlined text-6xl text-gold-bright">forum</span>
-                  </div>
-                )}
-              </div>
+          <div className="relative hidden h-[440px] lg:block">
+            <div className="absolute inset-0 translate-x-12 translate-y-6 rotate-3 transform overflow-hidden rounded-xl shadow-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={
+                  collageImages[0]
+                    ? urlFor(collageImages[0]).width(900).height(700).url()
+                    : STITCH_IMAGES.contactOffice
+                }
+                alt=""
+                className="h-full w-full object-cover"
+              />
             </div>
-          )}
+            <div className="absolute inset-0 -rotate-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={
+                  collageImages[1]
+                    ? urlFor(collageImages[1]).width(900).height(700).url()
+                    : STITCH_IMAGES.contactBoardroom
+                }
+                alt=""
+                className="h-full w-full rounded-lg object-cover"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -221,16 +222,16 @@ export default async function ContactPage() {
                 <Reveal key={destination._id} delay={index * 90}>
                   <div className="hover-lift group overflow-hidden rounded-xl border border-transparent bg-white shadow-sm hover:border-gold/20">
                     <div className="relative h-48">
-                      {destination.heroImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={urlFor(destination.heroImage).width(600).height(400).url()}
-                          alt={destination.country ?? ""}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="h-full w-full bg-navy" />
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={
+                          destination.heroImage
+                            ? urlFor(destination.heroImage).width(600).height(400).url()
+                            : countryImage(destination.country, index)
+                        }
+                        alt={destination.country ?? ""}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute bottom-4 left-4 text-white">
                         <h3 className="text-lg font-semibold">

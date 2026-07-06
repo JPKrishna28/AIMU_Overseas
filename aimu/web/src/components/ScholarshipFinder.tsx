@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { urlFor } from "@/sanity/image";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 import type { SCHOLARSHIPS_QUERY_RESULT } from "../../sanity.types";
 
 type Scholarship = SCHOLARSHIPS_QUERY_RESULT[number];
@@ -34,24 +35,28 @@ function badgeClass(type: string | null | undefined) {
   return "bg-gold/90 text-navy";
 }
 
-function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
+const SCHOLARSHIP_FALLBACKS = [
+  STITCH_IMAGES.scholarshipUk,
+  STITCH_IMAGES.scholarshipLab,
+  STITCH_IMAGES.scholarshipIvy,
+];
+
+function ScholarshipCard({ scholarship, index }: { scholarship: Scholarship; index: number }) {
   const image = scholarship.destination?.heroImage;
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border border-navy/10 bg-white shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(116,92,0,0.15)]">
       <div className="relative h-48 overflow-hidden">
-        {image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={urlFor(image).width(800).height(400).url()}
-            alt={scholarship.destination?.country ?? ""}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-navy">
-            <span className="material-symbols-outlined text-5xl text-white/20">workspace_premium</span>
-          </div>
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={
+            image
+              ? urlFor(image).width(800).height(400).url()
+              : SCHOLARSHIP_FALLBACKS[index % SCHOLARSHIP_FALLBACKS.length]
+          }
+          alt={scholarship.destination?.country ?? ""}
+          className="h-full w-full object-cover"
+        />
         {scholarship.type && (
           <span
             className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-medium uppercase backdrop-blur-sm ${badgeClass(scholarship.type)}`}
@@ -204,8 +209,8 @@ export function ScholarshipFinder({ scholarships }: { scholarships: SCHOLARSHIPS
           <p className="py-16 text-center text-navy/60">No scholarships match these filters.</p>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((scholarship) => (
-              <ScholarshipCard key={scholarship._id} scholarship={scholarship} />
+            {filtered.map((scholarship, index) => (
+              <ScholarshipCard key={scholarship._id} scholarship={scholarship} index={index} />
             ))}
           </div>
         )}

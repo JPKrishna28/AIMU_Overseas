@@ -2,6 +2,7 @@ import Link from "next/link";
 import { client } from "@/sanity/client";
 import { VISA_GUIDANCE_INDEX_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
+import { STITCH_IMAGES } from "@/lib/stitchImages";
 
 export const metadata = { title: "Complete Visa Guidance — AIMU Global" };
 
@@ -110,9 +111,17 @@ export default async function VisaGuidancePage() {
             </div>
           </div>
 
-          {/* Stats card */}
-          <div className="relative hidden lg:block">
-            <div className="ml-auto max-w-sm rounded-2xl border border-gold/30 bg-white/95 p-10 shadow-2xl backdrop-blur">
+          {/* Passport image + stats card */}
+          <div className="relative hidden pb-10 lg:block">
+            <div className="overflow-hidden rounded-2xl border-4 border-white/10 shadow-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={STITCH_IMAGES.visaPassport}
+                alt="Passport and visa documents"
+                className="aspect-square w-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-4 -left-6 max-w-xs rounded-2xl border border-gold/30 bg-white/95 p-8 shadow-2xl backdrop-blur">
               <div className="font-heading text-5xl font-bold text-navy">
                 {visaStat?.value ?? "98%"}
               </div>
