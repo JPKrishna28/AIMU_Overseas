@@ -2,215 +2,284 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { urlFor } from "@/sanity/image";
 import type { COURSES_QUERY_RESULT } from "../../sanity.types";
 
 type Course = COURSES_QUERY_RESULT[number];
 
-const DEMAND_ORDER = ["Low", "Medium", "High", "Very High"];
+type SortOrder = "relevant" | "priceAsc" | "priceDesc";
 
 function uniqueSorted(values: (string | null | undefined)[]): string[] {
   return Array.from(new Set(values.filter((v): v is string => Boolean(v)))).sort();
 }
 
-function topUniversitiesForEmployment(course: Course) {
-  return [...(course.topUniversities ?? [])]
-    .filter((u): u is NonNullable<typeof u> => Boolean(u))
-    .sort((a, b) => Number(b.studentSatisfaction?.replace("%", "") ?? 0) - Number(a.studentSatisfaction?.replace("%", "") ?? 0))
-    .slice(0, 3);
+function uniqueCountries(course: Course): string[] {
+  return uniqueSorted(course.topUniversities?.map((u) => u?.destination?.country) ?? []);
 }
 
-function CourseFinderCard({ course }: { course: Course }) {
-  const topEmployers = topUniversitiesForEmployment(course);
+function courseImage(course: Course) {
+  for (const university of course.topUniversities ?? []) {
+    if (university?.destination?.heroImage) return university.destination.heroImage;
+  }
+  return null;
+}
+
+function CheckboxGroup({
+  label,
+  options,
+  selected,
+  onToggle,
+}: {
+  label: string;
+  options: string[];
+  selected: string[];
+  onToggle: (value: string) => void;
+}) {
+  if (options.length === 0) return null;
 
   return (
-    <div className="hover-lift flex h-full flex-col gap-3 rounded-2xl border border-light-gray bg-white p-6 shadow-sm">
-      {course.category && <p className="text-xs font-semibold uppercase text-gold">{course.category}</p>}
-      <h3 className="font-heading text-lg font-semibold text-navy">{course.title}</h3>
+    <div className="space-y-4">
+      <p className="text-xs font-semibold uppercase tracking-widest text-navy/50">{label}</p>
+      <div className="flex flex-col gap-3">
+        {options.map((option) => (
+          <label key={option} className="group flex cursor-pointer items-center gap-3">
+            <input
+              type="checkbox"
+              checked={selected.includes(option)}
+              onChange={() => onToggle(option)}
+              className="h-5 w-5 rounded border-navy/30 text-gold accent-[#c89b3c] focus:ring-gold"
+            />
+            <span className="text-sm text-navy/80 transition-colors group-hover:text-navy">{option}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-      <dl className="grid grid-cols-2 gap-3 text-sm">
-        {course.duration && (
-          <div>
-            <dt className="text-xs text-navy/50">Duration</dt>
-            <dd className="font-medium text-navy">{course.duration}</dd>
-          </div>
-        )}
-        {course.tuitionFrom && (
-          <div>
-            <dt className="text-xs text-navy/50">Tuition Fees</dt>
-            <dd className="font-medium text-navy">{course.tuitionFrom}</dd>
-          </div>
-        )}
-        {course.averageSalary && (
-          <div>
-            <dt className="text-xs text-navy/50">Avg Salary</dt>
-            <dd className="font-medium text-navy">{course.averageSalary}</dd>
-          </div>
-        )}
-        {course.demand && (
-          <div>
-            <dt className="text-xs text-navy/50">Demand</dt>
-            <dd className="font-medium text-navy">{course.demand}</dd>
-          </div>
-        )}
-      </dl>
+function CourseCatalogCard({ course }: { course: Course }) {
+  const countries = uniqueCountries(course);
+  const image = courseImage(course);
+  const universityCount = (course.topUniversities ?? []).length;
+  const highDemand = course.demand === "High" || course.demand === "Very High";
 
-      {course.careerOutcomes && course.careerOutcomes.length > 0 && (
-        <div>
-          <p className="text-xs font-semibold text-navy/50">Career Options</p>
-          <div className="mt-1 flex flex-wrap gap-1">
-            {course.careerOutcomes.map((outcome) => (
-              <span key={outcome} className="rounded-full bg-light-gray px-2.5 py-1 text-xs text-navy">
-                {outcome}
-              </span>
-            ))}
+  return (
+    <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-navy/10 bg-white shadow-[0_4px_20px_-2px_rgba(13,28,50,0.08)] transition-all duration-300 hover:shadow-[0_12px_30px_-4px_rgba(13,28,50,0.12)]">
+      <div className="relative h-48 overflow-hidden">
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={urlFor(image).width(800).height(400).url()}
+            alt={course.title ?? ""}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-navy">
+            <span className="material-symbols-outlined text-5xl text-white/30">school</span>
+          </div>
+        )}
+        <div className="absolute left-4 top-4 flex gap-2">
+          {highDemand && (
+            <span className="rounded-full bg-emerald/90 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+              High Demand
+            </span>
+          )}
+          {course.category && (
+            <span className="rounded-full bg-gold px-3 py-1 text-xs font-medium text-navy backdrop-blur-md">
+              {course.category}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="mb-2 font-heading text-xl font-semibold text-navy transition-colors group-hover:text-gold">
+          {course.title}
+        </h3>
+
+        <div className="flex-1 space-y-2">
+          {countries.length > 0 && (
+            <div className="flex items-center gap-2 text-navy/60">
+              <span className="material-symbols-outlined text-base text-gold">public</span>
+              <span className="text-sm font-medium">{countries.join(" · ")}</span>
+            </div>
+          )}
+
+          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-navy/10 pt-4">
+            <div>
+              <p className="text-xs uppercase tracking-wider text-navy/50">Universities</p>
+              <p className="font-heading text-lg font-semibold text-navy">
+                {universityCount > 0 ? `${universityCount}+` : "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wider text-navy/50">Duration</p>
+              <p className="font-heading text-lg font-semibold text-navy">{course.duration ?? "—"}</p>
+            </div>
+            {course.tuitionFrom && (
+              <div>
+                <p className="text-xs uppercase tracking-wider text-navy/50">Tuition From</p>
+                <p className="font-heading text-lg font-semibold text-navy">{course.tuitionFrom}</p>
+              </div>
+            )}
+            {course.averageSalary && (
+              <div>
+                <p className="text-xs uppercase tracking-wider text-navy/50">Avg Salary</p>
+                <p className="font-heading text-lg font-semibold text-navy">{course.averageSalary}</p>
+              </div>
+            )}
           </div>
         </div>
-      )}
 
-      {topEmployers.length > 0 && (
-        <div>
-          <p className="text-xs font-semibold text-navy/50">Top Universities for Easy Employment</p>
-          <ul className="mt-1 flex flex-col gap-1">
-            {topEmployers.map((university) => (
-              <li key={university._id} className="text-sm text-navy">
-                {university.slug?.current ? (
-                  <Link href={`/universities/${university.slug.current}`} className="underline decoration-gold underline-offset-2">
-                    {university.name}
-                  </Link>
-                ) : (
-                  university.name
-                )}
-                {university.studentSatisfaction && (
-                  <span className="text-navy/50"> · {university.studentSatisfaction} satisfaction</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {course.slug?.current && (
-        <Link
-          href={`/courses/${course.slug.current}`}
-          className="mt-auto rounded bg-navy py-3 text-center text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-navy/90"
-        >
-          Explore Course
-        </Link>
-      )}
+        {course.slug?.current && (
+          <Link
+            href={`/courses/${course.slug.current}`}
+            className="mt-6 w-full rounded-lg bg-navy py-4 text-center text-sm font-semibold uppercase tracking-widest text-white transition-colors hover:bg-ink"
+          >
+            View Program Details
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
 
 export function CourseFinder({ courses }: { courses: COURSES_QUERY_RESULT }) {
-  const [country, setCountry] = useState("");
-  const [university, setUniversity] = useState("");
-  const [category, setCategory] = useState("");
-  const [duration, setDuration] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+  const [selectedIntakes, setSelectedIntakes] = useState<string[]>([]);
   const [maxBudget, setMaxBudget] = useState("");
-  const [intake, setIntake] = useState("");
-  const [minGrowth, setMinGrowth] = useState("");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("relevant");
 
+  const categories = useMemo(() => uniqueSorted(courses.map((c) => c.category)), [courses]);
   const countries = useMemo(
     () => uniqueSorted(courses.flatMap((c) => c.topUniversities?.map((u) => u?.destination?.country) ?? [])),
     [courses]
   );
-  const universities = useMemo(
-    () => uniqueSorted(courses.flatMap((c) => c.topUniversities?.map((u) => u?.name) ?? [])),
-    [courses]
-  );
-  const categories = useMemo(() => uniqueSorted(courses.map((c) => c.category)), [courses]);
-  const durations = useMemo(() => uniqueSorted(courses.map((c) => c.duration)), [courses]);
   const intakes = useMemo(
     () => uniqueSorted(courses.flatMap((c) => c.topUniversities?.flatMap((u) => u?.destination?.intakeMonths ?? []) ?? [])),
     [courses]
   );
 
+  function toggle(setter: React.Dispatch<React.SetStateAction<string[]>>) {
+    return (value: string) =>
+      setter((current) =>
+        current.includes(value) ? current.filter((v) => v !== value) : [...current, value]
+      );
+  }
+
   const filtered = courses.filter((course) => {
-    if (country && !course.topUniversities?.some((u) => u?.destination?.country === country)) return false;
-    if (university && !course.topUniversities?.some((u) => u?.name === university)) return false;
-    if (category && course.category !== category) return false;
-    if (duration && course.duration !== duration) return false;
+    if (selectedCategories.length > 0 && (!course.category || !selectedCategories.includes(course.category)))
+      return false;
+    if (
+      selectedCountries.length > 0 &&
+      !course.topUniversities?.some((u) => u?.destination?.country && selectedCountries.includes(u.destination.country))
+    )
+      return false;
+    if (
+      selectedIntakes.length > 0 &&
+      !course.topUniversities?.some((u) => u?.destination?.intakeMonths?.some((m) => selectedIntakes.includes(m)))
+    )
+      return false;
     if (maxBudget && course.tuitionFromUSD && course.tuitionFromUSD > Number(maxBudget)) return false;
-    if (intake && !course.topUniversities?.some((u) => u?.destination?.intakeMonths?.includes(intake))) return false;
-    if (minGrowth) {
-      const minIndex = DEMAND_ORDER.indexOf(minGrowth);
-      if (!course.demand || DEMAND_ORDER.indexOf(course.demand) < minIndex) return false;
-    }
     return true;
   });
 
-  const selectClass = "rounded-lg border border-light-gray px-3 py-2 text-sm text-navy focus:border-gold focus:outline-none";
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortOrder === "priceAsc") return (a.tuitionFromUSD ?? Infinity) - (b.tuitionFromUSD ?? Infinity);
+    if (sortOrder === "priceDesc") return (b.tuitionFromUSD ?? 0) - (a.tuitionFromUSD ?? 0);
+    return 0;
+  });
+
+  const hasFilters =
+    selectedCategories.length > 0 || selectedCountries.length > 0 || selectedIntakes.length > 0 || maxBudget !== "";
 
   return (
-    <div>
-      <div className="mb-10 grid gap-3 rounded-2xl bg-light-gray p-6 sm:grid-cols-2 lg:grid-cols-4">
-        <select value={country} onChange={(e) => setCountry(e.target.value)} className={selectClass}>
-          <option value="">All Countries</option>
-          {countries.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
+    <div className="flex flex-col gap-8 lg:flex-row">
+      {/* Sidebar Filters */}
+      <aside className="w-full flex-shrink-0 lg:w-72">
+        <div className="space-y-8 rounded-xl border border-navy/10 bg-white p-6 lg:sticky lg:top-24">
+          <div className="flex items-center justify-between">
+            <h3 className="font-heading text-lg font-semibold text-navy">Filters</h3>
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategories([]);
+                  setSelectedCountries([]);
+                  setSelectedIntakes([]);
+                  setMaxBudget("");
+                }}
+                className="text-sm font-medium text-gold hover:underline"
+              >
+                Reset
+              </button>
+            )}
+          </div>
 
-        <select value={university} onChange={(e) => setUniversity(e.target.value)} className={selectClass}>
-          <option value="">All Universities</option>
-          {universities.map((u) => <option key={u} value={u}>{u}</option>)}
-        </select>
+          <CheckboxGroup
+            label="Subject"
+            options={categories}
+            selected={selectedCategories}
+            onToggle={toggle(setSelectedCategories)}
+          />
+          <CheckboxGroup
+            label="Destination"
+            options={countries}
+            selected={selectedCountries}
+            onToggle={toggle(setSelectedCountries)}
+          />
+          <CheckboxGroup
+            label="Intake"
+            options={intakes}
+            selected={selectedIntakes}
+            onToggle={toggle(setSelectedIntakes)}
+          />
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)} className={selectClass}>
-          <option value="">All Fields of Study</option>
-          {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
-
-        <select value={duration} onChange={(e) => setDuration(e.target.value)} className={selectClass}>
-          <option value="">Any Duration</option>
-          {durations.map((d) => <option key={d} value={d}>{d}</option>)}
-        </select>
-
-        <select value={intake} onChange={(e) => setIntake(e.target.value)} className={selectClass}>
-          <option value="">Any Intake</option>
-          {intakes.map((i) => <option key={i} value={i}>{i}</option>)}
-        </select>
-
-        <input
-          type="number"
-          inputMode="numeric"
-          placeholder="Max Budget (USD/year)"
-          value={maxBudget}
-          onChange={(e) => setMaxBudget(e.target.value)}
-          className={selectClass}
-        />
-
-        <select value={minGrowth} onChange={(e) => setMinGrowth(e.target.value)} className={selectClass}>
-          <option value="">Any Career Demand</option>
-          {DEMAND_ORDER.map((d) => <option key={d} value={d}>{d}+ demand</option>)}
-        </select>
-
-        <button
-          type="button"
-          onClick={() => {
-            setCountry("");
-            setUniversity("");
-            setCategory("");
-            setDuration("");
-            setMaxBudget("");
-            setIntake("");
-            setMinGrowth("");
-          }}
-          className="rounded-lg border border-navy/20 px-3 py-2 text-sm font-semibold text-navy transition-colors hover:bg-white"
-        >
-          Clear Filters
-        </button>
-      </div>
-
-      <p className="mb-6 text-sm text-navy/60">{filtered.length} courses found</p>
-
-      {filtered.length === 0 ? (
-        <p className="text-center text-navy/60">No courses match these filters.</p>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((course) => (
-            <CourseFinderCard key={course._id} course={course} />
-          ))}
+          <div className="space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-navy/50">Max Budget</p>
+            <input
+              type="number"
+              inputMode="numeric"
+              placeholder="USD / year"
+              value={maxBudget}
+              onChange={(e) => setMaxBudget(e.target.value)}
+              className="w-full rounded-lg border border-navy/15 px-3 py-2 text-sm text-navy focus:border-gold focus:outline-none"
+            />
+          </div>
         </div>
-      )}
+      </aside>
+
+      {/* Course Grid */}
+      <div className="flex-1 space-y-6">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <p className="text-navy/60">
+            <span className="font-bold text-navy">{sorted.length}</span> programs found matching your criteria
+          </p>
+          <div className="flex w-full items-center gap-2 rounded-full border border-navy/15 bg-white px-4 py-2 md:w-auto">
+            <span className="material-symbols-outlined text-navy/40">sort</span>
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as SortOrder)}
+              className="border-none bg-transparent text-sm text-navy focus:outline-none focus:ring-0"
+            >
+              <option value="relevant">Most Relevant</option>
+              <option value="priceAsc">Price: Low to High</option>
+              <option value="priceDesc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {sorted.length === 0 ? (
+          <p className="py-16 text-center text-navy/60">No courses match these filters.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {sorted.map((course) => (
+              <CourseCatalogCard key={course._id} course={course} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

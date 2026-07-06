@@ -1,12 +1,14 @@
 import { client } from "@/sanity/client";
-import { PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
+import { PAGE_QUERY, SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
+import { HomeFinder } from "@/components/HomeFinder";
 
 export default async function Home() {
-  const [page, siteSettings] = await Promise.all([
+  const [page, siteSettings, leadFormOptions] = await Promise.all([
     client.fetch(PAGE_QUERY, { slug: "home" }),
     client.fetch(SITE_SETTINGS_QUERY),
+    client.fetch(LEAD_FORM_OPTIONS_QUERY),
   ]);
 
   if (!page) {
@@ -24,10 +26,14 @@ export default async function Home() {
   const heroBlock = blocks.find((block) => block._type === "hero");
   const restBlocks = blocks.filter((block) => block._type !== "hero");
 
+  const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
+  const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
+
   return (
     <>
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar stats={siteSettings?.stats} />
+      <HomeFinder countries={countries} courses={courses} />
       <PageBuilder blocks={restBlocks} />
     </>
   );

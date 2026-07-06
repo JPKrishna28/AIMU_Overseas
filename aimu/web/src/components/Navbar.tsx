@@ -89,7 +89,7 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className="hidden rounded-full bg-navy px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy/90 sm:block"
+            className="hidden rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-navy transition-all hover:brightness-110 active:scale-95 sm:block"
           >
             Book Consultation
           </Link>
@@ -164,7 +164,7 @@ export function Navbar() {
 
           <Link
             href="/contact"
-            className="mt-2 rounded-full bg-navy px-5 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-navy/90"
+            className="mt-2 rounded-full bg-gold px-5 py-3 text-center text-sm font-semibold text-navy transition-all hover:brightness-110"
           >
             Book Consultation
           </Link>

@@ -1359,7 +1359,7 @@ export type PAGE_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries.ts
 // Variable: DESTINATIONS_QUERY
-// Query: *[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages }
+// Query: *[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages, tuitionFees, costOfLiving, intakeMonths, workRights }
 export type DESTINATIONS_QUERY_RESULT = Array<{
   _id: string;
   country: string | null;
@@ -1382,6 +1382,10 @@ export type DESTINATIONS_QUERY_RESULT = Array<{
     _type: "image";
     _key: string;
   }> | null;
+  tuitionFees: string | null;
+  costOfLiving: string | null;
+  intakeMonths: Array<string> | null;
+  workRights: string | null;
 }>;
 
 // Source: ../web/src/sanity/queries.ts
@@ -1792,7 +1796,7 @@ export type UNIVERSITY_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries.ts
 // Variable: COURSES_QUERY
-// Query: *[_type == "course"] | order(title asc){    _id,    title,    slug,    category,    duration,    tuitionFrom,    tuitionFromUSD,    averageSalary,    demand,    careerOutcomes,    topUniversities[]->{      _id,      name,      slug,      studentSatisfaction,      destination->{ _id, country, slug, intakeMonths }    }  }
+// Query: *[_type == "course"] | order(title asc){    _id,    title,    slug,    category,    duration,    tuitionFrom,    tuitionFromUSD,    averageSalary,    demand,    careerOutcomes,    topUniversities[]->{      _id,      name,      slug,      studentSatisfaction,      destination->{ _id, country, slug, intakeMonths, heroImage }    }  }
 export type COURSES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -1826,6 +1830,13 @@ export type COURSES_QUERY_RESULT = Array<{
       country: string | null;
       slug: Slug | null;
       intakeMonths: Array<string> | null;
+      heroImage: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
     } | null;
   }> | null;
 }>;
@@ -1905,7 +1916,7 @@ export type COURSE_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries.ts
 // Variable: SCHOLARSHIPS_QUERY
-// Query: *[_type == "scholarship"] | order(deadline asc){    _id,    name,    slug,    type,    amount,    deadline,    destination->{ country },    university->{ name }  }
+// Query: *[_type == "scholarship"] | order(deadline asc){    _id,    name,    slug,    type,    amount,    deadline,    destination->{ country, heroImage },    university->{ name }  }
 export type SCHOLARSHIPS_QUERY_RESULT = Array<{
   _id: string;
   name: string | null;
@@ -1915,6 +1926,13 @@ export type SCHOLARSHIPS_QUERY_RESULT = Array<{
   deadline: string | null;
   destination: {
     country: string | null;
+    heroImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
   } | null;
   university: {
     name: string | null;
@@ -2036,7 +2054,7 @@ export type LEAD_FORM_OPTIONS_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries.ts
 // Variable: TESTIMONIALS_QUERY
-// Query: *[_type == "testimonial"]{    _id,    studentName,    headline,    photo,    quote,    counsellorName,    videoUrl,    university->{ name },    course->{ title },    destination->{ country }  }
+// Query: *[_type == "testimonial"]{    _id,    studentName,    headline,    photo,    quote,    counsellorName,    videoUrl,    university->{ name },    course->{ title },    destination->{ country, heroImage }  }
 export type TESTIMONIALS_QUERY_RESULT = Array<{
   _id: string;
   studentName: string | null;
@@ -2059,6 +2077,13 @@ export type TESTIMONIALS_QUERY_RESULT = Array<{
   } | null;
   destination: {
     country: string | null;
+    heroImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
   } | null;
 }>;
 
@@ -2069,7 +2094,7 @@ declare module "@sanity/client" {
     '*[_type == "siteSettings" && _id == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "page" && defined(slug.current)] | order(title asc){ _id, title, slug }': PAGES_QUERY_RESULT;
     '*[_type == "page" && slug.current == $slug][0]{\n    _id,\n    title,\n    seoTitle,\n    seoDescription,\n    pageBuilder[]{\n      _key,\n      _type,\n      ...,\n      // Confidential items must never reach the public page payload;\n      // they are served by /api/confidential after account creation.\n      _type == "gatedFeaturesBlock" => { "items": [] },\n      destinations[]->{ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages },\n      courses[]->{\n        _id,\n        title,\n        slug,\n        category,\n        duration,\n        averageSalary,\n        topUniversities[]->{ _id, destination->{ _id, country, slug } }\n      },\n      testimonials[]->{\n        _id,\n        studentName,\n        headline,\n        photo,\n        quote,\n        counsellorName,\n        videoUrl,\n        university->{ name },\n        course->{ title },\n        destination->{ country }\n      }\n    }\n  }': PAGE_QUERY_RESULT;
-    '*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages }': DESTINATIONS_QUERY_RESULT;
+    '*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages, tuitionFees, costOfLiving, intakeMonths, workRights }': DESTINATIONS_QUERY_RESULT;
     '*[_type == "page" && count(pageBuilder[_type == "gatedFeaturesBlock"]) > 0][0]\n    .pageBuilder[_type == "gatedFeaturesBlock"][0]{\n      heading,\n      items[]{ _key, title, description }\n    }': CONFIDENTIAL_ITEMS_QUERY_RESULT;
     '*[_type == "destination" && slug.current == $slug][0]{\n    _id,\n    country,\n    flagEmoji,\n    slug,\n    heroImage,\n    summary,\n    whyStudyPoints,\n    overview,\n    tuitionFees,\n    costOfLiving,\n    mainCities,\n    citiesNearAirports,\n    accommodationOptions,\n    accommodationAverageCost,\n    partTimeJobInfo,\n    partTimeGuarantee,\n    visaInfo,\n    visaGuidance,\n    workRights,\n    postStudyOpportunities,\n    intakeMonths,\n    seoTitle,\n    seoDescription,\n    popularCourses[]->{ _id, title, slug, category },\n    universities[]->{ _id, name, slug, logo, city, ranking },\n    scholarships[]->{ _id, name, slug, type, amount, deadline }\n  }': DESTINATION_QUERY_RESULT;
     '*[_type == "destination" && defined(visaGuidance)] | order(country asc){\n    _id,\n    country,\n    flagEmoji,\n    slug,\n    visaGuidance\n  }': VISA_GUIDANCE_INDEX_QUERY_RESULT;
@@ -2077,12 +2102,12 @@ declare module "@sanity/client" {
     '*[_type == "destination" && defined(costBreakdownUSD)] | order(country asc){\n    _id,\n    country,\n    flagEmoji,\n    costBreakdownUSD,\n    universities[]->{ _id, name }\n  }': COST_CALCULATOR_QUERY_RESULT;
     '*[_type == "university"] | order(name asc){\n    _id,\n    name,\n    slug,\n    logo,\n    city,\n    ranking,\n    tuitionFrom,\n    tuitionFromUSD,\n    destination->{ _id, country, slug, intakeMonths },\n    courses[]->{ _id, title, demand }\n  }': UNIVERSITIES_QUERY_RESULT;
     '*[_type == "university" && slug.current == $slug][0]{\n    _id,\n    name,\n    slug,\n    logo,\n    heroImage,\n    galleryImages,\n    city,\n    ranking,\n    overview,\n    keyFacts,\n    tuitionFrom,\n    feeStructure,\n    paymentOptions,\n    scholarshipsAvailable,\n    admissionRequirements,\n    studentSatisfaction,\n    indianCommunity,\n    accommodation,\n    cityGuide,\n    nearestAirport,\n    airportDistance,\n    transportationOptions,\n    seoTitle,\n    seoDescription,\n    destination->{ _id, country, slug },\n    courses[]->{ _id, title, slug, category, duration },\n    scholarships[]->{ _id, name, slug, type, amount },\n    studentTestimonials[]->{\n      _id,\n      studentName,\n      headline,\n      photo,\n      quote,\n      counsellorName,\n      videoUrl,\n      university->{ name },\n      course->{ title },\n      destination->{ country }\n    }\n  }': UNIVERSITY_QUERY_RESULT;
-    '*[_type == "course"] | order(title asc){\n    _id,\n    title,\n    slug,\n    category,\n    duration,\n    tuitionFrom,\n    tuitionFromUSD,\n    averageSalary,\n    demand,\n    careerOutcomes,\n    topUniversities[]->{\n      _id,\n      name,\n      slug,\n      studentSatisfaction,\n      destination->{ _id, country, slug, intakeMonths }\n    }\n  }': COURSES_QUERY_RESULT;
+    '*[_type == "course"] | order(title asc){\n    _id,\n    title,\n    slug,\n    category,\n    duration,\n    tuitionFrom,\n    tuitionFromUSD,\n    averageSalary,\n    demand,\n    careerOutcomes,\n    topUniversities[]->{\n      _id,\n      name,\n      slug,\n      studentSatisfaction,\n      destination->{ _id, country, slug, intakeMonths, heroImage }\n    }\n  }': COURSES_QUERY_RESULT;
     '*[_type == "course" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    category,\n    overview,\n    duration,\n    averageSalary,\n    demand,\n    admissionRequirements,\n    careerOutcomes,\n    seoTitle,\n    seoDescription,\n    topUniversities[]->{ _id, name, slug, city, destination->{ country } }\n  }': COURSE_QUERY_RESULT;
-    '*[_type == "scholarship"] | order(deadline asc){\n    _id,\n    name,\n    slug,\n    type,\n    amount,\n    deadline,\n    destination->{ country },\n    university->{ name }\n  }': SCHOLARSHIPS_QUERY_RESULT;
+    '*[_type == "scholarship"] | order(deadline asc){\n    _id,\n    name,\n    slug,\n    type,\n    amount,\n    deadline,\n    destination->{ country, heroImage },\n    university->{ name }\n  }': SCHOLARSHIPS_QUERY_RESULT;
     '*[_type == "post" && defined(slug.current)] | order(publishedAt desc){\n    _id,\n    title,\n    slug,\n    category,\n    excerpt,\n    coverImage,\n    publishedAt,\n    author->{ name, photo }\n  }': POSTS_QUERY_RESULT;
     '*[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    category,\n    excerpt,\n    coverImage,\n    body,\n    publishedAt,\n    seoTitle,\n    seoDescription,\n    author->{ name, photo, bio }\n  }': POST_QUERY_RESULT;
     '{\n    "countries": *[_type == "destination"] | order(country asc).country,\n    "courses": *[_type == "course"] | order(title asc).title\n  }': LEAD_FORM_OPTIONS_QUERY_RESULT;
-    '*[_type == "testimonial"]{\n    _id,\n    studentName,\n    headline,\n    photo,\n    quote,\n    counsellorName,\n    videoUrl,\n    university->{ name },\n    course->{ title },\n    destination->{ country }\n  }': TESTIMONIALS_QUERY_RESULT;
+    '*[_type == "testimonial"]{\n    _id,\n    studentName,\n    headline,\n    photo,\n    quote,\n    counsellorName,\n    videoUrl,\n    university->{ name },\n    course->{ title },\n    destination->{ country, heroImage }\n  }': TESTIMONIALS_QUERY_RESULT;
   }
 }

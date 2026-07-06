@@ -9,69 +9,53 @@ type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
 type DestinationsBlockType = Extract<Blocks[number], { _type: "destinationsBlock" }>;
 type Destination = NonNullable<NonNullable<DestinationsBlockType["destinations"]>[number]>;
 
-function PolaroidStack({ images, country }: { images: Destination["galleryImages"]; country: string | null | undefined }) {
-  const photos = images && images.length > 0 ? images.slice(0, 3) : [null, null, null];
-  const rotations = ["-rotate-6", "rotate-3", "-rotate-2"];
-  const positions = ["left-0 top-4", "left-16 top-0", "left-10 top-16"];
-
-  return (
-    <div className="relative h-48 w-full">
-      {photos.map((photo, index) => (
-        <div
-          key={index}
-          className={`absolute h-28 w-24 rounded-md border-4 border-white bg-light-gray shadow-md transition-transform duration-500 group-hover:rotate-0 ${rotations[index]} ${positions[index]}`}
-        >
-          {photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={urlFor(photo).width(200).height(200).url()}
-              alt={country ?? ""}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-xs text-navy/30">Photo</div>
-          )}
-        </div>
-      ))}
-      <span className="absolute bottom-0 right-2 text-2xl" aria-hidden>
-        ✈
-      </span>
-    </div>
-  );
-}
-
 function DestinationCard({ destination }: { destination: Destination }) {
-  return (
-    <div className="hover-lift group flex w-[min(340px,82vw)] shrink-0 flex-col gap-4 rounded-2xl bg-gradient-to-b from-sky-50 to-white p-6 shadow-sm">
-      <PolaroidStack images={destination.galleryImages} country={destination.country} />
+  const coverImage = destination.galleryImages?.[0];
 
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-navy/50">Study In</p>
-        <h3 className="font-heading text-3xl font-extrabold text-red-600">{destination.country}</h3>
+  return (
+    <div className="group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
+      {coverImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={urlFor(coverImage).width(800).height(1000).url()}
+          alt={destination.country ?? ""}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-navy" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
+
+      <div className="absolute right-6 top-6">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/20 backdrop-blur-md">
+          <span className="material-symbols-outlined text-white">flight_takeoff</span>
+        </div>
       </div>
 
-      {destination.whyStudyPoints && destination.whyStudyPoints.length > 0 && (
-        <div>
-          <p className="text-sm font-semibold text-navy">Why Study in {destination.country?.toUpperCase()}</p>
-          <ul className="mt-2 flex flex-col gap-2">
-            {destination.whyStudyPoints.map((point, index) => (
-              <li key={index} className="flex gap-2 text-sm text-navy/80">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy" />
-                {point}
-              </li>
-            ))}
-          </ul>
+      <div className="absolute bottom-0 left-0 p-8 text-white">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="material-symbols-outlined text-gold">verified</span>
+          <span className="text-sm font-semibold uppercase tracking-wider">{destination.country}</span>
         </div>
-      )}
 
-      {destination.slug?.current && (
-        <Link
-          href={`/destinations/${destination.slug.current}`}
-          className="mt-auto text-sm font-semibold text-gold underline underline-offset-4"
-        >
-          Learn more
-        </Link>
-      )}
+        {destination.whyStudyPoints && destination.whyStudyPoints.length > 0 && (
+          <>
+            <h3 className="mb-4 font-heading text-2xl font-semibold">{destination.whyStudyPoints[0]}</h3>
+            {destination.whyStudyPoints[1] && (
+              <p className="mb-6 line-clamp-2 text-white/80">{destination.whyStudyPoints[1]}</p>
+            )}
+          </>
+        )}
+
+        {destination.slug?.current && (
+          <Link
+            href={`/destinations/${destination.slug.current}`}
+            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold transition-all group-hover:gap-4"
+          >
+            Learn more <span className="material-symbols-outlined">trending_flat</span>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

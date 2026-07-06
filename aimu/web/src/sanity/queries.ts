@@ -48,7 +48,7 @@ export const PAGE_QUERY = defineQuery(
 );
 
 export const DESTINATIONS_QUERY = defineQuery(
-  `*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages }`
+  `*[_type == "destination"] | order(country asc){ _id, country, flagEmoji, slug, summary, heroImage, whyStudyPoints, galleryImages, tuitionFees, costOfLiving, intakeMonths, workRights }`
 );
 
 export const CONFIDENTIAL_ITEMS_QUERY = defineQuery(
@@ -196,7 +196,7 @@ export const COURSES_QUERY = defineQuery(
       name,
       slug,
       studentSatisfaction,
-      destination->{ _id, country, slug, intakeMonths }
+      destination->{ _id, country, slug, intakeMonths, heroImage }
     }
   }`
 );
@@ -227,7 +227,7 @@ export const SCHOLARSHIPS_QUERY = defineQuery(
     type,
     amount,
     deadline,
-    destination->{ country },
+    destination->{ country, heroImage },
     university->{ name }
   }`
 );
@@ -278,6 +278,6 @@ export const TESTIMONIALS_QUERY = defineQuery(
     videoUrl,
     university->{ name },
     course->{ title },
-    destination->{ country }
+    destination->{ country, heroImage }
   }`
 );

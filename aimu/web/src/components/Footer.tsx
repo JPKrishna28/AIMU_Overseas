@@ -47,7 +47,7 @@ export function Footer({
   courses?: string[];
 }) {
   return (
-    <footer className="border-t border-light-gray bg-navy text-white">
+    <footer className="bg-ink text-white">
       <div className="mx-auto max-w-3xl px-6 pt-16">
         <div className="rounded-2xl bg-white/5 p-8">
           <h2 className="font-heading text-xl font-bold">Get Free Counseling</h2>

@@ -39,6 +39,11 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-navy">
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+          precedence="default"
+        />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer siteSettings={siteSettings} countries={countries} courses={courses} />

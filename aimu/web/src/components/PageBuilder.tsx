@@ -28,77 +28,94 @@ function Hero(block: Extract<Block, { _type: "hero" }>) {
   ].filter((cta): cta is { label: string; url: string; primary: boolean } => Boolean(cta.label && cta.url));
 
   return (
-    <section className="relative overflow-hidden bg-navy py-20 text-center text-white sm:py-32">
+    <section className="relative flex min-h-[600px] items-center overflow-hidden bg-navy py-24 text-white sm:min-h-[85vh] sm:py-32">
       {block.image && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={urlFor(block.image).width(1600).url()}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
-        />
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={urlFor(block.image).width(1920).url()}
+            alt=""
+            className="h-full w-full scale-105 object-cover"
+          />
+          <div className="hero-gradient absolute inset-0" />
+        </div>
       )}
-      <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 px-6">
-        {quotes.length > 0 && (
-          <div className="animate-hero" style={{ "--hero-delay": "0ms" } as React.CSSProperties}>
-            <RotatingQuote quotes={quotes} />
-          </div>
-        )}
-        <h1
-          className="animate-hero text-3xl font-bold tracking-tight sm:text-6xl"
-          style={{ "--hero-delay": "120ms" } as React.CSSProperties}
-        >
-          {block.heading}
-        </h1>
-        {block.subheading && (
-          <p
-            className="animate-hero max-w-xl text-base text-white/80 sm:text-lg"
-            style={{ "--hero-delay": "240ms" } as React.CSSProperties}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-12">
+        <div className="max-w-2xl">
+          {quotes.length > 0 && (
+            <div className="animate-hero mb-6" style={{ "--hero-delay": "0ms" } as React.CSSProperties}>
+              <RotatingQuote quotes={quotes} />
+            </div>
+          )}
+          <h1
+            className="animate-hero font-heading text-4xl font-bold leading-tight tracking-tight sm:text-6xl sm:leading-[1.15]"
+            style={{ "--hero-delay": "120ms" } as React.CSSProperties}
           >
-            {block.subheading}
-          </p>
-        )}
-        {ctas.length > 0 && (
-          <div
-            className="animate-hero mt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-            style={{ "--hero-delay": "360ms" } as React.CSSProperties}
-          >
-            {ctas.map((cta) => (
-              <Link
-                key={cta.url}
-                href={cta.url}
-                className={
-                  cta.primary
-                    ? "rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-gold/25 sm:px-7 sm:py-3.5"
-                    : "rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/60 hover:bg-white/10 sm:px-7 sm:py-3.5"
-                }
-              >
-                {cta.label}
-              </Link>
-            ))}
-          </div>
-        )}
+            {block.heading}
+          </h1>
+          {block.subheading && (
+            <p
+              className="animate-hero mt-6 max-w-xl text-base text-white/80 sm:text-lg sm:leading-8"
+              style={{ "--hero-delay": "240ms" } as React.CSSProperties}
+            >
+              {block.subheading}
+            </p>
+          )}
+          {ctas.length > 0 && (
+            <div
+              className="animate-hero mt-8 flex flex-col gap-4 sm:flex-row"
+              style={{ "--hero-delay": "360ms" } as React.CSSProperties}
+            >
+              {ctas.map((cta) => (
+                <Link
+                  key={cta.url}
+                  href={cta.url}
+                  className={
+                    cta.primary
+                      ? "inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy transition-all duration-300 hover:brightness-110"
+                      : "inline-flex items-center justify-center gap-2 rounded-full border border-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white/10"
+                  }
+                >
+                  {cta.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 }
 
+const FEATURE_ICONS = ["school", "visibility", "person_pin", "public", "workspace_premium", "support_agent"];
+
 function Features(block: Extract<Block, { _type: "features" }>) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
-      {block.heading && (
-        <Reveal>
-          <h2 className="mb-10 text-center text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
-        </Reveal>
-      )}
-      <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-        {block.items?.map((item: FeatureItem, index) => (
-          <Reveal key={item._key} delay={index * 90}>
-            <div className="hover-lift h-full rounded-2xl bg-light-gray p-8">
-              <h3 className="font-heading font-semibold text-navy">{item.title}</h3>
-              {item.description && <p className="mt-2 text-sm text-navy/70">{item.description}</p>}
+    <section className="bg-light-gray/60 py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        {block.heading && (
+          <Reveal>
+            <div className="mb-16 text-center">
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Our Advantage</span>
+              <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">{block.heading}</h2>
             </div>
           </Reveal>
-        ))}
+        )}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {block.items?.map((item: FeatureItem, index) => (
+            <Reveal key={item._key} delay={index * 90}>
+              <div className="group h-full rounded-2xl border border-navy/10 bg-white p-10 transition-all duration-300 hover:shadow-lg">
+                <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-navy/5 text-navy transition-colors duration-300 group-hover:bg-gold group-hover:text-white">
+                  <span className="material-symbols-outlined text-4xl">
+                    {FEATURE_ICONS[index % FEATURE_ICONS.length]}
+                  </span>
+                </div>
+                <h3 className="mb-4 text-xl font-semibold text-navy">{item.title}</h3>
+                {item.description && <p className="text-navy/60">{item.description}</p>}
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -300,15 +317,23 @@ function DestinationsBlock(block: Extract<Block, { _type: "destinationsBlock" }>
   const destinations = (block.destinations ?? []).filter((d): d is NonNullable<typeof d> => Boolean(d));
 
   return (
-    <section className="bg-white py-16 sm:py-20">
+    <section className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal>
-          {block.heading && (
-            <h2 className="mb-2 text-center text-2xl font-bold text-navy sm:text-3xl">🎓 {block.heading}</h2>
-          )}
-          <p className="mb-10 text-center text-navy/60">
-            Discover globally ranked universities and career-ready opportunities across the world.
-          </p>
+          <div className="mb-16 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Explore the World</span>
+              {block.heading && (
+                <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">{block.heading}</h2>
+              )}
+            </div>
+            <Link
+              href="/destinations"
+              className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-navy transition-transform hover:translate-x-1"
+            >
+              View All Destinations <span className="material-symbols-outlined">arrow_right_alt</span>
+            </Link>
+          </div>
         </Reveal>
         {destinations.length > 0 && (
           <Reveal delay={120}>
@@ -348,17 +373,21 @@ function TestimonialsBlock(block: Extract<Block, { _type: "testimonialsBlock" }>
   const stories = (block.testimonials ?? []).filter((s): s is NonNullable<typeof s> => Boolean(s));
 
   return (
-    <section className="bg-white py-16 sm:py-20">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative overflow-hidden bg-navy py-20 sm:py-28">
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_center,rgba(200,155,60,0.15),transparent_70%)]" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         {block.heading && (
           <Reveal>
-            <h2 className="mb-10 text-center text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
+            <div className="mb-16">
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Student Journeys</span>
+              <h2 className="mt-4 font-heading text-3xl font-semibold text-white sm:text-4xl">{block.heading}</h2>
+            </div>
           </Reveal>
         )}
-        <div className="flex flex-col gap-10">
-          {stories.map((story) => (
+        <div className="flex flex-col gap-6">
+          {stories.map((story, index) => (
             <Reveal key={story._id}>
-              <SuccessStoryCard story={story} />
+              <SuccessStoryCard story={story} variant="dark" reversed={index % 2 === 1} />
             </Reveal>
           ))}
         </div>
@@ -369,19 +398,43 @@ function TestimonialsBlock(block: Extract<Block, { _type: "testimonialsBlock" }>
 
 function CtaBlock(block: Extract<Block, { _type: "ctaBlock" }>) {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16 text-center sm:py-24">
-      <Reveal>
-        <h2 className="text-2xl font-bold text-navy sm:text-3xl">{block.heading}</h2>
-        {block.subheading && <p className="mt-4 text-navy/70">{block.subheading}</p>}
-        {block.ctaUrl && block.ctaLabel && (
-          <Link
-            href={block.ctaUrl}
-            className="mt-8 inline-block rounded-full bg-navy px-8 py-4 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-navy/90 hover:shadow-xl hover:shadow-navy/20"
-          >
-            {block.ctaLabel}
-          </Link>
-        )}
-      </Reveal>
+    <section className="relative overflow-hidden bg-ink py-20 text-center text-white sm:py-28">
+      <div className="pointer-events-none absolute inset-0 opacity-20">
+        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full border border-white/10" />
+        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-2xl px-6">
+        <Reveal>
+          <h2 className="font-heading text-3xl font-semibold sm:text-4xl">{block.heading}</h2>
+          {block.subheading && <p className="mt-6 text-lg text-white/70">{block.subheading}</p>}
+          {block.ctaUrl && block.ctaLabel && (
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+              <Link
+                href={block.ctaUrl}
+                className="rounded-full bg-gold px-10 py-5 text-sm font-semibold uppercase tracking-wider text-navy shadow-xl shadow-gold/20 transition-all duration-300 hover:scale-105"
+              >
+                {block.ctaLabel}
+              </Link>
+              <Link
+                href="/contact"
+                className="rounded-full border border-white/30 px-10 py-5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white/10"
+              >
+                Contact Support
+              </Link>
+            </div>
+          )}
+          <div className="mt-12 flex items-center justify-center gap-8 text-white/60">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-gold">verified</span>
+              <span className="text-xs font-medium">Certified Counselors</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-gold">handshake</span>
+              <span className="text-xs font-medium">University Partners</span>
+            </div>
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }
