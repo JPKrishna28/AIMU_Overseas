@@ -5,6 +5,8 @@ import { client } from "@/sanity/client";
 import { DESTINATION_QUERY } from "@/sanity/queries";
 import { PageHeader } from "@/components/PageHeader";
 import { urlFor } from "@/sanity/image";
+import { countryContent } from "@/lib/countryContent";
+import { CountryDetails } from "@/components/CountryDetails";
 
 function Section({
   title,
@@ -27,7 +29,30 @@ export default async function DestinationPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const staticContent = countryContent[slug];
   const destination = await client.fetch(DESTINATION_QUERY, { slug });
+
+  if (staticContent) {
+    return (
+      <>
+        <PageHeader
+          title={`${staticContent.flagEmoji} ${staticContent.heroTitle}`}
+          subtitle={staticContent.heroSubtitle}
+        />
+        <div className="mx-auto max-w-4xl px-6 py-16">
+          {destination?.heroImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={urlFor(destination.heroImage).width(1000).url()}
+              alt={staticContent.country}
+              className="mb-12 w-full rounded-2xl object-cover"
+            />
+          )}
+          <CountryDetails content={staticContent} />
+        </div>
+      </>
+    );
+  }
 
   if (!destination) return notFound();
 
