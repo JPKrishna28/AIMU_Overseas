@@ -4,15 +4,64 @@ import { DESTINATIONS_QUERY, UNIVERSITIES_QUERY, SITE_SETTINGS_QUERY } from "@/s
 import { Reveal } from "@/components/Reveal";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
+import { countryContent, type CountryContent } from "@/lib/countryContent";
 
 export const metadata = { title: "Study Destinations — AIMU Global" };
 
+type DestinationCard = {
+  _id: string;
+  country: string | null;
+  flagEmoji: string | null;
+  slug: { current?: string } | null;
+  heroImage: Parameters<typeof urlFor>[0] | null;
+  whyStudyPoints: string[] | null;
+  tuitionFees: string | null;
+  costOfLiving: string | null;
+  workRights: string | null;
+  intakeMonths: string[] | null;
+};
+
+function staticDestinationCard(content: CountryContent): DestinationCard {
+  const mastersFees =
+    content.tuitionFees.find((row) => row.program.toLowerCase().includes("master"))?.fees ??
+    content.tuitionFees[0]?.fees ??
+    null;
+  return {
+    _id: `static-${content.slug}`,
+    country: content.country,
+    flagEmoji: content.flagEmoji,
+    slug: { current: content.slug },
+    heroImage: null,
+    whyStudyPoints: content.whyStudyPoints,
+    tuitionFees: mastersFees,
+    costOfLiving: content.costOfLivingTotals.map((total) => total.value).join(" / "),
+    workRights: content.quickFacts.find((fact) => fact.label.startsWith("Work During"))?.value ?? null,
+    intakeMonths:
+      content.quickFacts
+        .find((fact) => fact.label === "Popular Intake")
+        ?.value.split(", ") ?? null,
+  };
+}
+
 export default async function DestinationsPage() {
-  const [destinations, universities, siteSettings] = await Promise.all([
+  const [sanityDestinations, universities, siteSettings] = await Promise.all([
     client.fetch(DESTINATIONS_QUERY),
     client.fetch(UNIVERSITIES_QUERY),
     client.fetch(SITE_SETTINGS_QUERY),
   ]);
+
+  // Merge hardcoded countries with Sanity docs; static content wins on slug clash.
+  const staticContents = [...new Set(Object.values(countryContent))];
+  const staticSlugs = new Set(staticContents.map((content) => content.slug));
+  const staticCountryNames = new Set(staticContents.map((content) => content.country.toLowerCase()));
+  const destinations: DestinationCard[] = [
+    ...staticContents.map(staticDestinationCard),
+    ...sanityDestinations.filter(
+      (d) =>
+        !(d.slug?.current && staticSlugs.has(d.slug.current)) &&
+        !(d.country && staticCountryNames.has(d.country.toLowerCase()))
+    ),
+  ];
 
   const rankedUniversities = universities.filter((u) => u.ranking).slice(0, 4);
   const comparisonDestinations = destinations

@@ -27,6 +27,7 @@ const COUNTRY_IMAGES: Record<string, string> = {
   canada: "/images/stitch/canada.jpg",
   australia: "/images/stitch/australia.jpg",
   "united states": "/images/stitch/usa.jpg",
+  "united states of america": "/images/stitch/usa.jpg",
   usa: "/images/stitch/usa.jpg",
 };
 
