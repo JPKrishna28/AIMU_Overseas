@@ -14,7 +14,7 @@ function DestinationCard({ destination }: { destination: Destination }) {
   const coverImage = destination.galleryImages?.[0];
 
   return (
-    <div className="group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
+    <div className="hover-lift group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={coverImage ? urlFor(coverImage).width(800).height(1000).url() : countryImage(destination.country)}

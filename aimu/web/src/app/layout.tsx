@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Inter } from "next/font/google";
+import { Sansation } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/client";
@@ -7,14 +7,15 @@ import { SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
 import { FloatingActions } from "@/components/FloatingActions";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const sansation = Sansation({
+  variable: "--font-sansation",
   subsets: ["latin"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  style: ["normal", "italic"],
+  // Next has no size metrics for Sansation, so it can't generate an
+  // auto-adjusted fallback — use plain fallbacks instead of warning.
+  adjustFontFallback: false,
+  fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function RootLayout({
   const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
 
   return (
-    <html lang="en" className={`${manrope.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${sansation.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-navy">
         <link
           rel="stylesheet"

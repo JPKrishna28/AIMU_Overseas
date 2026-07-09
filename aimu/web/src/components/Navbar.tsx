@@ -57,13 +57,13 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="font-heading text-xl font-bold tracking-tight text-navy">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-5 sm:px-8">
+        <Link href="/" className="shrink-0 font-heading text-2xl font-bold tracking-tight text-navy">
           AIMU <span className="text-gold">Global</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {PRIMARY_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
               {link.label}
@@ -96,14 +96,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/contact"
-            className="hidden rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-navy transition-all hover:brightness-110 active:scale-95 sm:block"
-          >
-            Book Consultation
-          </Link>
-
+        <div className="flex items-center">
           {/* Hamburger */}
           <button
             type="button"
@@ -177,13 +170,6 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-
-          <Link
-            href="/contact"
-            className="mt-2 rounded-full bg-gold px-5 py-3 text-center text-sm font-semibold text-navy transition-all hover:brightness-110"
-          >
-            Book Consultation
-          </Link>
         </nav>
       </div>
     </header>

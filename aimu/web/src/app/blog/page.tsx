@@ -131,7 +131,7 @@ export default async function BlogPage() {
               <Reveal delay={90} className="md:col-span-4">
                 <Link
                   href={`/blog/${second.slug.current}`}
-                  className="flex h-full flex-col justify-between rounded-3xl border border-navy/10 bg-light-gray/60 p-8 transition-all hover:-translate-y-1 hover:shadow-lg"
+                  className="hover-lift flex h-full flex-col justify-between rounded-3xl border border-navy/10 bg-light-gray/60 p-8"
                 >
                   <div>
                     {second.category && (
@@ -154,7 +154,7 @@ export default async function BlogPage() {
               <Reveal delay={180} className="md:col-span-4">
                 <Link
                   href={`/blog/${third.slug.current}`}
-                  className="flex h-full flex-col justify-between rounded-3xl bg-navy p-8 text-white transition-all hover:-translate-y-1 hover:shadow-lg"
+                  className="hover-lift flex h-full flex-col justify-between rounded-3xl bg-navy p-8 text-white"
                 >
                   <div>
                     {third.category && (

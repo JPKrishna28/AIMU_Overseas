@@ -142,7 +142,7 @@ export function CountryDetails({ content }: { content: CountryContent }) {
           {content.popularCourses.map((group) => (
             <div
               key={group.category}
-              className="flex flex-col items-center gap-4 rounded-2xl border border-light-gray p-8 text-center transition-colors hover:border-gold"
+              className="hover-lift flex flex-col items-center gap-4 rounded-2xl border border-light-gray p-8 text-center hover:border-gold"
             >
               <CourseCategoryBadge icon={group.icon} />
               <p className="font-heading text-lg font-semibold text-navy">{group.category}</p>

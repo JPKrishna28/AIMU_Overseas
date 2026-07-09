@@ -66,7 +66,7 @@ function CourseCatalogCard({ course, index }: { course: Course; index: number })
   const highDemand = course.demand === "High" || course.demand === "Very High";
 
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-xl border border-navy/10 bg-white shadow-[0_4px_20px_-2px_rgba(13,28,50,0.08)] transition-all duration-300 hover:shadow-[0_12px_30px_-4px_rgba(13,28,50,0.12)]">
+    <div className="group flex h-full flex-col overflow-hidden hover-lift rounded-xl border border-navy/10 bg-white shadow-[0_4px_20px_-2px_rgba(13,28,50,0.08)]">
       <div className="relative h-48 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

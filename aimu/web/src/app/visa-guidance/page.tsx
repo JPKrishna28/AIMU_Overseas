@@ -170,12 +170,12 @@ export default async function VisaGuidancePage() {
             {TRACKER_STAGES.map((stage, index) => (
               <Reveal key={stage.title} delay={index * 90}>
                 <div
-                  className={`h-full rounded-2xl bg-white p-8 transition-all ${
+                  className={`hover-lift h-full rounded-2xl bg-white p-8 ${
                     stage.status === "active"
                       ? "border-2 border-gold shadow-md"
                       : stage.status === "pending"
                         ? "border border-navy/10 opacity-60"
-                        : "border border-navy/10 shadow-sm hover:shadow-md"
+                        : "border border-navy/10 shadow-sm"
                   }`}
                 >
                   <div className="mb-6 flex items-start justify-between">
@@ -265,7 +265,7 @@ export default async function VisaGuidancePage() {
             <div className="grid gap-6 lg:grid-cols-2">
               {destinations.map((destination, index) => (
                 <Reveal key={destination._id} delay={index * 90}>
-                  <div className="h-full rounded-2xl border border-navy/15 bg-white p-8 shadow-sm transition-all hover:border-navy hover:shadow-lg">
+                  <div className="hover-lift h-full rounded-2xl border border-navy/15 bg-white p-8 shadow-sm hover:border-navy">
                     <div className="mb-6 flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{destination.flagEmoji ?? "🌍"}</span>

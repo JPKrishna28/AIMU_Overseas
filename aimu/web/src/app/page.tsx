@@ -3,6 +3,7 @@ import { PAGE_QUERY, SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sani
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
 import { HomeFinder } from "@/components/HomeFinder";
+import { BentoGrid } from "@/components/BentoGrid";
 
 export default async function Home() {
   const [page, siteSettings, leadFormOptions] = await Promise.all([
@@ -34,6 +35,7 @@ export default async function Home() {
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar stats={siteSettings?.stats} />
       <HomeFinder countries={countries} courses={courses} />
+      <BentoGrid />
       <PageBuilder blocks={restBlocks} />
     </>
   );

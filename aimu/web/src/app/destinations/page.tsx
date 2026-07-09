@@ -147,7 +147,7 @@ export default async function DestinationsPage() {
             {destinations.map((destination, index) =>
               destination.slug?.current ? (
                 <Reveal key={destination._id} delay={index * 90}>
-                  <div className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)] transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(10,25,47,0.15)]">
+                  <div className="hover-lift group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)]">
                     <div className="relative h-64 overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -234,7 +234,7 @@ export default async function DestinationsPage() {
                 <Reveal key={university._id} delay={index * 90}>
                   <Link
                     href={university.slug?.current ? `/universities/${university.slug.current}` : "/universities"}
-                    className="flex h-full flex-col items-center rounded-xl border border-navy/10 bg-white p-8 text-center shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)] transition-all hover:shadow-[0_20px_40px_-15px_rgba(10,25,47,0.15)]"
+                    className="hover-lift flex h-full flex-col items-center rounded-xl border border-navy/10 bg-white p-8 text-center shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)]"
                   >
                     <div className="mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-light-gray">
                       {university.logo ? (

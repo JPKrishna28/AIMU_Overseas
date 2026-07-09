@@ -103,7 +103,7 @@ function Features(block: Extract<Block, { _type: "features" }>) {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {block.items?.map((item: FeatureItem, index) => (
             <Reveal key={item._key} delay={index * 90}>
-              <div className="group h-full rounded-2xl border border-navy/10 bg-white p-10 transition-all duration-300 hover:shadow-lg">
+              <div className="hover-lift group h-full rounded-2xl border border-navy/10 bg-white p-10">
                 <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-navy/5 text-navy transition-colors duration-300 group-hover:bg-gold group-hover:text-white">
                   <span className="material-symbols-outlined text-4xl">
                     {FEATURE_ICONS[index % FEATURE_ICONS.length]}

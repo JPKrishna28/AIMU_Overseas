@@ -32,7 +32,7 @@ function JourneyStory({ story, index }: { story: Story; index: number }) {
 
       {/* Story card */}
       <div className={`w-full md:w-[45%] ${reversed ? "order-2" : "order-2 md:order-1"}`}>
-        <div className="rounded-xl border border-navy/10 bg-white/90 p-8 shadow-sm backdrop-blur transition-shadow hover:shadow-lg">
+        <div className="hover-lift rounded-xl border border-navy/10 bg-white/90 p-8 shadow-sm backdrop-blur">
           <div className="mb-4 flex items-center gap-4">
             <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-gold/30">
               {story.photo ? (

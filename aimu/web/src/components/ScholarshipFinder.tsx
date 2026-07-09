@@ -45,7 +45,7 @@ function ScholarshipCard({ scholarship, index }: { scholarship: Scholarship; ind
   const image = scholarship.destination?.heroImage;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-navy/10 bg-white shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(116,92,0,0.15)]">
+    <div className="flex h-full flex-col overflow-hidden hover-lift rounded-xl border border-navy/10 bg-white shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
       <div className="relative h-48 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

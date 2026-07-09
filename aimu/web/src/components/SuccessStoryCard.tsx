@@ -11,7 +11,7 @@ export type SuccessStory = NonNullable<NonNullable<TestimonialsBlockType["testim
 function DarkStoryCard({ story, reversed }: { story: SuccessStory; reversed: boolean }) {
   return (
     <div
-      className={`flex flex-col items-center gap-12 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all hover:bg-white/[0.08] md:p-12 ${
+      className={`hover-lift flex flex-col items-center gap-12 rounded-3xl border border-white/10 bg-white/5 p-8 hover:bg-white/[0.08] md:p-12 ${
         reversed ? "md:flex-row-reverse" : "md:flex-row"
       }`}
     >
