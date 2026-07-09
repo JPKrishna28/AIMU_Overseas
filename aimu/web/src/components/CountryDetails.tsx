@@ -95,7 +95,7 @@ export function CountryDetails({ content }: { content: CountryContent }) {
       </Section>
 
       {/* Why Choose */}
-      <Section title={`Why Choose the ${content.country === "United Kingdom" ? "UK" : content.country}?`}>
+      <Section title={`Why Choose ${content.nameWithArticle}?`}>
         <div className="grid gap-4 sm:grid-cols-2">
           {content.whyChoose.map((point) => (
             <div key={point.title} className="rounded-xl border border-light-gray p-4">
@@ -118,7 +118,7 @@ export function CountryDetails({ content }: { content: CountryContent }) {
       </Section>
 
       {/* Education System */}
-      <Section title={`${content.country === "United Kingdom" ? "UK" : content.country} Education System`}>
+      <Section title={`${content.shortName} Education System`}>
         <div className="flex flex-col gap-4">
           {content.educationSystem.map((entry) => (
             <div key={entry.level} className="rounded-xl border border-light-gray p-4">
@@ -374,7 +374,7 @@ export function CountryDetails({ content }: { content: CountryContent }) {
       </Section>
 
       {/* Student Life */}
-      <Section title={`Student Life in the ${content.country === "United Kingdom" ? "UK" : content.country}`}>
+      <Section title={`Student Life in ${content.nameWithArticle}`}>
         <ul className="flex flex-col gap-2">
           {content.studentLife.map((item, index) => (
             <li key={index} className="flex gap-2 text-navy/80">
