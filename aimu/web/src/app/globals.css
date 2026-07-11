@@ -161,6 +161,26 @@ h6 {
   transform: translateX(120%);
 }
 
+/* Reviews marquee — track holds two copies of the list, slides one list-width */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* Carousel scroll behaviour */
 .snap-carousel {
   scroll-snap-type: x mandatory;
@@ -186,6 +206,10 @@ h6 {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .marquee-track {
+    animation: none;
   }
 
   .hover-lift,

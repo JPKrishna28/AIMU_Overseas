@@ -1,24 +1,21 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { urlFor } from "@/sanity/image";
-import { countryImage } from "@/lib/stitchImages";
-import type { PAGE_QUERY_RESULT } from "../../sanity.types";
 
-type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
-type DestinationsBlockType = Extract<Blocks[number], { _type: "destinationsBlock" }>;
-type Destination = NonNullable<NonNullable<DestinationsBlockType["destinations"]>[number]>;
+export type MarqueeDestination = {
+  key: string;
+  country: string;
+  slug?: string;
+  imageUrl: string;
+  headline?: string;
+  description?: string;
+};
 
-function DestinationCard({ destination }: { destination: Destination }) {
-  const coverImage = destination.galleryImages?.[0];
-
+function DestinationCard({ destination }: { destination: MarqueeDestination }) {
   return (
     <div className="hover-lift group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={coverImage ? urlFor(coverImage).width(800).height(1000).url() : countryImage(destination.country)}
-        alt={destination.country ?? ""}
+        src={destination.imageUrl}
+        alt={destination.country}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
@@ -35,18 +32,18 @@ function DestinationCard({ destination }: { destination: Destination }) {
           <span className="text-sm font-semibold uppercase tracking-wider">{destination.country}</span>
         </div>
 
-        {destination.whyStudyPoints && destination.whyStudyPoints.length > 0 && (
+        {destination.headline && (
           <>
-            <h3 className="mb-4 font-heading text-2xl font-semibold">{destination.whyStudyPoints[0]}</h3>
-            {destination.whyStudyPoints[1] && (
-              <p className="mb-6 line-clamp-2 text-white/80">{destination.whyStudyPoints[1]}</p>
+            <h3 className="mb-4 font-heading text-2xl font-semibold">{destination.headline}</h3>
+            {destination.description && (
+              <p className="mb-6 line-clamp-2 text-white/80">{destination.description}</p>
             )}
           </>
         )}
 
-        {destination.slug?.current && (
+        {destination.slug && (
           <Link
-            href={`/destinations/${destination.slug.current}`}
+            href={`/destinations/${destination.slug}`}
             className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold transition-all group-hover:gap-4"
           >
             Learn more <span className="material-symbols-outlined">trending_flat</span>
@@ -57,66 +54,18 @@ function DestinationCard({ destination }: { destination: Destination }) {
   );
 }
 
-export function DestinationsCarousel({ destinations }: { destinations: Destination[] }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    function updateArrows() {
-      if (!track) return;
-      setCanScrollLeft(track.scrollLeft > 8);
-      setCanScrollRight(track.scrollLeft + track.clientWidth < track.scrollWidth - 8);
-    }
-
-    updateArrows();
-    track.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    return () => {
-      track.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
-    };
-  }, [destinations.length]);
-
-  function scrollByCard(direction: 1 | -1) {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.firstElementChild as HTMLElement | null;
-    const step = card ? card.offsetWidth + 24 : 360;
-    track.scrollBy({ left: direction * step, behavior: "smooth" });
-  }
-
+export function DestinationsCarousel({ destinations }: { destinations: MarqueeDestination[] }) {
   return (
-    <div className="relative">
-      <div ref={trackRef} className="snap-carousel flex gap-6 overflow-x-auto px-1 pb-4 pt-1">
-        {destinations.map((destination) => (
-          <DestinationCard key={destination._id} destination={destination} />
+    <div className="relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-32" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-32" />
+      <div className="marquee-track py-1" style={{ animationDuration: "60s" }}>
+        {[...destinations, ...destinations].map((destination, i) => (
+          <div key={i} aria-hidden={i >= destinations.length} className="px-3">
+            <DestinationCard destination={destination} />
+          </div>
         ))}
       </div>
-
-      {canScrollLeft && (
-        <button
-          type="button"
-          aria-label="Previous destinations"
-          onClick={() => scrollByCard(-1)}
-          className="absolute left-0 top-1/2 hidden h-10 w-10 -translate-x-3 -translate-y-1/2 items-center justify-center rounded-full bg-white text-navy shadow-lg transition-transform hover:scale-110 sm:flex"
-        >
-          ‹
-        </button>
-      )}
-      {canScrollRight && (
-        <button
-          type="button"
-          aria-label="Next destinations"
-          onClick={() => scrollByCard(1)}
-          className="absolute right-0 top-1/2 hidden h-10 w-10 -translate-y-1/2 translate-x-3 items-center justify-center rounded-full bg-white text-navy shadow-lg transition-transform hover:scale-110 sm:flex"
-        >
-          ›
-        </button>
-      )}
     </div>
   );
 }

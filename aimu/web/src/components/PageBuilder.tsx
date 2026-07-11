@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { PAGE_QUERY_RESULT } from "../../sanity.types";
 import { urlFor } from "@/sanity/image";
-import { DestinationsCarousel } from "@/components/DestinationsCarousel";
+import { DestinationsCarousel, type MarqueeDestination } from "@/components/DestinationsCarousel";
+import { countryContent } from "@/lib/countryContent";
+import { countryImage } from "@/lib/stitchImages";
 import { SuccessStoryCard } from "@/components/SuccessStoryCard";
 import { CourseCard } from "@/components/CourseCard";
 import { RotatingQuote } from "@/components/RotatingQuote";
@@ -313,33 +315,54 @@ function TimelineBlock(block: Extract<Block, { _type: "timelineBlock" }>) {
 }
 
 function DestinationsBlock(block: Extract<Block, { _type: "destinationsBlock" }>) {
-  const destinations = (block.destinations ?? []).filter((d): d is NonNullable<typeof d> => Boolean(d));
+  const sanityDestinations = (block.destinations ?? []).filter((d): d is NonNullable<typeof d> => Boolean(d));
+
+  const cards: MarqueeDestination[] = sanityDestinations.map((d) => ({
+    key: d._id,
+    country: d.country ?? "",
+    slug: d.slug?.current ?? undefined,
+    imageUrl: d.galleryImages?.[0]
+      ? urlFor(d.galleryImages[0]).width(800).height(1000).url()
+      : countryImage(d.country),
+    headline: d.whyStudyPoints?.[0] ?? undefined,
+    description: d.whyStudyPoints?.[1] ?? undefined,
+  }));
+
+  // Fill the marquee with the remaining static countries not already in the block
+  for (const content of new Set(Object.values(countryContent))) {
+    const alreadyShown = cards.some(
+      (c) =>
+        (c.slug && countryContent[c.slug] === content) ||
+        c.country.toLowerCase() === content.country.toLowerCase(),
+    );
+    if (alreadyShown) continue;
+    cards.push({
+      key: content.slug,
+      country: content.country,
+      slug: content.slug,
+      imageUrl: countryImage(content.country),
+      headline: content.whyStudyPoints[0],
+      description: content.whyStudyPoints[1],
+    });
+  }
 
   return (
-    <section className="bg-white py-20 sm:py-28">
+    <section className="overflow-hidden bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal>
-          <div className="mb-16 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Explore the World</span>
-              {block.heading && (
-                <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">{block.heading}</h2>
-              )}
-            </div>
-            <Link
-              href="/destinations"
-              className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-navy transition-transform hover:translate-x-1"
-            >
-              View All Destinations <span className="material-symbols-outlined">arrow_right_alt</span>
-            </Link>
+          <div className="mb-16">
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Explore the World</span>
+            {block.heading && (
+              <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">{block.heading}</h2>
+            )}
           </div>
         </Reveal>
-        {destinations.length > 0 && (
-          <Reveal delay={120}>
-            <DestinationsCarousel destinations={destinations} />
-          </Reveal>
-        )}
       </div>
+      {cards.length > 0 && (
+        <Reveal delay={120}>
+          <DestinationsCarousel destinations={cards} />
+        </Reveal>
+      )}
     </section>
   );
 }

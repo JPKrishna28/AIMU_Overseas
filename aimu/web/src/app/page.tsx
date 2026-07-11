@@ -4,6 +4,9 @@ import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
 import { HomeFinder } from "@/components/HomeFinder";
 import { BentoGrid } from "@/components/BentoGrid";
+import { GoogleReviewsMarquee } from "@/components/GoogleReviewsMarquee";
+import { JourneySteps } from "@/components/JourneySteps";
+import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
 
 export default async function Home() {
   const [page, siteSettings, leadFormOptions] = await Promise.all([
@@ -25,7 +28,10 @@ export default async function Home() {
 
   const blocks = page.pageBuilder ?? [];
   const heroBlock = blocks.find((block) => block._type === "hero");
-  const restBlocks = blocks.filter((block) => block._type !== "hero");
+  const destinationsBlock = blocks.find((block) => block._type === "destinationsBlock");
+  const restBlocks = blocks.filter(
+    (block) => block._type !== "hero" && block._type !== "destinationsBlock",
+  );
 
   const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
   const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
@@ -35,6 +41,10 @@ export default async function Home() {
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar stats={siteSettings?.stats} />
       <HomeFinder countries={countries} courses={courses} />
+      <GoogleReviewsMarquee />
+      <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
+      <UniversitiesMarquee />
+      <JourneySteps />
       <BentoGrid />
       <PageBuilder blocks={restBlocks} />
     </>
