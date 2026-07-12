@@ -7,6 +7,7 @@ import { BentoGrid } from "@/components/BentoGrid";
 import { GoogleReviewsMarquee } from "@/components/GoogleReviewsMarquee";
 import { JourneySteps } from "@/components/JourneySteps";
 import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
+import { ChairmanMessage } from "@/components/ChairmanMessage";
 
 export default async function Home() {
   const [page, siteSettings, leadFormOptions] = await Promise.all([
@@ -42,6 +43,7 @@ export default async function Home() {
       <StatsBar stats={siteSettings?.stats} />
       <HomeFinder countries={countries} courses={courses} />
       <GoogleReviewsMarquee />
+      <ChairmanMessage />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       <UniversitiesMarquee />
       <JourneySteps />

@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 
 const STEPS = [
-  { step: 1, title: "Free Profile Review" },
-  { step: 2, title: "University & Scholarship Shortlisting" },
-  { step: 3, title: "Application Submission" },
-  { step: 4, title: "Visa & Accommodation Support" },
-  { step: 5, title: "Pre-Departure & Arrival Assistance" },
+  { step: 1, title: "Free Profile Review", href: "/contact" },
+  { step: 2, title: "University & Scholarship Shortlisting", href: "/universities" },
+  { step: 3, title: "Application Submission", href: "/intake-calendar" },
+  { step: 4, title: "Visa & Accommodation Support", href: "/visa-guidance" },
+  { step: 5, title: "Pre-Departure & Arrival Assistance", href: "/student-portal" },
 ];
 
 export function JourneySteps() {
@@ -48,25 +49,35 @@ export function JourneySteps() {
                   <div className={`flex h-1/2 w-full flex-col items-center ${above ? "justify-start" : ""}`}>
                     {above && (
                       <>
-                        <p className="px-2 text-center text-base font-semibold leading-[1.5] text-white">
+                        <Link
+                          href={step.href}
+                          className="px-2 text-center text-base font-semibold leading-[1.5] text-white transition-colors hover:text-gold-bright"
+                        >
                           {step.title}
-                        </p>
+                        </Link>
                         <span aria-hidden className="mt-2 w-px flex-1 bg-white/60" />
                       </>
                     )}
                   </div>
                   {/* numbered dot */}
-                  <span className="relative z-10 flex h-10 w-10 shrink-0 -translate-y-1/2 items-center justify-center rounded-full bg-white font-heading text-sm font-bold text-navy shadow-lg ring-4 ring-white/20">
+                  <Link
+                    href={step.href}
+                    aria-label={step.title}
+                    className="relative z-10 flex h-10 w-10 shrink-0 -translate-y-1/2 items-center justify-center rounded-full bg-white font-heading text-sm font-bold text-navy shadow-lg ring-4 ring-white/20 transition-transform hover:scale-110 hover:ring-gold-bright/60"
+                  >
                     {step.step}
-                  </span>
+                  </Link>
                   {/* label below */}
                   <div className="flex h-1/2 w-full -translate-y-10 flex-col items-center">
                     {!above && (
                       <>
                         <span aria-hidden className="mb-2 w-px flex-1 bg-white/60" />
-                        <p className="px-2 text-center text-base font-semibold leading-[1.5] text-white">
+                        <Link
+                          href={step.href}
+                          className="px-2 text-center text-base font-semibold leading-[1.5] text-white transition-colors hover:text-gold-bright"
+                        >
                           {step.title}
-                        </p>
+                        </Link>
                       </>
                     )}
                   </div>
@@ -85,10 +96,14 @@ export function JourneySteps() {
                     className="absolute left-5 top-10 h-full w-px border-l-2 border-dashed border-white/30"
                   />
                 )}
-                <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white font-heading text-sm font-bold text-navy ring-4 ring-white/20">
-                  {step.step}
-                </span>
-                <p className="text-base font-semibold leading-[1.5] text-white">{step.title}</p>
+                <Link href={step.href} className="group flex items-center gap-4">
+                  <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white font-heading text-sm font-bold text-navy ring-4 ring-white/20 transition-transform group-hover:scale-110">
+                    {step.step}
+                  </span>
+                  <p className="text-base font-semibold leading-[1.5] text-white transition-colors group-hover:text-gold-bright">
+                    {step.title}
+                  </p>
+                </Link>
               </li>
             ))}
           </ol>
