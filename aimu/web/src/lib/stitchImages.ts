@@ -6,7 +6,7 @@
 
 export const STITCH_IMAGES = {
   homeHero: "/images/stitch/home-hero.jpg",
-  destinationsHero: "/images/explorestudydestinations.jpeg",
+  destinationsHero: "/images/explorestudydestinations.webp",
   visaPassport: "/images/stitch/visa-passport.jpg",
   resourcesLibrary: "/images/stitch/resources-library.jpg",
   resourcesCityscape: "/images/stitch/resources-cityscape.jpg",
@@ -22,26 +22,26 @@ export const STITCH_IMAGES = {
 } as const;
 
 const COUNTRY_IMAGES: Record<string, string> = {
-  "united kingdom": "/images/uk.jpeg",
-  uk: "/images/uk.jpeg",
-  canada: "/images/canada.jpeg",
-  australia: "/images/australia.jpeg",
-  "united states": "/images/usa.jpeg",
-  "united states of america": "/images/usa.jpeg",
-  usa: "/images/usa.jpeg",
-  france: "/images/france.jpeg",
-  germany: "/images/germany.jpeg",
-  ireland: "/images/ireland.jpeg",
+  "united kingdom": "/images/uk.webp",
+  uk: "/images/uk.webp",
+  canada: "/images/canada.webp",
+  australia: "/images/australia.webp",
+  "united states": "/images/usa.webp",
+  "united states of america": "/images/usa.webp",
+  usa: "/images/usa.webp",
+  france: "/images/france.webp",
+  germany: "/images/germany.webp",
+  ireland: "/images/ireland.webp",
 };
 
 const COUNTRY_CYCLE = [
-  "/images/uk.jpeg",
-  "/images/canada.jpeg",
-  "/images/australia.jpeg",
-  "/images/usa.jpeg",
-  "/images/france.jpeg",
-  "/images/germany.jpeg",
-  "/images/ireland.jpeg",
+  "/images/uk.webp",
+  "/images/canada.webp",
+  "/images/australia.webp",
+  "/images/usa.webp",
+  "/images/france.webp",
+  "/images/germany.webp",
+  "/images/ireland.webp",
 ];
 
 /** Country-specific campus artwork; falls back to a rotating pick so grids stay varied. */
@@ -52,17 +52,17 @@ export function countryImage(country: string | null | undefined, index = 0): str
 
 /** Hero artwork for the per-country destination pages, keyed by slug or country name. */
 const COUNTRY_PAGE_IMAGES: Record<string, string> = {
-  uk: "/images/uk_overview.jpeg",
-  "united kingdom": "/images/uk_overview.jpeg",
-  "united-kingdom": "/images/uk_overview.jpeg",
-  usa: "/images/usa_country.jpeg",
-  "united states": "/images/usa_country.jpeg",
-  "united-states": "/images/usa_country.jpeg",
-  "united states of america": "/images/usa_country.jpeg",
-  canada: "/images/canada_country.jpeg",
-  france: "/images/france_overview.jpeg",
-  germany: "/images/germany_overview.jpeg",
-  ireland: "/images/ireland_overview.jpeg",
+  uk: "/images/uk_overview.webp",
+  "united kingdom": "/images/uk_overview.webp",
+  "united-kingdom": "/images/uk_overview.webp",
+  usa: "/images/usa_country.webp",
+  "united states": "/images/usa_country.webp",
+  "united-states": "/images/usa_country.webp",
+  "united states of america": "/images/usa_country.webp",
+  canada: "/images/canada_country.webp",
+  france: "/images/france_overview.webp",
+  germany: "/images/germany_overview.webp",
+  ireland: "/images/ireland_overview.webp",
 };
 
 /** Image shown at the top of a country's destination page; null when we have none. */

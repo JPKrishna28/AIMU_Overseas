@@ -19,6 +19,7 @@ function DestinationCard({ destination }: { destination: MarqueeDestination }) {
       <img
         src={destination.imageUrl}
         alt={destination.country}
+        loading="lazy"
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />

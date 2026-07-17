@@ -92,6 +92,7 @@ function JourneyStory({ story, index }: { story: Story; index: number }) {
                 : countryImage(story.destination?.country, index)
             }
             alt={story.destination?.country ?? story.studentName ?? ""}
+            loading="lazy"
             className="h-full w-full object-cover"
           />
         </div>
