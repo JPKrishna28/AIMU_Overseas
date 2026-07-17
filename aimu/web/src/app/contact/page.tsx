@@ -2,6 +2,7 @@ import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY, DESTINATIONS_QUERY } from "@/sanity/queries";
 import { LeadForm } from "@/components/LeadForm";
 import { Reveal } from "@/components/Reveal";
+import { BlendImage } from "@/components/BlendImage";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
 
@@ -221,16 +222,15 @@ export default async function ContactPage() {
               {destinations.slice(0, 4).map((destination, index) => (
                 <Reveal key={destination._id} delay={index * 90}>
                   <div className="hover-lift group overflow-hidden rounded-xl border border-transparent bg-white shadow-sm hover:border-gold/20">
-                    <div className="relative h-48">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                    <div className="relative h-48 overflow-hidden">
+                      <BlendImage
                         src={
                           destination.heroImage
                             ? urlFor(destination.heroImage).width(600).height(400).url()
                             : countryImage(destination.country, index)
                         }
                         alt={destination.country ?? ""}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute bottom-4 left-4 text-white">

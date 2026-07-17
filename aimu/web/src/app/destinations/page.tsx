@@ -2,6 +2,7 @@ import Link from "next/link";
 import { client } from "@/sanity/client";
 import { DESTINATIONS_QUERY, UNIVERSITIES_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
+import { BlendImage } from "@/components/BlendImage";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
 import { countryContent, type CountryContent } from "@/lib/countryContent";
@@ -149,15 +150,14 @@ export default async function DestinationsPage() {
                 <Reveal key={destination._id} delay={index * 90}>
                   <div className="hover-lift group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)]">
                     <div className="relative h-64 overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <BlendImage
                         src={
                           destination.heroImage
                             ? urlFor(destination.heroImage).width(800).height(520).url()
                             : countryImage(destination.country, index)
                         }
                         alt={destination.country ?? ""}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="h-full w-full transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-widest text-navy">
                         {destination.flagEmoji} {destination.country}
