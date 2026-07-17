@@ -6,6 +6,7 @@ import { DESTINATION_QUERY } from "@/sanity/queries";
 import { PageHeader } from "@/components/PageHeader";
 import { urlFor } from "@/sanity/image";
 import { countryContent } from "@/lib/countryContent";
+import { countryPageImage } from "@/lib/stitchImages";
 import { CountryDetails } from "@/components/CountryDetails";
 
 function Section({
@@ -40,10 +41,14 @@ export default async function DestinationPage({
           subtitle={staticContent.heroSubtitle}
         />
         <div className="mx-auto max-w-4xl px-6 py-16">
-          {destination?.heroImage && (
+          {(destination?.heroImage || countryPageImage(slug)) && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={urlFor(destination.heroImage).width(1000).url()}
+              src={
+                destination?.heroImage
+                  ? urlFor(destination.heroImage).width(1000).url()
+                  : countryPageImage(slug)!
+              }
               alt={staticContent.country}
               className="mb-12 w-full rounded-2xl object-cover"
             />
@@ -64,10 +69,14 @@ export default async function DestinationPage({
       />
 
       <div className="mx-auto max-w-4xl px-6 py-16">
-        {destination.heroImage && (
+        {(destination.heroImage || countryPageImage(destination.country ?? slug)) && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={urlFor(destination.heroImage).width(1000).url()}
+            src={
+              destination.heroImage
+                ? urlFor(destination.heroImage).width(1000).url()
+                : countryPageImage(destination.country ?? slug)!
+            }
             alt={destination.country ?? ""}
             className="mb-12 w-full rounded-2xl object-cover"
           />
