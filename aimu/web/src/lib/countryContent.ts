@@ -54,6 +54,7 @@ export type CountryContent = {
   aimuServices: string[];
 };
 
+
 const uk: CountryContent = {
   slug: "uk",
   country: "United Kingdom",
@@ -64,22 +65,34 @@ const uk: CountryContent = {
   heroSubtitle:
     "Transform your future with a world-class UK education. Study at globally ranked universities, gain international work experience, and build a successful global career.",
   overview: [
-    "The United Kingdom (UK) is one of the world's most popular destinations for international students. Every year, thousands of students choose the UK for its high-quality education, globally recognised universities, and excellent career opportunities.",
-    "Studying in the UK gives you more than just a degree. It helps you develop practical skills, gain international exposure, and prepare for a successful global career. With modern campuses, experienced lecturers, and students from around the world, you'll enjoy a rich academic and cultural experience.",
-    "One of the biggest advantages of studying in the UK is the shorter duration of courses. Most bachelor's degrees take 3 years, and many master's degrees can be completed in just 1 year, helping you save both time and money.",
-    "International students can also work up to 20 hours per week during their studies (subject to visa conditions), allowing them to gain valuable work experience while supporting their living expenses. After graduation, eligible students may stay in the UK under the Graduate Route to gain international work experience and build their careers.",
-    "Whether your goal is to become an engineer, business leader, healthcare professional, IT expert, or researcher, the UK offers excellent opportunities to achieve your ambitions.",
+    "The United Kingdom is one of the most popular study destinations for international students. It is known for high-quality education, globally recognised universities and strong career opportunities.",
+    "Most bachelor's degrees take three years, while many master's degrees can be completed in one year. This helps students save time and reduce the overall cost of studying abroad.",
+    "International students can experience modern campuses, multicultural communities and practical learning opportunities.",
+    "Eligible students may also work part-time during their studies, subject to their visa conditions. After graduation, eligible students may apply for the Graduate visa to gain international work experience and build their careers.",
   ],
   quickFacts: [
     { label: "Capital", value: "London" },
-    { label: "Currency", value: "British Pound (£)" },
+    { label: "Currency", value: "Pound Sterling — GBP (£)" },
     { label: "Language", value: "English" },
-    { label: "Popular Intake", value: "September, January, May" },
-    { label: "Average Study Duration", value: "1 Year (Master's), 3 Years (Bachelor's)" },
-    { label: "Work During Studies", value: "20 Hours/Week" },
-    { label: "Post Study Work Visa", value: "Up to 2 Years" },
-    { label: "Top Student Cities", value: "London, Manchester, Birmingham, Leeds, Glasgow" },
-    { label: "Time Difference from India", value: "+4.5 to +5.5 Hours" },
+    { label: "Countries", value: "England, Scotland, Wales and Northern Ireland" },
+    { label: "Popular Intake", value: "September (main), January and selected spring intakes" },
+    {
+      label: "Average Study Duration",
+      value: "1 Year (Taught Master's), 3 Years (Bachelor's; commonly 4 in Scotland)",
+    },
+    { label: "Work During Studies", value: "Up to 20 Hours/Week during term time" },
+    {
+      label: "Graduate Visa",
+      value: "2 years (applications before 1 Jan 2027); 18 months (from 1 Jan 2027); 3 years for PhD",
+    },
+    {
+      label: "Top Student Cities",
+      value: "London, Manchester, Birmingham, Leeds, Glasgow, Edinburgh, Sheffield, Nottingham, Newcastle",
+    },
+    {
+      label: "Time Difference from India",
+      value: "4.5 Hours behind (summer), 5.5 Hours behind (winter)",
+    },
   ],
   whyChoose: [
     {
@@ -105,7 +118,8 @@ const uk: CountryContent = {
     {
       icon: "🚀",
       title: "Post-Study Work Opportunities",
-      description: "Eligible graduates can stay in the UK to gain valuable professional experience.",
+      description:
+        "Eligible graduates may apply for the Graduate visa — up to 2 years for applications before 1 January 2027 (18 months from then), and 3 years for PhD graduates.",
     },
     {
       icon: "🤝",
@@ -161,7 +175,8 @@ const uk: CountryContent = {
         "Marketing",
         "Human Resource Management",
         "Project Management",
-        "Supply Chain",
+        "Supply Chain Management",
+        "Hospitality Management",
       ],
     },
     {
@@ -249,7 +264,7 @@ const uk: CountryContent = {
     { program: "Bachelor's", fees: "£12,000–£30,000" },
     { program: "Master's", fees: "£14,000–£35,000" },
     { program: "MBA", fees: "£20,000–£60,000" },
-    { program: "Medicine", fees: "£30,000–£60,000" },
+    { program: "Medicine", fees: "£30,000–£60,000 or more" },
   ],
   costOfLiving: [
     { expense: "Accommodation", cost: "£500–£1,200" },
@@ -265,18 +280,21 @@ const uk: CountryContent = {
     { label: "London", value: "£1,400–£2,200/month" },
   ],
   studentEarnings: [
-    { label: "Average Wage", value: "£12–£16/hour" },
-    { label: "Maximum Hours", value: "20 Hours per Week" },
-    { label: "Potential Monthly Income", value: "£900–£1,300" },
-    { label: "Holiday Period", value: "Full-time work permitted subject to visa conditions" },
+    { label: "Minimum Wage — Age 21 and over", value: "£12.71/hour (from 1 April 2026)" },
+    { label: "Minimum Wage — Age 18–20", value: "£10.85/hour (from 1 April 2026)" },
+    { label: "Minimum Wage — Under 18", value: "£8.00/hour (from 1 April 2026)" },
+    { label: "Eligible Apprentice Rate", value: "£8.00/hour (from 1 April 2026)" },
+    { label: "Maximum Hours", value: "Up to 20 Hours per Week during term time" },
+    { label: "Holiday Period", value: "Full-time work permitted during official university holidays" },
   ],
   scholarships: [
     "Chevening Scholarships",
     "Commonwealth Scholarships",
     "GREAT Scholarships",
     "University Merit Scholarships",
+    "International Student Scholarships",
     "Sports Scholarships",
-    "Early Bird Discounts",
+    "Early Payment Discounts",
   ],
   admissionRequirements: [
     {
@@ -325,17 +343,15 @@ const uk: CountryContent = {
     "Education",
     "Biotechnology",
   ],
+  // Career-wide starter-to-experienced ranges published by the UK National
+  // Careers Service — not guaranteed graduate salaries.
   graduateSalaries: [
-    { industry: "Software Engineer", fresher: "£32k–£45k", experienced: "£55k–£90k" },
-    { industry: "Data Scientist", fresher: "£35k–£48k", experienced: "£60k–£100k" },
-    { industry: "AI Engineer", fresher: "£40k–£55k", experienced: "£70k–£120k" },
-    { industry: "Cyber Security", fresher: "£35k–£50k", experienced: "£65k–£110k" },
-    { industry: "Business Analyst", fresher: "£30k–£42k", experienced: "£55k–£85k" },
-    { industry: "Accountant", fresher: "£28k–£40k", experienced: "£50k–£80k" },
-    { industry: "Mechanical Engineer", fresher: "£30k–£42k", experienced: "£50k–£75k" },
-    { industry: "Civil Engineer", fresher: "£30k–£45k", experienced: "£50k–£80k" },
-    { industry: "Nurse", fresher: "£29k–£37k", experienced: "£40k–£60k" },
-    { industry: "Marketing", fresher: "£28k–£38k", experienced: "£45k–£70k" },
+    { industry: "Data Scientist", fresher: "£32,000", experienced: "£83,000" },
+    { industry: "Data Analyst / Statistician", fresher: "£28,000", experienced: "£65,000" },
+    { industry: "Artificial Intelligence Engineer", fresher: "£35,000", experienced: "£75,000" },
+    { industry: "IT Security Coordinator", fresher: "£35,000", experienced: "£76,000" },
+    { industry: "Cyber Intelligence Officer", fresher: "£25,000", experienced: "£50,000" },
+    { industry: "Forensic Computer Analyst", fresher: "£30,000", experienced: "£62,000" },
   ],
   studentLife: [
     "Universities provide modern libraries, sports facilities, clubs, societies, and career support for a balanced and rewarding experience.",
@@ -346,64 +362,52 @@ const uk: CountryContent = {
     "Accommodation options include university halls, private student housing, shared apartments, and homestays.",
   ],
   visaInformation: [
-    "Student visa requirements: a CAS (Confirmation of Acceptance for Studies) from a licensed sponsor university, valid passport, and supporting documents.",
-    "Financial evidence: show tuition fees plus living costs (28-day bank statement requirement applies).",
-    "English language requirements: IELTS, PTE, or an accepted equivalent.",
-    "Biometrics: book and attend a biometrics appointment as part of the application.",
-    "Visa processing time: typically 3–6 weeks from application to decision.",
-    "Immigration Health Surcharge (if applicable) gives access to the NHS during your stay.",
-    "Working rights: up to 20 hours per week during term, full-time during holidays (subject to visa conditions).",
-    "Dependants: may accompany students on eligible courses (where applicable).",
+    "Students usually need: a valid passport, university offer, CAS letter, financial evidence, English-language evidence, required supporting documents, and Immigration Health Surcharge payment.",
+    "Financial requirement (maintenance funds): £1,529 per month for up to nine months in London (maximum £13,761); £1,171 per month for up to nine months outside London (maximum £10,539).",
+    "English language requirements: IELTS, PTE, TOEFL, or an accepted equivalent.",
+    "Visa applications made outside the UK are commonly processed within approximately three weeks, although some applications may take longer.",
+    "Immigration Health Surcharge payment gives access to the NHS during your stay.",
+    "Working rights: up to 20 hours per week during term time, full-time during official university holidays (subject to visa conditions).",
+    "Dependants: generally allowed only for eligible postgraduate research students and certain government-sponsored students.",
+    "Graduate visa after your course: up to 2 years for eligible applications before 1 January 2027 (18 months for most from 1 January 2027); 3 years for eligible PhD graduates. It does not guarantee a job or permanent residence.",
   ],
   faqs: [
     {
       question: "Can I work while studying?",
-      answer:
-        "Yes. International students can work up to 20 hours per week during term time and full-time during holidays, subject to visa conditions.",
+      answer: "Eligible students can usually work up to 20 hours per week during term time.",
     },
     {
-      question: "Is IELTS mandatory?",
+      question: "Is IELTS compulsory?",
       answer:
-        "Most universities require IELTS or PTE, but some accept alternatives such as prior English-medium education or university-approved tests. We can help you find the right option.",
-    },
-    {
-      question: "Can I stay after graduation?",
-      answer:
-        "Yes. Eligible graduates can stay in the UK under the Graduate Route for up to 2 years to work and build their careers.",
-    },
-    {
-      question: "How much money do I need?",
-      answer:
-        "Plan for tuition fees (£12,000–£35,000/year for most programs) plus living costs of £900–£1,500/month outside London or £1,400–£2,200/month in London.",
+        "Not always. Some universities accept PTE, TOEFL, previous English-medium education or university-approved tests.",
     },
     {
       question: "Which intake is best?",
       answer:
-        "September is the main intake with the widest course choice. January and May intakes are also popular and offer flexibility if you miss September.",
+        "September normally offers the widest range of courses. January is also available at many universities.",
     },
     {
       question: "Can my spouse accompany me?",
       answer:
-        "Dependants may accompany students on eligible courses (where applicable). Rules vary by program level — contact us for guidance on your specific case.",
+        "Dependants are generally allowed only for eligible postgraduate research students and certain government-sponsored students.",
     },
     {
       question: "Are scholarships available?",
       answer:
-        "Yes. Options include Chevening, Commonwealth, and GREAT Scholarships, plus university merit scholarships, sports scholarships, and early bird discounts.",
+        "Yes. Scholarships are available from universities, the UK government and other organisations.",
     },
     {
-      question: "What are the chances of getting a job?",
+      question: "Can I stay after graduation?",
+      answer: "Eligible students may apply for the Graduate visa.",
+    },
+    {
+      question: "Can I get permanent residence?",
       answer:
-        "The UK has strong demand in AI, data science, software, cybersecurity, finance, healthcare, engineering, and more. Graduate starting salaries typically range from £28k–£55k depending on field.",
+        "Studying in the UK does not directly guarantee permanent residence. Students may later switch to another eligible visa route.",
     },
     {
-      question: "How long does the visa take?",
-      answer: "Student visa processing typically takes 3–6 weeks from application to decision.",
-    },
-    {
-      question: "Can I get permanent residency?",
-      answer:
-        "The Graduate Route and subsequent skilled work visas can lead to settlement over time. We can explain the pathway based on your goals.",
+      question: "Is a job guaranteed after graduation?",
+      answer: "No. Employment depends on skills, experience, the job market and visa eligibility.",
     },
   ],
   aimuServices: [
