@@ -6,7 +6,7 @@
 
 export const STITCH_IMAGES = {
   homeHero: "/images/stitch/home-hero.jpg",
-  destinationsHero: "/images/stitch/destinations-hero.jpg",
+  destinationsHero: "/images/explorestudydestinations.jpeg",
   visaPassport: "/images/stitch/visa-passport.jpg",
   resourcesLibrary: "/images/stitch/resources-library.jpg",
   resourcesCityscape: "/images/stitch/resources-cityscape.jpg",
@@ -22,20 +22,26 @@ export const STITCH_IMAGES = {
 } as const;
 
 const COUNTRY_IMAGES: Record<string, string> = {
-  "united kingdom": "/images/stitch/uk.jpg",
-  uk: "/images/stitch/uk.jpg",
-  canada: "/images/stitch/canada.jpg",
-  australia: "/images/stitch/australia.jpg",
-  "united states": "/images/stitch/usa.jpg",
-  "united states of america": "/images/stitch/usa.jpg",
-  usa: "/images/stitch/usa.jpg",
+  "united kingdom": "/images/uk.jpeg",
+  uk: "/images/uk.jpeg",
+  canada: "/images/canada.jpeg",
+  australia: "/images/australia.jpeg",
+  "united states": "/images/usa.jpeg",
+  "united states of america": "/images/usa.jpeg",
+  usa: "/images/usa.jpeg",
+  france: "/images/france.jpeg",
+  germany: "/images/germany.jpeg",
+  ireland: "/images/ireland.jpeg",
 };
 
 const COUNTRY_CYCLE = [
-  "/images/stitch/uk.jpg",
-  "/images/stitch/canada.jpg",
-  "/images/stitch/australia.jpg",
-  "/images/stitch/usa.jpg",
+  "/images/uk.jpeg",
+  "/images/canada.jpeg",
+  "/images/australia.jpeg",
+  "/images/usa.jpeg",
+  "/images/france.jpeg",
+  "/images/germany.jpeg",
+  "/images/ireland.jpeg",
 ];
 
 /** Country-specific campus artwork; falls back to a rotating pick so grids stay varied. */
