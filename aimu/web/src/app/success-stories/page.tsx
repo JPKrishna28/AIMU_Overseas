@@ -3,7 +3,6 @@ import { client } from "@/sanity/client";
 import { TESTIMONIALS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { VideoThumbnail } from "@/components/VideoThumbnail";
-import { BlendImage } from "@/components/BlendImage";
 import { urlFor } from "@/sanity/image";
 import { countryImage } from "@/lib/stitchImages";
 import type { TESTIMONIALS_QUERY_RESULT } from "../../../sanity.types";
@@ -85,14 +84,15 @@ function JourneyStory({ story, index }: { story: Story; index: number }) {
       {/* Campus / student image */}
       <div className={`w-full md:w-[45%] ${reversed ? "order-1" : "order-1 md:order-2"}`}>
         <div className="aspect-[4/3] transform overflow-hidden rounded-xl shadow-xl transition-transform hover:scale-[1.02]">
-          <BlendImage
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={
               campusImage
                 ? urlFor(campusImage).width(1000).height(750).url()
                 : countryImage(story.destination?.country, index)
             }
             alt={story.destination?.country ?? story.studentName ?? ""}
-            className="h-full w-full"
+            className="h-full w-full object-cover"
           />
         </div>
       </div>

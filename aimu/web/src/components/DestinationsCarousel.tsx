@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { BlendImage } from "@/components/BlendImage";
 
 export type MarqueeDestination = {
   key: string;
@@ -16,10 +15,11 @@ export type MarqueeDestination = {
 function DestinationCard({ destination }: { destination: MarqueeDestination }) {
   return (
     <div className="hover-lift group relative h-[500px] w-[min(380px,85vw)] shrink-0 overflow-hidden rounded-3xl shadow-lg">
-      <BlendImage
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={destination.imageUrl}
         alt={destination.country}
-        className="h-full w-full transition-transform duration-700 group-hover:scale-110"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
 
