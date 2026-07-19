@@ -3,6 +3,7 @@ import { client } from "@/sanity/client";
 import { POSTS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { ResourceArticles } from "@/components/ResourceArticles";
+import { ResourceLibrary } from "@/components/ResourceLibrary";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES } from "@/lib/stitchImages";
 
@@ -174,6 +175,9 @@ export default async function BlogPage() {
           </div>
         </section>
       )}
+
+      {/* Resource library */}
+      <ResourceLibrary />
 
       {/* Categories + article grid (client) */}
       {posts.length === 0 ? (

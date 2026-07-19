@@ -14,7 +14,8 @@ const FOOTER_LINKS = [
     heading: "Explore",
     links: [
       { href: "/courses", label: "Courses" },
-      { href: "/scholarships", label: "Scholarships" },
+      // Temporarily hidden — restore by uncommenting.
+      // { href: "/scholarships", label: "Scholarships" },
       { href: "/blog", label: "Resources" },
     ],
   },
@@ -25,6 +26,7 @@ const FOOTER_LINKS = [
       { href: "/intake-calendar", label: "Intake Calendar" },
       { href: "/visa-guidance", label: "Visa Guidance" },
       { href: "/student-portal", label: "Student Portal" },
+      { href: "/student-chat", label: "Student Chat" },
     ],
   },
   {
@@ -32,6 +34,7 @@ const FOOTER_LINKS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/success-stories", label: "Success Stories" },
+      { href: "/careers", label: "Careers" },
       { href: "/contact", label: "Contact" },
     ],
   },

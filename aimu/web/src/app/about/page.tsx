@@ -6,26 +6,20 @@ import { CountUp } from "@/components/CountUp";
 
 export const metadata = { title: "About — AIMU Global" };
 
-const WHY_CARDS = [
-  {
-    icon: "school",
-    title: "University Insiders",
-    description:
-      "We don't just know the requirements; we know the culture and expectations of the world's top universities.",
-  },
-  {
-    icon: "account_balance_wallet",
-    title: "Funding Champions",
-    description:
-      "We help our students secure substantial scholarships and financial aid every single intake.",
-  },
-  {
-    icon: "support_agent",
-    title: "End-to-End Support",
-    description:
-      "From the first IELTS mock test to finding your student accommodation, we are with you at every step.",
-  },
+const GUIDANCE_SERVICES = [
+  { icon: "explore", label: "Career and course guidance" },
+  { icon: "public", label: "Country and university selection" },
+  { icon: "edit_document", label: "Application preparation" },
+  { icon: "account_balance_wallet", label: "Scholarship and financial guidance" },
+  { icon: "approval_delegation", label: "Visa support" },
+  { icon: "home_pin", label: "Accommodation and travel preparation" },
+  { icon: "flight_takeoff", label: "Pre-departure guidance" },
+  { icon: "work_history", label: "Part-time job awareness" },
+  { icon: "business_center", label: "Internship and career preparation" },
+  { icon: "support_agent", label: "Post-arrival student support" },
 ];
+
+const PROMISE_POINTS = ["Aim higher.", "Choose wisely.", "Move confidently.", "Build globally."];
 
 export default async function AboutPage() {
   const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
@@ -40,45 +34,56 @@ export default async function AboutPage() {
               className="animate-hero inline-block rounded-full border border-gold/40 bg-gold/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-gold"
               style={{ "--hero-delay": "0ms" } as React.CSSProperties}
             >
-              Our Heritage
+              About AIMU Global
             </span>
             <h1
               className="animate-hero mt-6 font-heading text-4xl font-bold leading-tight text-navy sm:text-6xl"
               style={{ "--hero-delay": "120ms" } as React.CSSProperties}
             >
-              Empowering <span className="text-gold">Global Ambitions</span> with Academic
-              Excellence.
+              Built From Experience. <span className="text-gold">Created for Students.</span>
             </h1>
             <p
               className="animate-hero mt-8 max-w-2xl text-lg text-navy/60"
               style={{ "--hero-delay": "240ms" } as React.CSSProperties}
             >
-              At AIMU Global, we don&rsquo;t just process applications. We bridge the gap between
-              human potential and world-class education, guided by a legacy of trust and
-              transformative results.
+              AIMU Global was not created simply to help students apply to universities. It was
+              created from a real international student journey filled with ambition, uncertainty,
+              challenges and important lessons.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Narrative + Values bento */}
+      {/* Founder story + belief */}
       <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
         <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6">
           <Reveal className="col-span-12 lg:col-span-7">
             <div className="h-full rounded-xl border border-navy/10 bg-white p-10 shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
-              <h2 className="mb-6 font-heading text-3xl font-semibold text-navy">The AIMU Narrative</h2>
+              <h2 className="mb-6 font-heading text-3xl font-semibold text-navy">Our Story</h2>
               <div className="space-y-4 text-navy/70">
                 <p>
-                  Founded on the principle that quality education should be accessible and
-                  transparent, AIMU Global began as a boutique consultancy with a single promise:
-                  put the student&rsquo;s future first. We have since grown into a trusted partner
-                  for academic navigation across the world&rsquo;s leading study destinations.
+                  Our founder personally experienced the process of planning higher education in the
+                  USA and the UK. During this journey, he faced many of the same challenges that
+                  students continue to experience today. Choosing the right country and university
+                  was difficult. Understanding the application process was confusing. Reliable
+                  guidance was not always easy to find.
                 </p>
                 <p>
-                  Our journey is defined by the success stories of students who found their home in
-                  prestigious institutions across the UK, USA, Canada, Australia, and Europe. Every
-                  student has a unique trajectory — our role is to sharpen that focus through
-                  data-driven insights and personalized mentorship.
+                  After arriving abroad, new challenges began. Finding genuine part-time work,
+                  preparing for internships, managing studies and expenses, adapting to a new
+                  country and avoiding misleading information became part of everyday student life.
+                  There were also distractions, unreliable promises and situations where students
+                  could easily be misled or taken advantage of.
+                </p>
+                <p>
+                  Studying abroad is not only about receiving an admission letter. It is about
+                  choosing the right course, protecting the family&rsquo;s investment, adjusting to
+                  a new environment and building a successful career. Students need more than an
+                  application agent. They need someone who understands the full journey.
+                </p>
+                <p>
+                  That is why AIMU Global was created — to support students from their first
+                  question until they become confident in their education, life and career abroad.
                 </p>
               </div>
               <div className="mt-8 flex items-center gap-3 text-navy">
@@ -93,19 +98,23 @@ export default async function AboutPage() {
           <div className="col-span-12 grid grid-rows-2 gap-6 lg:col-span-5">
             <Reveal>
               <div className="flex h-full flex-col justify-center rounded-xl bg-navy p-10 text-white">
-                <h3 className="mb-2 text-lg font-semibold text-gold-bright">Transparency</h3>
+                <h3 className="mb-2 text-lg font-semibold text-gold-bright">
+                  No Student Should Have to Face This Journey Alone
+                </h3>
                 <p className="text-white/80">
-                  Absolute clarity in processes, fees, and outcomes. We demystify the complex web of
-                  international admissions.
+                  These experiences created one strong belief: every student deserves someone who
+                  understands the full journey — not just the application.
                 </p>
               </div>
             </Reveal>
             <Reveal delay={90}>
               <div className="flex h-full flex-col justify-center rounded-xl bg-gold p-10 text-navy">
-                <h3 className="mb-2 text-lg font-semibold">Excellence</h3>
+                <h3 className="mb-2 text-lg font-semibold">What AIMU Means</h3>
                 <p className="text-navy/80">
-                  A relentless pursuit of perfection in every application, visa file, and
-                  consultation session.
+                  AIMU means &ldquo;Aim You.&rdquo; Every student has a different goal, background
+                  and dream. We do not push every student toward the same university or course — we
+                  understand each student, identify their strengths and help them choose a path
+                  that can shape their future.
                 </p>
               </div>
             </Reveal>
@@ -130,6 +139,84 @@ export default async function AboutPage() {
           </div>
         </section>
       )}
+
+      {/* More than admissions */}
+      <section className="px-6 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <div className="mb-16 text-center">
+              <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
+                More Than Admissions
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-navy/60">
+                Our work does not end when a student receives an offer letter. We aim to provide
+                end-to-end guidance throughout the international education journey, so students feel
+                informed, prepared and supported at every stage.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {GUIDANCE_SERVICES.map((service, index) => (
+              <Reveal key={service.label} delay={(index % 5) * 90}>
+                <div className="hover-lift flex h-full flex-col items-center gap-3 rounded-xl border border-navy/10 bg-white p-6 text-center shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
+                  <span className="material-symbols-outlined text-3xl text-gold">{service.icon}</span>
+                  <p className="text-sm font-medium text-navy">{service.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Honest guidance */}
+      <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
+        <div className="mx-auto max-w-4xl text-center">
+          <Reveal>
+            <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
+              Honest Guidance Matters
+            </h2>
+            <div className="mt-6 space-y-4 text-lg text-navy/70">
+              <p>
+                We understand how easily students can become confused by unrealistic promises,
+                incomplete information and unreliable advice. That is why transparency is one of the
+                most important values at AIMU Global.
+              </p>
+              <p>
+                We believe students and parents deserve clear information about universities, costs,
+                visa requirements, career possibilities and the realities of living abroad. We do
+                not want students to make decisions based only on marketing. We want them to make
+                decisions based on understanding.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Mission & Vision */}
+      <section className="px-6 py-20 sm:py-28">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2">
+          <Reveal>
+            <div className="h-full rounded-xl bg-navy p-10 text-white">
+              <span className="material-symbols-outlined mb-4 text-4xl text-gold-bright">flag</span>
+              <h3 className="mb-3 font-heading text-2xl font-semibold">Our Mission</h3>
+              <p className="text-white/80">
+                To provide honest, personalised and career-focused guidance that helps students make
+                confident decisions about their education and future.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={90}>
+            <div className="h-full rounded-xl bg-gold p-10 text-navy">
+              <span className="material-symbols-outlined mb-4 text-4xl">visibility</span>
+              <h3 className="mb-3 font-heading text-2xl font-semibold">Our Vision</h3>
+              <p className="text-navy/80">
+                To build a trusted global education platform that supports students not only in
+                reaching another country, but also in building a meaningful life and career there.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Global Footprint */}
       <section className="overflow-hidden bg-light-gray/60 px-6 py-20 sm:py-28">
@@ -186,36 +273,10 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Why AIMU Global */}
+      {/* Our Promise / CTA */}
       <section className="px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <div className="mb-16 text-center">
-              <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
-                Why AIMU Global?
-              </h2>
-            </div>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {WHY_CARDS.map((card, index) => (
-              <Reveal key={card.title} delay={index * 90}>
-                <div className="hover-lift h-full rounded-xl border border-navy/10 bg-white p-10 text-center shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
-                  <span className="material-symbols-outlined mb-4 text-4xl text-gold">{card.icon}</span>
-                  <h3 className="mb-3 text-lg font-semibold text-navy">{card.title}</h3>
-                  <p className="text-navy/60">{card.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 pb-20 sm:pb-28">
         <Reveal>
-          <div
-            className="relative mx-auto max-w-7xl overflow-hidden rounded-[32px] bg-ink py-24 text-center text-white"
-          >
+          <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[32px] bg-ink py-24 text-center text-white">
             <div
               className="pointer-events-none absolute inset-0"
               style={{
@@ -224,13 +285,26 @@ export default async function AboutPage() {
                 backgroundSize: "40px 40px",
               }}
             />
-            <div className="relative z-10 mx-auto max-w-2xl px-6">
+            <div className="relative z-10 mx-auto max-w-3xl px-6">
               <h2 className="mb-6 font-heading text-3xl font-bold leading-tight sm:text-5xl">
-                Your Global Journey <span className="text-gold-bright">Starts Here.</span>
+                Our <span className="text-gold-bright">Promise</span>
               </h2>
-              <p className="mb-10 text-lg text-white/70">
-                Schedule a complimentary strategy session with one of our expert advisors today.
+              <p className="mb-8 text-lg text-white/70">
+                We do not see students as application numbers. Every student comes to us with a
+                dream, and every family places trust in that dream. Our responsibility is to guide
+                that ambition carefully, protect it with honest advice and help turn it into a
+                practical plan.
               </p>
+              <div className="mb-10 flex flex-wrap justify-center gap-3">
+                {PROMISE_POINTS.map((point) => (
+                  <span
+                    key={point}
+                    className="rounded-full border border-gold/40 bg-gold/10 px-5 py-2 text-sm font-semibold text-gold-bright"
+                  >
+                    {point}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <Link
                   href="/contact"

@@ -64,21 +64,23 @@ export function BentoGrid() {
           </Link>
         </Reveal>
 
-        {/* Scholarships */}
-        <Reveal delay={270} className="h-full">
-          <Link
-            href="/scholarships"
-            className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-gold/15 p-8"
-          >
-            <span className="material-symbols-outlined text-4xl text-gold">workspace_premium</span>
-            <div className="mt-6">
-              <h3 className="font-heading text-lg font-semibold text-navy">Scholarships</h3>
-              <p className="mt-1 text-sm text-navy/60">
-                Chevening, DAAD, Eiffel, and university awards worth up to 100% of tuition.
-              </p>
-            </div>
-          </Link>
-        </Reveal>
+        {/* Scholarships — temporarily hidden, flip to true to restore */}
+        {false && (
+          <Reveal delay={270} className="h-full">
+            <Link
+              href="/scholarships"
+              className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-gold/15 p-8"
+            >
+              <span className="material-symbols-outlined text-4xl text-gold">workspace_premium</span>
+              <div className="mt-6">
+                <h3 className="font-heading text-lg font-semibold text-navy">Scholarships</h3>
+                <p className="mt-1 text-sm text-navy/60">
+                  Chevening, DAAD, Eiffel, and university awards worth up to 100% of tuition.
+                </p>
+              </div>
+            </Link>
+          </Reveal>
+        )}
 
         {/* Intake calendar */}
         <Reveal delay={180} className="h-full">

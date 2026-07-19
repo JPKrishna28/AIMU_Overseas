@@ -8,8 +8,10 @@ const PRIMARY_LINKS = [
   { href: "/destinations", label: "Destinations" },
   { href: "/universities", label: "Universities" },
   { href: "/courses", label: "Courses" },
-  { href: "/scholarships", label: "Scholarships" },
-  { href: "/test-preparation", label: "Test Prep" },
+  // Temporarily hidden — restore by uncommenting.
+  // { href: "/scholarships", label: "Scholarships" },
+  // { href: "/test-preparation", label: "Test Prep" },
+  { href: "/careers", label: "Careers" },
 ];
 
 const TOOLS_LINKS = [
@@ -17,6 +19,7 @@ const TOOLS_LINKS = [
   { href: "/intake-calendar", label: "Intake Calendar" },
   { href: "/visa-guidance", label: "Visa Guidance" },
   { href: "/student-portal", label: "Student Portal" },
+  { href: "/student-chat", label: "Student Chat" },
 ];
 
 const SECONDARY_LINKS = [

@@ -25,6 +25,7 @@ import { postType } from './documents/postType'
 import { testimonialType } from './documents/testimonialType'
 import { siteSettingsType } from './documents/siteSettingsType'
 import { leadType } from './documents/leadType'
+import { studentQuestionType } from './documents/studentQuestionType'
 
 export const schemaTypes = [
   // documents
@@ -38,6 +39,7 @@ export const schemaTypes = [
   testimonialType,
   siteSettingsType,
   leadType,
+  studentQuestionType,
   // page builder
   pageBuilderType,
   heroType,
