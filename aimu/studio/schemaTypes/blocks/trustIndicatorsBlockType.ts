@@ -1,11 +1,11 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
-import { BadgeIcon } from '@sanity/icons'
+import { StarIcon } from '@sanity/icons'
 
 export const trustIndicatorsBlockType = defineType({
   name: 'trustIndicatorsBlock',
   title: 'Trust Indicators',
   type: 'object',
-  icon: BadgeIcon,
+  icon: StarIcon,
   fields: [
     defineField({ name: 'heading', type: 'string', initialValue: 'Trusted by Thousands of Students Worldwide' }),
     defineField({ name: 'trustLine', type: 'text', description: 'e.g. "Join thousands of students who trusted AIMU Global..."' }),
@@ -54,7 +54,7 @@ export const trustIndicatorsBlockType = defineType({
   preview: {
     select: { title: 'heading' },
     prepare({ title }) {
-      return { title: title || 'Untitled', subtitle: 'Trust Indicators', media: BadgeIcon }
+      return { title: title || 'Untitled', subtitle: 'Trust Indicators', media: StarIcon }
     },
   },
 })

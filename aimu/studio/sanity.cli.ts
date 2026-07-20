@@ -11,7 +11,9 @@ export default defineCliConfig({
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
      */
     autoUpdates: true,
+    appId: 'c3y1q77bohbp0zuo4e1f4iiq',
   },
+  studioHost: 'aimu-global',
   typegen: {
     enabled: true,
     path: '../web/src/**/*.{ts,tsx}',
