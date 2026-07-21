@@ -18,7 +18,9 @@ type UkUniversity = {
   country: string;
 };
 
-const universities = ukUniversities as UkUniversity[];
+const universities = (ukUniversities as UkUniversity[])
+  .filter((u) => u.russellGroup)
+  .slice(0, 5);
 
 function UkUniversityCard({ university }: { university: UkUniversity }) {
   return (
@@ -70,7 +72,7 @@ export function UkUniversitiesGrid() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16">
       <h2 className="font-heading text-2xl font-bold text-navy">
-        UK Partner Universities ({universities.length})
+        Top UK Partner Universities
       </h2>
       <p className="mt-2 text-sm text-navy/60">
         Entry requirements, fees, and intakes for our full network of UK partner institutions.
