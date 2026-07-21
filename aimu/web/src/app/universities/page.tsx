@@ -2,6 +2,7 @@ import { client } from "@/sanity/client";
 import { UNIVERSITIES_QUERY } from "@/sanity/queries";
 import { PageHeader } from "@/components/PageHeader";
 import { UniversitySearch } from "@/components/UniversitySearch";
+import { UkUniversitiesGrid } from "@/components/UkUniversitiesGrid";
 
 export const metadata = { title: "Universities — AIMU Global" };
 
@@ -21,6 +22,7 @@ export default async function UniversitiesPage() {
           <UniversitySearch universities={universities} />
         )}
       </section>
+      <UkUniversitiesGrid />
     </>
   );
 }
