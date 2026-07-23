@@ -5,7 +5,7 @@ import { StatsBar } from "@/components/StatsBar";
 import { HomeFinder } from "@/components/HomeFinder";
 import { BentoGrid } from "@/components/BentoGrid";
 import { GoogleReviewsMarquee } from "@/components/GoogleReviewsMarquee";
-import { JourneySteps } from "@/components/JourneySteps";
+import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 
@@ -46,7 +46,7 @@ export default async function Home() {
       <ChairmanMessage />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       <UniversitiesMarquee />
-      <JourneySteps />
+      <JourneyAnimation />
       <BentoGrid />
       <PageBuilder blocks={restBlocks} />
     </>
