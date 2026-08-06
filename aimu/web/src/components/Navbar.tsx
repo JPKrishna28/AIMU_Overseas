@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -61,8 +62,11 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-5 sm:px-8">
-        <Link href="/" className="shrink-0 font-heading text-2xl font-bold tracking-tight text-navy">
-          AIMU <span className="text-gold">Global</span>
+        <Link href="/" className="flex shrink-0 items-center gap-2">
+          <Image src="/images/logo.jpeg" alt="AIMU Global" width={40} height={40} className="h-10 w-10 rounded-lg object-cover" />
+          <span className="font-heading text-2xl font-bold tracking-tight text-navy">
+            AIMU <span className="text-gold">Global</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}

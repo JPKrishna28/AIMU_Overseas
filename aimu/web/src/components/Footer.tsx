@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
 import type { SITE_SETTINGS_QUERY_RESULT } from "../../sanity.types";
@@ -65,9 +66,12 @@ export function Footer({
 
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-6">
         <div className="lg:col-span-2">
-          <p className="font-heading text-lg font-bold">
-            AIMU <span className="text-gold">Global</span>
-          </p>
+          <div className="flex items-center gap-2">
+            <Image src="/images/logo.jpeg" alt="AIMU Global" width={36} height={36} className="h-9 w-9 rounded-lg object-cover" />
+            <p className="font-heading text-lg font-bold">
+              AIMU <span className="text-gold">Global</span>
+            </p>
+          </div>
           <p className="mt-3 max-w-sm text-sm text-white/70">
             {siteSettings?.tagline ??
               "A Global Education & Career Advisory Platform powered by trusted expertise and intelligent technology."}

@@ -8,6 +8,7 @@ import { GoogleReviewsMarquee } from "@/components/GoogleReviewsMarquee";
 import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
+import { PopularCourses } from "@/components/PopularCourses";
 
 export default async function Home() {
   const [page, siteSettings, leadFormOptions] = await Promise.all([
@@ -31,7 +32,11 @@ export default async function Home() {
   const heroBlock = blocks.find((block) => block._type === "hero");
   const destinationsBlock = blocks.find((block) => block._type === "destinationsBlock");
   const restBlocks = blocks.filter(
-    (block) => block._type !== "hero" && block._type !== "destinationsBlock",
+    (block) =>
+      block._type !== "hero" &&
+      block._type !== "destinationsBlock" &&
+      block._type !== "trustIndicatorsBlock" &&
+      block._type !== "coursesBlock",
   );
 
   const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
@@ -48,6 +53,7 @@ export default async function Home() {
       <UniversitiesMarquee />
       <JourneyAnimation />
       <BentoGrid />
+      <PopularCourses />
       <PageBuilder blocks={restBlocks} />
     </>
   );

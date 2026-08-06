@@ -22,13 +22,18 @@ type Milestone = NonNullable<Extract<Block, { _type: "timelineBlock" }>["milesto
 type LeaderMessage = NonNullable<Extract<Block, { _type: "leadershipBlock" }>["messages"]>[number];
 type CampusTour = NonNullable<Extract<Block, { _type: "campusToursBlock" }>["tours"]>[number];
 
+const HERO_HEADING = "Your Global Education Partner — From Dream to Destination";
+const HERO_TAGLINE = "From Dream to Degree. From Home to the World.";
+const HERO_SUBHEADING =
+  "Your future deserves more than just an application. We combine personalised counselling, global university partnerships, and expert visa support to help ambitious students achieve internationally recognised education and build successful careers without unnecessary complexity.";
+const HERO_CTAS = [
+  { label: "Free Counselling", url: "/contact", primary: true },
+  { label: "WhatsApp Us", url: "https://wa.me/", primary: false },
+];
+
 function Hero(block: Extract<Block, { _type: "hero" }>) {
   const quotes = (block.rotatingQuotes ?? []).filter((q): q is string => Boolean(q));
-  const ctas = [
-    { label: block.ctaLabel, url: block.ctaUrl, primary: true },
-    { label: block.secondaryCtaLabel, url: block.secondaryCtaUrl, primary: false },
-    { label: block.tertiaryCtaLabel, url: block.tertiaryCtaUrl, primary: false },
-  ].filter((cta): cta is { label: string; url: string; primary: boolean } => Boolean(cta.label && cta.url));
+  const ctas = HERO_CTAS;
 
   return (
     <section className="relative flex min-h-[600px] items-center overflow-hidden bg-navy py-24 text-white sm:min-h-[85vh] sm:py-32">
@@ -48,20 +53,24 @@ function Hero(block: Extract<Block, { _type: "hero" }>) {
               <RotatingQuote quotes={quotes} />
             </div>
           )}
+          <p
+            className="animate-hero mb-3 font-heading text-sm font-semibold uppercase tracking-[0.2em] text-gold"
+            style={{ "--hero-delay": "60ms" } as React.CSSProperties}
+          >
+            {HERO_TAGLINE}
+          </p>
           <h1
             className="animate-hero font-heading text-4xl font-bold leading-tight tracking-tight sm:text-6xl sm:leading-[1.15]"
             style={{ "--hero-delay": "120ms" } as React.CSSProperties}
           >
-            {block.heading}
+            {block.heading || HERO_HEADING}
           </h1>
-          {block.subheading && (
-            <p
-              className="animate-hero mt-6 max-w-xl text-base text-white/80 sm:text-lg sm:leading-8"
-              style={{ "--hero-delay": "240ms" } as React.CSSProperties}
-            >
-              {block.subheading}
-            </p>
-          )}
+          <p
+            className="animate-hero mt-6 max-w-xl text-base text-white/80 sm:text-lg sm:leading-8"
+            style={{ "--hero-delay": "240ms" } as React.CSSProperties}
+          >
+            {block.subheading || HERO_SUBHEADING}
+          </p>
           {ctas.length > 0 && (
             <div
               className="animate-hero mt-8 flex flex-col gap-4 sm:flex-row"
