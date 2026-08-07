@@ -3,6 +3,7 @@ import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
+import { SITE_CONTACT } from "@/lib/siteContact";
 
 export const metadata = { title: "About — AIMU Global" };
 
@@ -231,24 +232,24 @@ export default async function AboutPage() {
                 direct lines to our counsellors in key educational hubs.
               </p>
               <ul className="space-y-4">
-                {siteSettings?.address && (
-                  <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
-                    <span className="material-symbols-outlined text-gold">location_on</span>
-                    <span className="text-sm font-medium text-navy">{siteSettings.address}</span>
-                  </li>
-                )}
-                {siteSettings?.phone && (
-                  <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
-                    <span className="material-symbols-outlined text-gold">call</span>
-                    <span className="text-sm font-medium text-navy">{siteSettings.phone}</span>
-                  </li>
-                )}
-                {siteSettings?.email && (
-                  <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
-                    <span className="material-symbols-outlined text-gold">mail</span>
-                    <span className="text-sm font-medium text-navy">{siteSettings.email}</span>
-                  </li>
-                )}
+                <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
+                  <span className="material-symbols-outlined text-gold">location_on</span>
+                  <span className="text-sm font-medium text-navy">
+                    {siteSettings?.address ?? SITE_CONTACT.address}
+                  </span>
+                </li>
+                <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
+                  <span className="material-symbols-outlined text-gold">call</span>
+                  <span className="text-sm font-medium text-navy">
+                    {siteSettings?.phone ?? SITE_CONTACT.phone}
+                  </span>
+                </li>
+                <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
+                  <span className="material-symbols-outlined text-gold">mail</span>
+                  <span className="text-sm font-medium text-navy">
+                    {siteSettings?.email ?? SITE_CONTACT.email}
+                  </span>
+                </li>
               </ul>
             </div>
           </Reveal>

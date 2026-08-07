@@ -4,6 +4,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { Reveal } from "@/components/Reveal";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
+import { SITE_CONTACT } from "@/lib/siteContact";
 
 export const metadata = { title: "Contact — AIMU Global" };
 
@@ -20,6 +21,9 @@ export default async function ContactPage() {
   const whatsappHref = siteSettings?.whatsappNumber
     ? `https://wa.me/${siteSettings.whatsappNumber.replace(/[^0-9]/g, "")}`
     : null;
+  const email = siteSettings?.email ?? SITE_CONTACT.email;
+  const phone = siteSettings?.phone ?? SITE_CONTACT.phone;
+  const address = siteSettings?.address ?? SITE_CONTACT.address;
 
   return (
     <>
@@ -143,60 +147,49 @@ export default async function ContactPage() {
 
             <Reveal delay={90}>
               <div className="space-y-8 rounded-xl border border-gold/20 bg-light-gray/60 p-8">
-                {siteSettings?.email && (
-                  <div className="flex items-start gap-4">
-                    <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
-                      <span className="material-symbols-outlined text-gold">mail</span>
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">Email Us</h4>
-                      <a
-                        href={`mailto:${siteSettings.email}`}
-                        className="mt-1 block break-all text-lg font-semibold text-navy hover:text-gold"
-                      >
-                        {siteSettings.email}
-                      </a>
-                      <p className="mt-1 text-xs text-navy/50">Response within 12 business hours</p>
-                    </div>
+                <div className="flex items-start gap-4">
+                  <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
+                    <span className="material-symbols-outlined text-gold">mail</span>
                   </div>
-                )}
-                {siteSettings?.phone && (
-                  <div className="flex items-start gap-4">
-                    <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
-                      <span className="material-symbols-outlined text-gold">call</span>
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
-                        Global Hotline
-                      </h4>
-                      <a
-                        href={`tel:${siteSettings.phone.replace(/\s/g, "")}`}
-                        className="mt-1 block text-lg font-semibold text-navy hover:text-gold"
-                      >
-                        {siteSettings.phone}
-                      </a>
-                      <p className="mt-1 text-xs text-navy/50">Mon–Sat, business hours</p>
-                    </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">Email Us</h4>
+                    <a
+                      href={`mailto:${email}`}
+                      className="mt-1 block break-all text-lg font-semibold text-navy hover:text-gold"
+                    >
+                      {email}
+                    </a>
+                    <p className="mt-1 text-xs text-navy/50">Response within 12 business hours</p>
                   </div>
-                )}
-                {siteSettings?.address && (
-                  <div className="flex items-start gap-4">
-                    <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
-                      <span className="material-symbols-outlined text-gold">location_on</span>
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
-                        Visit Us
-                      </h4>
-                      <p className="mt-1 text-lg font-semibold text-navy">{siteSettings.address}</p>
-                    </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
+                    <span className="material-symbols-outlined text-gold">call</span>
                   </div>
-                )}
-                {!siteSettings?.email && !siteSettings?.phone && !siteSettings?.address && (
-                  <p className="text-sm text-navy/60">
-                    Add contact details in Site Settings within the Sanity Studio.
-                  </p>
-                )}
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
+                      Global Hotline
+                    </h4>
+                    <a
+                      href={`tel:${phone.replace(/\s/g, "")}`}
+                      className="mt-1 block text-lg font-semibold text-navy hover:text-gold"
+                    >
+                      {phone}
+                    </a>
+                    <p className="mt-1 text-xs text-navy/50">Mon–Sat, business hours</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="rounded-lg border border-gold/20 bg-white p-3 shadow-sm">
+                    <span className="material-symbols-outlined text-gold">location_on</span>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
+                      Visit Us
+                    </h4>
+                    <p className="mt-1 text-lg font-semibold text-navy">{address}</p>
+                  </div>
+                </div>
               </div>
             </Reveal>
           </div>

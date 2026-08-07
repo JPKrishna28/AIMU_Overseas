@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
 import { FloatingActions } from "@/components/FloatingActions";
+import { SITE_CONTACT } from "@/lib/siteContact";
 import "./globals.css";
 
 const sansation = Sansation({
@@ -37,6 +38,13 @@ export default async function RootLayout({
   const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
   const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
 
+  const contactSettings = {
+    ...siteSettings,
+    email: siteSettings?.email ?? SITE_CONTACT.email,
+    phone: siteSettings?.phone ?? SITE_CONTACT.phone,
+    address: siteSettings?.address ?? SITE_CONTACT.address,
+  };
+
   return (
     <html lang="en" className={`${sansation.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-navy">
@@ -47,9 +55,9 @@ export default async function RootLayout({
         />
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer siteSettings={siteSettings} countries={countries} courses={courses} />
+        <Footer siteSettings={contactSettings} countries={countries} courses={courses} />
         <FloatingActions
-          phone={siteSettings?.phone}
+          phone={contactSettings.phone}
           whatsappNumber={siteSettings?.whatsappNumber}
           countries={countries}
           courses={courses}

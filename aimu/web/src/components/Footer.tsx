@@ -46,7 +46,7 @@ export function Footer({
   countries = [],
   courses = [],
 }: {
-  siteSettings: SITE_SETTINGS_QUERY_RESULT;
+  siteSettings: SITE_SETTINGS_QUERY_RESULT | (Partial<NonNullable<SITE_SETTINGS_QUERY_RESULT>> & Record<string, unknown>);
   countries?: string[];
   courses?: string[];
 }) {
