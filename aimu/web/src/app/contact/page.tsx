@@ -18,9 +18,7 @@ export default async function ContactPage() {
   const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
   const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
   const collageImages = destinations.map((d) => d.heroImage).filter(Boolean).slice(0, 2);
-  const whatsappHref = siteSettings?.whatsappNumber
-    ? `https://wa.me/${siteSettings.whatsappNumber.replace(/[^0-9]/g, "")}`
-    : null;
+  const whatsappHref = `https://wa.me/${SITE_CONTACT.phone.replace(/[^0-9]/g, "")}`;
   const email = SITE_CONTACT.email;
   const phone = SITE_CONTACT.phone;
   const address = SITE_CONTACT.address;
@@ -121,23 +119,14 @@ export default async function ContactPage() {
                     Can&rsquo;t wait for a scheduled session? Message our counsellors directly right
                     now.
                   </p>
-                  {whatsappHref ? (
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block rounded-full bg-gold px-8 py-3 text-sm font-semibold text-navy transition-all hover:brightness-110"
-                    >
-                      Talk to an Expert
-                    </a>
-                  ) : (
-                    <a
-                      href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="inline-block rounded-full bg-gold px-8 py-3 text-sm font-semibold text-navy transition-all hover:brightness-110"
-                    >
-                      Talk to an Expert
-                    </a>
-                  )}
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block rounded-full bg-gold px-8 py-3 text-sm font-semibold text-navy transition-all hover:brightness-110"
+                  >
+                    Talk to an Expert
+                  </a>
                 </div>
                 <div className="absolute -bottom-12 -right-12 h-48 w-48 rounded-full bg-gold opacity-10 blur-3xl transition-opacity group-hover:opacity-20" />
               </div>

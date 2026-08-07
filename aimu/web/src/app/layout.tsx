@@ -58,7 +58,7 @@ export default async function RootLayout({
         <Footer siteSettings={contactSettings} countries={countries} courses={courses} />
         <FloatingActions
           phone={contactSettings.phone}
-          whatsappNumber={siteSettings?.whatsappNumber}
+          whatsappNumber={SITE_CONTACT.phone}
           countries={countries}
           courses={courses}
         />
