@@ -40,9 +40,9 @@ export default async function RootLayout({
 
   const contactSettings = {
     ...siteSettings,
-    email: siteSettings?.email ?? SITE_CONTACT.email,
-    phone: siteSettings?.phone ?? SITE_CONTACT.phone,
-    address: siteSettings?.address ?? SITE_CONTACT.address,
+    email: SITE_CONTACT.email,
+    phone: SITE_CONTACT.phone,
+    address: SITE_CONTACT.address,
   };
 
   return (

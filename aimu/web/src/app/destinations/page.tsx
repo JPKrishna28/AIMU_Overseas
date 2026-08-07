@@ -5,6 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { urlFor } from "@/sanity/image";
 import { STITCH_IMAGES, countryImage } from "@/lib/stitchImages";
 import { countryContent, type CountryContent } from "@/lib/countryContent";
+import { SITE_CONTACT } from "@/lib/siteContact";
 
 export const metadata = { title: "Study Destinations — AIMU Global" };
 
@@ -348,14 +349,12 @@ export default async function DestinationsPage() {
                 >
                   Book Free Consultation
                 </Link>
-                {siteSettings?.phone && (
-                  <a
-                    href={`tel:${siteSettings.phone.replace(/\s/g, "")}`}
-                    className="rounded-full border border-white/30 px-10 py-5 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white/10"
-                  >
-                    Call {siteSettings.phone}
-                  </a>
-                )}
+                <a
+                  href={`tel:${SITE_CONTACT.phone.replace(/\s/g, "")}`}
+                  className="rounded-full border border-white/30 px-10 py-5 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white/10"
+                >
+                  Call {SITE_CONTACT.phone}
+                </a>
               </div>
             </div>
           </div>

@@ -235,19 +235,19 @@ export default async function AboutPage() {
                 <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
                   <span className="material-symbols-outlined text-gold">location_on</span>
                   <span className="text-sm font-medium text-navy">
-                    {siteSettings?.address ?? SITE_CONTACT.address}
+                    {SITE_CONTACT.address}
                   </span>
                 </li>
                 <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
                   <span className="material-symbols-outlined text-gold">call</span>
                   <span className="text-sm font-medium text-navy">
-                    {siteSettings?.phone ?? SITE_CONTACT.phone}
+                    {SITE_CONTACT.phone}
                   </span>
                 </li>
                 <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
                   <span className="material-symbols-outlined text-gold">mail</span>
                   <span className="text-sm font-medium text-navy">
-                    {siteSettings?.email ?? SITE_CONTACT.email}
+                    {SITE_CONTACT.email}
                   </span>
                 </li>
               </ul>
