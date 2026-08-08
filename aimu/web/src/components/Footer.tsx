@@ -66,11 +66,14 @@ export function Footer({
 
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-6">
         <div className="lg:col-span-2">
-          <div className="flex items-center gap-2">
-            <Image src="/images/logo.jpeg" alt="AIMU Global" width={36} height={36} className="h-9 w-9 rounded-lg object-cover" />
-            <p className="font-heading text-lg font-bold">
-              AIMU <span className="text-gold">Global</span>
-            </p>
+          <div className="flex items-center">
+            <Image
+              src="/images/logo-light.svg"
+              alt="AIMU Global - Dream Beyond Borders"
+              width={808}
+              height={473}
+              className="h-auto w-[150px] sm:w-[170px]"
+            />
           </div>
           <p className="mt-3 max-w-sm text-sm text-white/70">
             {siteSettings?.tagline ??
