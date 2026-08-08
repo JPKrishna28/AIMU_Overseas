@@ -39,9 +39,15 @@ function Hero(block: Extract<Block, { _type: "hero" }>) {
     <section className="relative flex min-h-[600px] items-center overflow-hidden bg-navy py-24 text-white sm:min-h-[85vh] sm:py-32">
       <div className="absolute inset-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* LCP element — load eagerly at high priority rather than lazily. */}
         <img
           src={block.image ? urlFor(block.image).width(1920).url() : STITCH_IMAGES.homeHero}
           alt=""
+          width={2760}
+          height={1504}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="h-full w-full scale-105 object-cover"
         />
         <div className="hero-gradient absolute inset-0" />
