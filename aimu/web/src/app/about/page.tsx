@@ -156,31 +156,27 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* More than admissions — typographic list, no tiles */}
+      {/* More than admissions */}
       <section className="px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <Reveal>
-            <div className="max-w-2xl">
-              <Eyebrow>What We Do</Eyebrow>
-              <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
+            <div className="mb-16 text-center">
+              <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
                 More Than Admissions
               </h2>
-              <p className="mt-4 text-navy/60 leading-[1.8]">
+              <p className="mx-auto mt-4 max-w-2xl text-navy/60">
                 Our work does not end when a student receives an offer letter. We aim to provide
                 end-to-end guidance throughout the international education journey, so students feel
                 informed, prepared and supported at every stage.
               </p>
             </div>
           </Reveal>
-
-          <div className="mt-14 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {GUIDANCE_SERVICES.map((service, index) => (
-              <Reveal key={service.label} delay={(index % 3) * 80}>
-                <div className="group flex items-center gap-4 border-b border-navy/10 py-5">
-                  <span className="material-symbols-outlined text-[22px] text-gold transition-transform duration-300 group-hover:scale-110">
-                    {service.icon}
-                  </span>
-                  <p className="text-[15px] font-medium text-navy">{service.label}</p>
+              <Reveal key={service.label} delay={(index % 5) * 90}>
+                <div className="hover-lift flex h-full flex-col items-center gap-3 rounded-xl border border-navy/10 bg-white p-6 text-center shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
+                  <span className="material-symbols-outlined text-3xl text-gold">{service.icon}</span>
+                  <p className="text-sm font-medium text-navy">{service.label}</p>
                 </div>
               </Reveal>
             ))}
