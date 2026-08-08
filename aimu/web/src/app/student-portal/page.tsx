@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
+import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Student Portal — AIMU Global" };
 
@@ -18,7 +19,12 @@ export default function StudentPortalPage() {
         title="Student Portal"
         subtitle="Your personal dashboard for tracking applications, documents, and counsellor support."
       />
-      <section className="mx-auto max-w-4xl px-6 py-16">
+      <AuthWall
+        next="/student-portal"
+        title="Sign in to your student portal"
+        subtitle="Create a free account to track your applications and talk to your counsellor."
+      >
+        <section className="mx-auto max-w-4xl px-6 py-16">
         <div className="mb-10 rounded-2xl bg-gold/10 p-6 text-center">
           <p className="font-heading text-lg font-semibold text-navy">Coming Soon</p>
           <p className="mt-2 text-sm text-navy/70">
@@ -45,7 +51,8 @@ export default function StudentPortalPage() {
             Book a Free Consultation
           </Link>
         </div>
-      </section>
+        </section>
+      </AuthWall>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { client } from "@/sanity/client";
 import { PageHeader } from "@/components/PageHeader";
 import { StudentChatBoard, type StudentQuestion } from "@/components/StudentChatBoard";
+import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Student Chat — AIMU Global" };
 export const dynamic = "force-dynamic";
@@ -26,9 +27,15 @@ export default async function StudentChatPage() {
         title="Student Chat"
         subtitle="Ask anything about CAS, visas, part-time work, or life abroad. Fellow students and the AIMU team answer. Threads disappear after 30 days."
       />
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <StudentChatBoard initialQuestions={questions} />
-      </div>
+      <AuthWall
+        next="/student-chat"
+        title="Sign in to join the conversation"
+        subtitle="Create a free account to ask questions and read answers from students and the AIMU team."
+      >
+        <div className="mx-auto max-w-4xl px-6 py-16">
+          <StudentChatBoard initialQuestions={questions} />
+        </div>
+      </AuthWall>
     </>
   );
 }

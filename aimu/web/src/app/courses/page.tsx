@@ -2,6 +2,7 @@ import Link from "next/link";
 import { client } from "@/sanity/client";
 import { COURSES_QUERY } from "@/sanity/queries";
 import { CourseFinder } from "@/components/CourseFinder";
+import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Find Your Ideal Program — AIMU Global" };
 
@@ -39,13 +40,19 @@ export default async function CoursesPage() {
       </section>
 
       {/* Catalog */}
-      <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
-        {courses.length === 0 ? (
-          <p className="text-center text-navy/60">No courses yet. Add some in the Sanity Studio.</p>
-        ) : (
-          <CourseFinder courses={courses} />
-        )}
-      </section>
+      <AuthWall
+        next="/courses"
+        title="Sign in to browse all programs"
+        subtitle="Create a free account to explore our full course catalogue and filter by country, level and field."
+      >
+        <section className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
+          {courses.length === 0 ? (
+            <p className="text-center text-navy/60">No courses yet. Add some in the Sanity Studio.</p>
+          ) : (
+            <CourseFinder courses={courses} />
+          )}
+        </section>
+      </AuthWall>
 
       {/* CTA */}
       <section className="bg-light-gray/60 px-6 py-20 sm:py-28">

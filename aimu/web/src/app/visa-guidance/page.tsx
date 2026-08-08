@@ -2,6 +2,7 @@ import Link from "next/link";
 import { client } from "@/sanity/client";
 import { VISA_GUIDANCE_INDEX_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
+import { AuthWall } from "@/components/AuthWall";
 import { STITCH_IMAGES } from "@/lib/stitchImages";
 
 export const metadata = { title: "Complete Visa Guidance — AIMU Global" };
@@ -142,7 +143,12 @@ export default async function VisaGuidancePage() {
       </section>
 
       {/* Visa Success Tracker */}
-      <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
+      <AuthWall
+        next="/visa-guidance"
+        title="Sign in for full visa guidance"
+        subtitle="Create a free account to unlock document checklists, timelines and interview prep."
+      >
+        <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -351,6 +357,7 @@ export default async function VisaGuidancePage() {
           </div>
         </Reveal>
       </section>
+      </AuthWall>
     </>
   );
 }

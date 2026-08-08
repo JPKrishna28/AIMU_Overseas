@@ -1,6 +1,7 @@
 import { client } from "@/sanity/client";
 import { INTAKE_CALENDAR_QUERY } from "@/sanity/queries";
 import { PageHeader } from "@/components/PageHeader";
+import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Intake Calendar & Application Deadlines — AIMU Global" };
 
@@ -13,7 +14,12 @@ export default async function IntakeCalendarPage() {
         title="Intake Calendar & Application Deadlines"
         subtitle="Application opening and closing windows for major study destinations."
       />
-      <section className="mx-auto max-w-5xl px-6 py-16">
+      <AuthWall
+        next="/intake-calendar"
+        title="Sign in to view intake dates"
+        subtitle="Create a free account to track application windows and deadlines for every destination."
+      >
+        <section className="mx-auto max-w-5xl px-6 py-16">
         {destinations.length === 0 ? (
           <p className="text-center text-navy/60">No intake data yet. Add it to destinations in the Sanity Studio.</p>
         ) : (
@@ -57,7 +63,8 @@ export default async function IntakeCalendarPage() {
             ))}
           </div>
         )}
-      </section>
+        </section>
+      </AuthWall>
     </>
   );
 }

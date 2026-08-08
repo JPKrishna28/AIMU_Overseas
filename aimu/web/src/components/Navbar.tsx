@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AuthNav } from "@/components/AuthNav";
 
 const PRIMARY_LINKS = [
   { href: "/destinations", label: "Destinations" },
@@ -108,7 +109,11 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <div className="hidden lg:flex">
+            <AuthNav />
+          </div>
+
           {/* Hamburger */}
           <button
             type="button"
@@ -182,6 +187,10 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+
+          <div className="mt-3 border-t border-light-gray px-3 pt-4">
+            <AuthNav onNavigate={() => setMobileOpen(false)} />
+          </div>
         </nav>
       </div>
     </header>
