@@ -5,7 +5,7 @@
  */
 
 export const STITCH_IMAGES = {
-  homeHero: "/images/stitch/home-hero.jpg",
+  homeHero: "/images/stitch/home-hero.png",
   destinationsHero: "/images/explorestudydestinations.webp",
   visaPassport: "/images/stitch/visa-passport.jpg",
   resourcesLibrary: "/images/stitch/resources-library.jpg",
