@@ -22,6 +22,13 @@ const GUIDANCE_SERVICES = [
 
 const PROMISE_POINTS = ["Aim higher.", "Choose wisely.", "Move confidently.", "Build globally."];
 
+/* Small reusable eyebrow — matches the label style used across the site. */
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">{children}</span>
+  );
+}
+
 export default async function AboutPage() {
   const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
 
@@ -55,14 +62,29 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Founder story + belief */}
-      <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
-        <div className="mx-auto grid max-w-7xl grid-cols-12 gap-6">
-          <Reveal className="col-span-12 lg:col-span-7">
-            <div className="h-full rounded-xl border border-navy/10 bg-white p-10 shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
-              <h2 className="mb-6 font-heading text-3xl font-semibold text-navy">Our Story</h2>
-              <div className="space-y-4 text-navy/70">
-                <p>
+      {/* Our Story — editorial two-column: sticky heading left, prose right */}
+      <section className="border-t border-navy/10 px-6 py-20 sm:py-28">
+        <div className="mx-auto grid max-w-7xl gap-x-16 gap-y-10 lg:grid-cols-12">
+          <Reveal className="lg:col-span-4">
+            <div className="lg:sticky lg:top-32">
+              <Eyebrow>Our Story</Eyebrow>
+              <h2 className="mt-4 font-heading text-3xl font-semibold leading-tight text-navy sm:text-4xl">
+                A journey we have<br className="hidden sm:block" /> walked ourselves
+              </h2>
+              <div className="mt-6 flex items-center gap-3 text-navy">
+                <span className="material-symbols-outlined text-gold">verified</span>
+                <span className="text-sm font-semibold">
+                  {siteSettings?.tagline ?? "A Global Education & Career Advisory Platform"}
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Gold rule replaces the old card border as the only structural accent */}
+          <Reveal delay={120} className="lg:col-span-8">
+            <div className="border-l-2 border-gold/50 pl-6 sm:pl-10">
+              <div className="space-y-6 text-navy/70 leading-[1.8]">
+                <p className="text-lg text-navy/80">
                   Our founder personally experienced the process of planning higher education in the
                   USA and the UK. During this journey, he faced many of the same challenges that
                   students continue to experience today. Choosing the right country and university
@@ -87,39 +109,32 @@ export default async function AboutPage() {
                   question until they become confident in their education, life and career abroad.
                 </p>
               </div>
-              <div className="mt-8 flex items-center gap-3 text-navy">
-                <span className="material-symbols-outlined text-gold">verified</span>
-                <span className="text-sm font-semibold">
-                  {siteSettings?.tagline ?? "A Global Education & Career Advisory Platform"}
-                </span>
+
+              {/* Belief + meaning: typographic, separated by a rule rather than boxed */}
+              <div className="mt-12 grid gap-10 border-t border-navy/10 pt-10 sm:grid-cols-2">
+                <div>
+                  <h3 className="font-heading text-lg font-semibold text-navy">
+                    No Student Should Have to Face This Journey Alone
+                  </h3>
+                  <p className="mt-3 text-navy/70 leading-[1.8]">
+                    These experiences created one strong belief: every student deserves someone who
+                    understands the full journey — not just the application.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-heading text-lg font-semibold text-navy">
+                    What AIMU Means
+                  </h3>
+                  <p className="mt-3 text-navy/70 leading-[1.8]">
+                    AIMU means &ldquo;Aim You.&rdquo; Every student has a different goal, background
+                    and dream. We do not push every student toward the same university or course — we
+                    understand each student, identify their strengths and help them choose a path
+                    that can shape their future.
+                  </p>
+                </div>
               </div>
             </div>
           </Reveal>
-
-          <div className="col-span-12 grid grid-rows-2 gap-6 lg:col-span-5">
-            <Reveal>
-              <div className="flex h-full flex-col justify-center rounded-xl bg-navy p-10 text-white">
-                <h3 className="mb-2 text-lg font-semibold text-gold-bright">
-                  No Student Should Have to Face This Journey Alone
-                </h3>
-                <p className="text-white/80">
-                  These experiences created one strong belief: every student deserves someone who
-                  understands the full journey — not just the application.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div className="flex h-full flex-col justify-center rounded-xl bg-gold p-10 text-navy">
-                <h3 className="mb-2 text-lg font-semibold">What AIMU Means</h3>
-                <p className="text-navy/80">
-                  AIMU means &ldquo;Aim You.&rdquo; Every student has a different goal, background
-                  and dream. We do not push every student toward the same university or course — we
-                  understand each student, identify their strengths and help them choose a path
-                  that can shape their future.
-                </p>
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
 
@@ -141,27 +156,31 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* More than admissions */}
+      {/* More than admissions — typographic list, no tiles */}
       <section className="px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <Reveal>
-            <div className="mb-16 text-center">
-              <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
+            <div className="max-w-2xl">
+              <Eyebrow>What We Do</Eyebrow>
+              <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
                 More Than Admissions
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-navy/60">
+              <p className="mt-4 text-navy/60 leading-[1.8]">
                 Our work does not end when a student receives an offer letter. We aim to provide
                 end-to-end guidance throughout the international education journey, so students feel
                 informed, prepared and supported at every stage.
               </p>
             </div>
           </Reveal>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+
+          <div className="mt-14 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
             {GUIDANCE_SERVICES.map((service, index) => (
-              <Reveal key={service.label} delay={(index % 5) * 90}>
-                <div className="hover-lift flex h-full flex-col items-center gap-3 rounded-xl border border-navy/10 bg-white p-6 text-center shadow-[0_10px_30px_-10px_rgba(13,28,50,0.1)]">
-                  <span className="material-symbols-outlined text-3xl text-gold">{service.icon}</span>
-                  <p className="text-sm font-medium text-navy">{service.label}</p>
+              <Reveal key={service.label} delay={(index % 3) * 80}>
+                <div className="group flex items-center gap-4 border-b border-navy/10 py-5">
+                  <span className="material-symbols-outlined text-[22px] text-gold transition-transform duration-300 group-hover:scale-110">
+                    {service.icon}
+                  </span>
+                  <p className="text-[15px] font-medium text-navy">{service.label}</p>
                 </div>
               </Reveal>
             ))}
@@ -171,12 +190,17 @@ export default async function AboutPage() {
 
       {/* Honest guidance */}
       <section className="bg-light-gray/60 px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
+            <Eyebrow>Our Values</Eyebrow>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
               Honest Guidance Matters
             </h2>
-            <div className="mt-6 space-y-4 text-lg text-navy/70">
+            <span
+              aria-hidden
+              className="mx-auto mt-6 block h-px w-16 bg-gold"
+            />
+            <div className="mt-8 space-y-5 text-lg text-navy/70 leading-[1.8]">
               <p>
                 We understand how easily students can become confused by unrealistic promises,
                 incomplete information and unreliable advice. That is why transparency is one of the
@@ -193,24 +217,24 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Mission & Vision */}
+      {/* Mission & Vision — split by a rule instead of two coloured cards */}
       <section className="px-6 py-20 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2 md:gap-0">
           <Reveal>
-            <div className="h-full rounded-xl bg-navy p-10 text-white">
-              <span className="material-symbols-outlined mb-4 text-4xl text-gold-bright">flag</span>
-              <h3 className="mb-3 font-heading text-2xl font-semibold">Our Mission</h3>
-              <p className="text-white/80">
+            <div className="md:pr-14">
+              <span className="material-symbols-outlined text-3xl text-gold">flag</span>
+              <h3 className="mt-4 font-heading text-2xl font-semibold text-navy">Our Mission</h3>
+              <p className="mt-3 text-navy/70 leading-[1.8]">
                 To provide honest, personalised and career-focused guidance that helps students make
                 confident decisions about their education and future.
               </p>
             </div>
           </Reveal>
-          <Reveal delay={90}>
-            <div className="h-full rounded-xl bg-gold p-10 text-navy">
-              <span className="material-symbols-outlined mb-4 text-4xl">visibility</span>
-              <h3 className="mb-3 font-heading text-2xl font-semibold">Our Vision</h3>
-              <p className="text-navy/80">
+          <Reveal delay={120}>
+            <div className="border-navy/10 md:border-l md:pl-14">
+              <span className="material-symbols-outlined text-3xl text-gold">visibility</span>
+              <h3 className="mt-4 font-heading text-2xl font-semibold text-navy">Our Vision</h3>
+              <p className="mt-3 text-navy/70 leading-[1.8]">
                 To build a trusted global education platform that supports students not only in
                 reaching another country, but also in building a meaningful life and career there.
               </p>
@@ -224,10 +248,11 @@ export default async function AboutPage() {
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 lg:flex-row">
           <Reveal className="lg:w-1/3">
             <div>
-              <h2 className="mb-6 font-heading text-3xl font-semibold text-navy sm:text-4xl">
+              <Eyebrow>Where We Are</Eyebrow>
+              <h2 className="mb-6 mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
                 Global Footprint
               </h2>
-              <p className="mb-8 text-navy/60">
+              <p className="mb-8 text-navy/60 leading-[1.8]">
                 Our team serves as a beacon for aspiring students, providing on-ground support and
                 direct lines to our counsellors in key educational hubs.
               </p>

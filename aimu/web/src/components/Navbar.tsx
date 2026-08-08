@@ -61,7 +61,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-3 sm:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-4 sm:px-8">
         <Link href="/" aria-label="AIMU Global home" className="flex shrink-0 items-center text-navy">
           <Image
             src="/images/logo-mark.svg"
@@ -70,7 +70,7 @@ export function Navbar() {
             height={439}
             priority
             /* width drives the size; height follows the 808:439 ratio */
-            className="h-auto w-[130px] sm:w-[150px] md:w-[165px] lg:w-[175px]"
+            className="h-auto w-[105px] sm:w-[125px] md:w-[135px] lg:w-[145px]"
           />
         </Link>
 
