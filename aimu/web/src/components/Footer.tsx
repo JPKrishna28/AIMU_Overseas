@@ -70,8 +70,8 @@ export function Footer({
             <Image
               src="/images/logo-light.svg"
               alt="AIMU Global - Dream Beyond Borders"
-              width={808}
-              height={473}
+              width={1000}
+              height={578}
               className="h-auto w-[150px] sm:w-[170px]"
             />
           </div>
