@@ -5,10 +5,12 @@ import type { SITE_SETTINGS_QUERY_RESULT } from "../../sanity.types";
 type Stats = NonNullable<SITE_SETTINGS_QUERY_RESULT>["stats"];
 type Stat = NonNullable<Stats>[number];
 
+/* Fallback only — the live site renders siteSettings.stats from Sanity when present. */
 const DEFAULT_STATS: Stat[] = [
   { _type: "stat", _key: "universities", value: "50+", label: "Partnered Universities" },
   { _type: "stat", _key: "countries", value: "5+", label: "Countries" },
   { _type: "stat", _key: "courses", value: "500+", label: "Courses" },
+  { _type: "stat", _key: "satisfaction", value: "95%", label: "Client Satisfaction" },
   { _type: "stat", _key: "support", value: "24/7", label: "Support" },
   { _type: "stat", _key: "guidance", value: "Personalized", label: "Guidance" },
   { _type: "stat", _key: "process", value: "Transparent", label: "Process" },
