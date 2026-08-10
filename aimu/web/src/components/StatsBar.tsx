@@ -1,11 +1,12 @@
 import { CountUp } from "@/components/CountUp";
 import { Reveal } from "@/components/Reveal";
 
-type Stat = { key: string; value: string; label: string };
+export type Stat = { key: string; value: string; label: string };
 
 /* Stats are owned by the code and versioned in git — deliberately not read from Sanity,
-   so the approved numbers can't be changed out from under the site by CMS content. */
-const STATS: Stat[] = [
+   so the approved numbers can't be changed out from under the site by CMS content.
+   Shared with the About page so both surfaces always show the same figures. */
+export const STATS: Stat[] = [
   { key: "universities", value: "50+", label: "Partnered Universities" },
   { key: "countries", value: "5+", label: "Countries" },
   { key: "courses", value: "500+", label: "Courses" },

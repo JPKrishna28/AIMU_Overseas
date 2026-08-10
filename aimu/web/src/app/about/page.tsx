@@ -3,6 +3,7 @@ import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
+import { STATS } from "@/components/StatsBar";
 import { SITE_CONTACT } from "@/lib/siteContact";
 
 export const metadata = { title: "About — AIMU Global" };
@@ -138,23 +139,21 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Stats */}
-      {siteSettings?.stats && siteSettings.stats.length > 0 && (
-        <section className="bg-navy px-6 py-24 text-white">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 text-center md:grid-cols-4">
-            {siteSettings.stats.map((stat, index) => (
-              <Reveal key={stat._key} delay={index * 100}>
-                <div>
-                  <div className="mb-1 font-heading text-4xl font-bold text-gold-bright sm:text-5xl">
-                    <CountUp value={stat.value ?? ""} />
-                  </div>
-                  <div className="text-sm text-white/60">{stat.label}</div>
+      {/* Stats — shared with the home page so both surfaces show the same figures */}
+      <section className="bg-navy px-6 py-24 text-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 text-center md:grid-cols-4">
+          {STATS.map((stat, index) => (
+            <Reveal key={stat.key} delay={index * 100}>
+              <div>
+                <div className="mb-1 font-heading text-4xl font-bold text-gold-bright sm:text-5xl">
+                  <CountUp value={stat.value} />
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
+                <div className="text-sm text-white/60">{stat.label}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* More than admissions */}
       <section className="px-6 py-20 sm:py-28">
