@@ -1,5 +1,5 @@
 import { client } from "@/sanity/client";
-import { PAGE_QUERY, SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
+import { PAGE_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
 import { HomeFinder } from "@/components/HomeFinder";
@@ -12,9 +12,8 @@ import { PopularCourses } from "@/components/PopularCourses";
 import { ValuePropsMarquee } from "@/components/ValuePropsMarquee";
 
 export default async function Home() {
-  const [page, siteSettings, leadFormOptions] = await Promise.all([
+  const [page, leadFormOptions] = await Promise.all([
     client.fetch(PAGE_QUERY, { slug: "home" }),
-    client.fetch(SITE_SETTINGS_QUERY),
     client.fetch(LEAD_FORM_OPTIONS_QUERY),
   ]);
 
@@ -47,7 +46,7 @@ export default async function Home() {
   return (
     <>
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
-      <StatsBar stats={siteSettings?.stats} />
+      <StatsBar />
       <ValuePropsMarquee />
       <HomeFinder countries={countries} courses={courses} />
       <GoogleReviewsMarquee />
