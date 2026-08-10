@@ -9,6 +9,7 @@ import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 import { PopularCourses } from "@/components/PopularCourses";
+import { ValuePropsMarquee } from "@/components/ValuePropsMarquee";
 
 export default async function Home() {
   const [page, siteSettings, leadFormOptions] = await Promise.all([
@@ -36,6 +37,7 @@ export default async function Home() {
       block._type !== "hero" &&
       block._type !== "destinationsBlock" &&
       block._type !== "trustIndicatorsBlock" &&
+      block._type !== "trustBlock" &&
       block._type !== "coursesBlock",
   );
 
@@ -46,6 +48,7 @@ export default async function Home() {
     <>
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar stats={siteSettings?.stats} />
+      <ValuePropsMarquee />
       <HomeFinder countries={countries} courses={courses} />
       <GoogleReviewsMarquee />
       <ChairmanMessage />

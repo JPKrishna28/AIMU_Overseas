@@ -6,7 +6,6 @@ import { countryContent } from "@/lib/countryContent";
 import { countryImage } from "@/lib/stitchImages";
 import { SuccessStoryCard } from "@/components/SuccessStoryCard";
 import { CourseCard } from "@/components/CourseCard";
-import { RotatingQuote } from "@/components/RotatingQuote";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { VideoThumbnail } from "@/components/VideoThumbnail";
@@ -22,7 +21,10 @@ type Milestone = NonNullable<Extract<Block, { _type: "timelineBlock" }>["milesto
 type LeaderMessage = NonNullable<Extract<Block, { _type: "leadershipBlock" }>["messages"]>[number];
 type CampusTour = NonNullable<Extract<Block, { _type: "campusToursBlock" }>["tours"]>[number];
 
+/* Hero copy is fixed in code and deliberately ignores the Sanity hero fields, so the
+   approved wording can't be shadowed by older CMS content. */
 const HERO_HEADING = "Your Global Education Partner — From Dream to Destination";
+const HERO_EYEBROW = "Big Dreams Deserve the Right Direction";
 const HERO_TAGLINE = "From Dream to Degree. From Home to the World.";
 const HERO_SUBHEADING =
   "Your future deserves more than just an application. We combine personalised counselling, global university partnerships, and expert visa support to help ambitious students achieve internationally recognised education and build successful careers without unnecessary complexity.";
@@ -32,7 +34,6 @@ const HERO_CTAS = [
 ];
 
 function Hero(block: Extract<Block, { _type: "hero" }>) {
-  const quotes = (block.rotatingQuotes ?? []).filter((q): q is string => Boolean(q));
   const ctas = HERO_CTAS;
 
   return (
@@ -54,28 +55,29 @@ function Hero(block: Extract<Block, { _type: "hero" }>) {
       </div>
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-12">
         <div className="max-w-2xl">
-          {quotes.length > 0 && (
-            <div className="animate-hero mb-6" style={{ "--hero-delay": "0ms" } as React.CSSProperties}>
-              <RotatingQuote quotes={quotes} />
-            </div>
-          )}
           <p
             className="animate-hero mb-3 font-heading text-sm font-semibold uppercase tracking-[0.2em] text-gold"
             style={{ "--hero-delay": "60ms" } as React.CSSProperties}
           >
-            {HERO_TAGLINE}
+            {HERO_EYEBROW}
           </p>
           <h1
             className="animate-hero font-heading text-4xl font-bold leading-tight tracking-tight sm:text-6xl sm:leading-[1.15]"
             style={{ "--hero-delay": "120ms" } as React.CSSProperties}
           >
-            {block.heading || HERO_HEADING}
+            {HERO_HEADING}
           </h1>
+          <p
+            className="animate-hero mt-4 font-heading text-lg font-semibold text-gold-bright sm:text-xl"
+            style={{ "--hero-delay": "180ms" } as React.CSSProperties}
+          >
+            {HERO_TAGLINE}
+          </p>
           <p
             className="animate-hero mt-6 max-w-xl text-base text-white/80 sm:text-lg sm:leading-8"
             style={{ "--hero-delay": "240ms" } as React.CSSProperties}
           >
-            {block.subheading || HERO_SUBHEADING}
+            {HERO_SUBHEADING}
           </p>
           {ctas.length > 0 && (
             <div

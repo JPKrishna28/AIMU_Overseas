@@ -7,12 +7,10 @@ export function BentoGrid() {
     <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
       <Reveal>
         <div className="mb-12 space-y-2 text-center">
-          <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">
-            Everything You Need, In One Place
-          </h2>
+          <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">Why AIMU Global</h2>
           <p className="mx-auto max-w-lg text-navy/60">
-            Explore destinations, compare costs, find scholarships, and plan your journey — all with
-            expert guidance behind you.
+            A global network across 5+ countries — explore destinations, compare costs, plan your
+            visa, and track intakes, all with expert guidance behind you.
           </p>
         </div>
       </Reveal>
