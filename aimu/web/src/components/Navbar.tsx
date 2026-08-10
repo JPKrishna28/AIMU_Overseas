@@ -67,10 +67,10 @@ export function Navbar() {
           <Image
             src="/images/logo-mark.svg"
             alt="AIMU Global - Dream Beyond Borders"
-            width={1000}
-            height={530}
+            width={1170}
+            height={546}
             priority
-            /* width drives the size; height follows the 1000:530 ratio */
+            /* width drives the size; height follows the 1170:546 ratio */
             className="h-auto w-[92px] sm:w-[104px] md:w-[112px] lg:w-[120px]"
           />
         </Link>
