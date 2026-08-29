@@ -68,10 +68,10 @@ export function Footer({
         <div className="lg:col-span-2">
           <div className="flex items-center">
             <Image
-              src="/images/logo-light.svg"
+              src="/logo.png"
               alt="AIMU Global - Dream Beyond Borders"
-              width={1170}
-              height={598}
+              width={1536}
+              height={1024}
               className="h-auto w-[150px] sm:w-[170px]"
             />
           </div>

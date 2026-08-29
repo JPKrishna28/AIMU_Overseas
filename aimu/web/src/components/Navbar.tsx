@@ -65,12 +65,12 @@ export function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-3 sm:px-8">
         <Link href="/" aria-label="AIMU Global home" className="flex shrink-0 items-center text-navy">
           <Image
-            src="/images/logo-mark.svg"
+            src="/logo.png"
             alt="AIMU Global - Dream Beyond Borders"
-            width={1170}
-            height={546}
+            width={1536}
+            height={1024}
             priority
-            /* width drives the size; height follows the 1170:546 ratio */
+            /* width drives the size; height follows the 1536:1024 ratio */
             className="h-auto w-[92px] sm:w-[104px] md:w-[112px] lg:w-[120px]"
           />
         </Link>
