@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
-import { FooterPlane } from "@/components/FooterPlane";
 import type { SITE_SETTINGS_QUERY_RESULT } from "../../sanity.types";
 
 const FOOTER_LINKS = [
@@ -97,7 +96,7 @@ export function Footer({
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-6">
         <div className="lg:col-span-2">
           <div className="flex items-center">
             <Image
@@ -171,9 +170,17 @@ export function Footer({
         © {new Date().getFullYear()} AIMU Global. All rights reserved.
       </div>
 
-      {/* marbles.health-style blue band with a 3D aircraft breaking the top edge */}
-      <div className="relative mt-8 h-[240px] overflow-visible rounded-t-[20px] bg-[#3870dc] sm:h-[280px]">
-        <FooterPlane className="pointer-events-none absolute left-1/2 bottom-0 h-[360px] w-[560px] max-w-[92vw] -translate-x-1/2 sm:h-[440px] sm:w-[720px] lg:h-[500px] lg:w-[880px]" />
+      {/* marbles.health-style blue band with an aircraft peeking over the top edge */}
+      <div className="relative mt-8 h-[220px] overflow-visible rounded-t-[20px] bg-[#3870dc] sm:h-[252px]">
+        <Image
+          src="/images/footer-plane.svg"
+          alt=""
+          aria-hidden="true"
+          width={640}
+          height={512}
+          priority={false}
+          className="pointer-events-none absolute left-1/2 bottom-[-40px] w-[300px] -translate-x-1/2 select-none drop-shadow-[0_30px_40px_rgba(9,20,50,0.35)] sm:bottom-[-70px] sm:w-[420px] lg:w-[560px]"
+        />
       </div>
     </footer>
   );
