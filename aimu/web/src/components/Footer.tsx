@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
@@ -41,6 +42,37 @@ const FOOTER_LINKS = [
   },
 ];
 
+const SOCIALS: { href: string; label: string; icon: ReactNode }[] = [
+  {
+    href: "mailto:info@aimuglobal.com",
+    label: "Email",
+    icon: (
+      <path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h13A1.5 1.5 0 0 1 18 5.5v9A1.5 1.5 0 0 1 16.5 16h-13A1.5 1.5 0 0 1 2 14.5v-9Zm2.2.5L10 10.2 15.8 6H4.2Zm11.8 1.2-6 4.3-6-4.3v7.1h12V7.2Z" />
+    ),
+  },
+  {
+    href: "https://www.instagram.com/",
+    label: "Instagram",
+    icon: (
+      <path d="M10 6.7a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6Zm0 5.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Zm3.4-5.6a.8.8 0 1 1-1.6 0 .8.8 0 0 1 1.6 0ZM16 6.3c-.1-1-.3-2-1-2.7-.8-.7-1.7-1-2.7-1C11.2 2.5 8.8 2.5 7.7 2.6c-1 0-2 .3-2.7 1-.7.7-1 1.7-1 2.7C4 7.4 4 9.8 4 10.9c0 1 .3 2 1 2.7.7.7 1.7 1 2.7 1 1.1.1 3.5.1 4.6 0 1 0 2-.3 2.7-1 .7-.7 1-1.7 1-2.7.1-1.1.1-3.5 0-4.6ZM14.6 12c-.2.6-.7 1-1.3 1.3-.9.3-3 .3-4 .3s-3.1 0-4-.3c-.6-.3-1-.7-1.3-1.3-.3-.9-.3-3-.3-4s0-3.1.3-4c.3-.6.7-1 1.3-1.3.9-.3 3-.3 4-.3s3.1 0 4 .3c.6.3 1 .7 1.3 1.3.3.9.3 3 .3 4s0 3.1-.3 4Z" />
+    ),
+  },
+  {
+    href: "https://www.youtube.com/",
+    label: "YouTube",
+    icon: (
+      <path d="M17.4 6.4a1.9 1.9 0 0 0-1.3-1.3C14.9 4.8 10 4.8 10 4.8s-4.9 0-6.1.3A1.9 1.9 0 0 0 2.6 6.4C2.3 7.6 2.3 10 2.3 10s0 2.4.3 3.6a1.9 1.9 0 0 0 1.3 1.3c1.2.3 6.1.3 6.1.3s4.9 0 6.1-.3a1.9 1.9 0 0 0 1.3-1.3c.3-1.2.3-3.6.3-3.6s0-2.4-.3-3.6ZM8.5 12.3V7.7l4 2.3-4 2.3Z" />
+    ),
+  },
+  {
+    href: "https://www.linkedin.com/",
+    label: "LinkedIn",
+    icon: (
+      <path d="M6.1 5A1.1 1.1 0 1 1 6 2.8 1.1 1.1 0 0 1 6.1 5ZM5 6.6h2.2v9.6H5V6.6Zm4 0h2.1v1.3h.1a2.3 2.3 0 0 1 2.1-1.1c2.2 0 2.7 1.5 2.7 3.4v6h-2.2v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8v5.4H9V6.6Z" />
+    ),
+  },
+];
+
 export function Footer({
   siteSettings,
   countries = [],
@@ -79,6 +111,34 @@ export function Footer({
             {siteSettings?.tagline ??
               "A Global Education & Career Advisory Platform powered by trusted expertise and intelligent technology."}
           </p>
+
+          <Link
+            href="/contact"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border-[1.5px] border-[#3870dc] bg-[#3870dc] px-6 py-3 text-base font-medium text-white transition-colors hover:bg-[#2f5fc7]"
+          >
+            Book a Free Consultation →
+          </Link>
+
+          <div className="mt-8">
+            <p className="text-[15px] text-white/80">Socials</p>
+            <ul className="mt-3 flex flex-wrap gap-3">
+              {SOCIALS.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    className="flex h-[50px] w-[50px] items-center justify-center rounded-xl border border-[#5e5e5e] bg-[#4f4f4f] text-white/90 transition-colors hover:bg-[#5e5e5e]"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6">
+                      {s.icon}
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {FOOTER_LINKS.map((group) => (
@@ -106,8 +166,21 @@ export function Footer({
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-6 text-center text-xs text-white/50">
+      <div className="mx-auto max-w-7xl px-6 pb-6 text-sm font-medium text-[#848587]">
         © {new Date().getFullYear()} AIMU Global. All rights reserved.
+      </div>
+
+      {/* marbles.health-style blue band with an aircraft peeking over the top edge */}
+      <div className="relative mt-8 h-[220px] overflow-visible rounded-t-[20px] bg-[#3870dc] sm:h-[252px]">
+        <Image
+          src="/images/footer-plane.svg"
+          alt=""
+          aria-hidden="true"
+          width={640}
+          height={512}
+          priority={false}
+          className="pointer-events-none absolute left-1/2 bottom-[-40px] w-[300px] -translate-x-1/2 select-none drop-shadow-[0_30px_40px_rgba(9,20,50,0.35)] sm:bottom-[-70px] sm:w-[420px] lg:w-[560px]"
+        />
       </div>
     </footer>
   );
