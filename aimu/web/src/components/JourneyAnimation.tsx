@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 
 type SubStep = {
   icon: string;
   title: string;
-  body: React.ReactNode;
+  body: ReactNode;
   chips?: string[];
 };
 
@@ -141,36 +142,33 @@ const MILESTONES: Milestone[] = [
 ];
 
 export function JourneyAnimation() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const el = containerRef.current;
+    const el = scrollerRef.current;
     if (!el) return;
 
     function onScroll() {
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      const total = rect.height + viewportH;
-      const covered = viewportH - rect.top;
-      const pct = Math.min(1, Math.max(0, covered / total));
-      setProgress(pct);
+      const max = el.scrollWidth - el.clientWidth;
+      const pct = max > 0 ? el.scrollLeft / max : 1;
+      setProgress(Math.min(1, Math.max(0, pct)));
     }
 
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    el.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      el.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
   }, []);
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-20 sm:py-28">
+    <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
       <Reveal>
-        <div className="mb-16 space-y-3 text-center">
+        <div className="mb-12 space-y-3 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-gold-bright/15 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-gold">
             # Your Study-Abroad Journey
           </span>
@@ -179,76 +177,75 @@ export function JourneyAnimation() {
             <br />
             <span className="text-emerald">Here&rsquo;s how it happens.</span>
           </h2>
+          <p className="text-sm text-navy/50">Scroll sideways to follow the journey →</p>
         </div>
       </Reveal>
 
-      <div ref={containerRef} className="relative">
-        {/* Track */}
+      <div className="relative">
+        {/* Horizontal track */}
+        <div aria-hidden className="absolute left-0 right-0 top-6 h-px bg-navy/10 sm:top-7" />
+        {/* Animated fill — grows left → right with the scroller */}
         <div
           aria-hidden
-          className="absolute left-5 top-2 bottom-2 w-px bg-navy/10 sm:left-6"
-        />
-        {/* Animated fill */}
-        <div
-          aria-hidden
-          className="absolute left-5 top-2 w-px bg-gradient-to-b from-emerald to-gold-bright transition-[height] duration-150 ease-out sm:left-6"
-          style={{ height: `calc(${progress * 100}% - 8px)` }}
+          className="absolute left-0 top-6 h-px bg-gradient-to-r from-emerald to-gold-bright transition-[width] duration-150 ease-out sm:top-7"
+          style={{ width: `${progress * 100}%` }}
         />
 
-        <ol className="space-y-14">
+        <div
+          ref={scrollerRef}
+          className="snap-carousel flex gap-6 overflow-x-auto pb-4 pt-1 sm:gap-10"
+        >
           {MILESTONES.map((milestone) => (
-            <li key={milestone.index} className="relative pl-14 sm:pl-16">
-              <Reveal>
-                <div className="flex items-center gap-4">
-                  <span
-                    aria-hidden
-                    className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-navy/20 bg-white font-heading text-xs font-bold text-navy shadow-sm sm:h-12 sm:w-12 -ml-14 sm:-ml-16"
-                  >
-                    {milestone.index}
-                  </span>
-
-                  <p
-                    className={`font-heading italic text-navy ${
-                      milestone.large ? "text-3xl font-bold sm:text-4xl" : "text-xl font-semibold sm:text-2xl"
-                    }`}
-                  >
-                    {milestone.quote}
-                  </p>
-                </div>
-              </Reveal>
+            <div
+              key={milestone.index}
+              className="w-[280px] shrink-0 sm:w-[340px]"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden
+                  className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-navy/20 bg-white font-heading text-xs font-bold text-navy shadow-sm sm:h-14 sm:w-14"
+                >
+                  {milestone.index}
+                </span>
+                <p
+                  className={`font-heading italic text-navy ${
+                    milestone.large ? "text-2xl font-bold sm:text-3xl" : "text-lg font-semibold sm:text-xl"
+                  }`}
+                >
+                  {milestone.quote}
+                </p>
+              </div>
 
               {milestone.steps.length > 0 && (
                 <div className="mt-6 space-y-6">
-                  {milestone.steps.map((step, i) => (
-                    <Reveal key={step.title} delay={i * 80}>
-                      <div className="flex gap-3">
-                        <span className="material-symbols-outlined mt-0.5 shrink-0 text-lg text-emerald">
-                          {step.icon}
-                        </span>
-                        <div>
-                          <p className="font-semibold text-navy">{step.title}</p>
-                          <p className="mt-1 text-sm leading-relaxed text-navy/70">{step.body}</p>
-                          {step.chips && (
-                            <div className="mt-2 flex flex-wrap gap-2">
-                              {step.chips.map((chip) => (
-                                <span
-                                  key={chip}
-                                  className="rounded-full border border-navy/10 bg-light-gray px-2.5 py-1 text-xs font-medium text-navy/60"
-                                >
-                                  {chip}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
+                  {milestone.steps.map((step) => (
+                    <div key={step.title} className="flex gap-3">
+                      <span className="material-symbols-outlined mt-0.5 shrink-0 text-lg text-emerald">
+                        {step.icon}
+                      </span>
+                      <div>
+                        <p className="font-semibold text-navy">{step.title}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-navy/70">{step.body}</p>
+                        {step.chips && (
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {step.chips.map((chip) => (
+                              <span
+                                key={chip}
+                                className="rounded-full border border-navy/10 bg-light-gray px-2.5 py-1 text-xs font-medium text-navy/60"
+                              >
+                                {chip}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </Reveal>
+                    </div>
                   ))}
                 </div>
               )}
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

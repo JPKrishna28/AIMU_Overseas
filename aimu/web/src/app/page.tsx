@@ -3,7 +3,7 @@ import { PAGE_QUERY } from "@/sanity/queries";
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
 import { BentoGrid } from "@/components/BentoGrid";
-import { JourneySteps } from "@/components/JourneySteps";
+import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 import { PopularCourses } from "@/components/PopularCourses";
 import { ValuePropsMarquee } from "@/components/ValuePropsMarquee";
@@ -45,14 +45,13 @@ export default async function Home() {
       {/* Why AIMU sits above the admission process. */}
       <BentoGrid />
       <FlightPath />
-      {/* Admission process — horizontal (left-to-right) timeline, moved up under the hero. */}
-      <JourneySteps />
+      {/* Admission process — scroll-driven left-to-right journey, moved up under the hero. */}
+      <JourneyAnimation />
       {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
       <ChairmanMessage />
       <FlightPath />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
-      {/* Scroll-driven vertical journey hidden — replaced by <JourneySteps /> above. */}
       <FlightPath />
       <PopularCourses />
       <PageBuilder blocks={restBlocks} />
