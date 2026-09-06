@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
 import { PageHeader } from "@/components/PageHeader";
 import { StudentChatBoard, type StudentQuestion } from "@/components/StudentChatBoard";
@@ -5,6 +6,9 @@ import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Student Chat — AIMU Global" };
 export const dynamic = "force-dynamic";
+
+// Student Chat is temporarily hidden. Remove this flag and the notFound() guard to restore.
+const STUDENT_CHAT_HIDDEN = true;
 
 // Threads disappear from the board 30 days after they were asked.
 const QUESTIONS_QUERY = `*[
@@ -19,6 +23,8 @@ const QUESTIONS_QUERY = `*[
 }`;
 
 export default async function StudentChatPage() {
+  if (STUDENT_CHAT_HIDDEN) notFound();
+
   const questions = await client.fetch<StudentQuestion[]>(QUESTIONS_QUERY);
 
   return (

@@ -6,7 +6,7 @@ const STEPS = [
   { step: 2, title: "University & Scholarship Shortlisting", href: "/universities" },
   { step: 3, title: "Application Submission", href: "/intake-calendar" },
   { step: 4, title: "Visa & Accommodation Support", href: "/visa-guidance" },
-  { step: 5, title: "Pre-Departure & Arrival Assistance", href: "/student-portal" },
+  { step: 5, title: "Pre-Departure & Arrival Assistance", href: "/contact" },
 ];
 
 export function JourneySteps() {

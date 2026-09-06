@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
-import { SITE_CONTACT } from "@/lib/siteContact";
 import type { SITE_SETTINGS_QUERY_RESULT } from "../../sanity.types";
 
 const FOOTER_LINKS = [
@@ -27,8 +26,9 @@ const FOOTER_LINKS = [
       { href: "/cost-calculator", label: "Cost Calculator" },
       { href: "/intake-calendar", label: "Intake Calendar" },
       { href: "/visa-guidance", label: "Visa Guidance" },
-      { href: "/student-portal", label: "Student Portal" },
-      { href: "/student-chat", label: "Student Chat" },
+      // Temporarily hidden — restore by uncommenting.
+      // { href: "/student-portal", label: "Student Portal" },
+      // { href: "/student-chat", label: "Student Chat" },
     ],
   },
   {
@@ -54,7 +54,7 @@ export function Footer({
 }) {
   return (
     <footer className="bg-ink text-white">
-      <div id="footer-lead-form" className="mx-auto max-w-3xl scroll-mt-24 px-6 pt-16">
+      <div className="mx-auto max-w-3xl px-6 pt-16">
         <div className="rounded-2xl bg-white/5 p-8">
           <h2 className="font-heading text-xl font-bold">Get Free Counseling</h2>
           <p className="mt-2 text-sm text-white/70">
@@ -106,22 +106,6 @@ export function Footer({
             {siteSettings?.address && <li>{siteSettings.address}</li>}
           </ul>
         </div>
-      </div>
-
-      {/* Free Counselling + Contact Us CTA row */}
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-6 pb-10 sm:flex-row sm:justify-center">
-        <a
-          href="#footer-lead-form"
-          className="w-full rounded-full bg-gold px-8 py-3 text-center text-sm font-semibold uppercase tracking-wider text-navy transition-all hover:brightness-110 sm:w-auto"
-        >
-          Free Counselling
-        </a>
-        <a
-          href={`tel:${SITE_CONTACT.phone.replace(/\s+/g, "")}`}
-          className="w-full rounded-full border border-white/30 px-8 py-3 text-center text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 sm:w-auto"
-        >
-          Contact Us
-        </a>
       </div>
 
       <div className="border-t border-white/10 py-6 text-center text-xs text-white/50">

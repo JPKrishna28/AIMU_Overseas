@@ -28,77 +28,68 @@ const HERO_EYEBROW = "Big Dreams Deserve the Right Direction";
 const HERO_TAGLINE = "From Dream to Degree. From Home to the World.";
 const HERO_SUBHEADING =
   "Your future deserves more than just an application. We combine personalised counselling, global university partnerships, and expert visa support to help ambitious students achieve internationally recognised education and build successful careers without unnecessary complexity.";
-const HERO_CTAS = [
-  { label: "Free Counselling", url: "/contact", primary: true },
-  { label: "WhatsApp Us", url: "https://wa.me/", primary: false },
-];
 
 function Hero(block: Extract<Block, { _type: "hero" }>) {
-  const ctas = HERO_CTAS;
+  const heroImage = block.image ? urlFor(block.image).width(1200).url() : STITCH_IMAGES.homeHero;
 
   return (
-    <section className="relative flex min-h-[600px] items-center overflow-hidden bg-navy py-24 text-white sm:min-h-[85vh] sm:py-32">
-      <div className="absolute inset-0">
-        {/* LCP element — load eagerly at high priority rather than lazily. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={block.image ? urlFor(block.image).width(1920).url() : STITCH_IMAGES.homeHero}
-          alt=""
-          width={2760}
-          height={1504}
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="h-full w-full scale-105 object-cover"
-        />
-        <div className="hero-gradient absolute inset-0" />
-      </div>
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-12">
+    <section className="relative overflow-hidden bg-navy py-20 text-white sm:py-28">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-6 sm:px-12 lg:grid-cols-2">
+        {/* Text column */}
         <div className="max-w-2xl">
           <p
-            className="animate-hero mb-3 font-heading text-sm font-semibold uppercase tracking-[0.2em] text-gold"
+            className="animate-hero mb-3 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gold sm:text-sm"
             style={{ "--hero-delay": "60ms" } as React.CSSProperties}
           >
             {HERO_EYEBROW}
           </p>
           <h1
-            className="animate-hero font-heading text-4xl font-bold leading-tight tracking-tight sm:text-6xl sm:leading-[1.15]"
+            className="animate-hero font-heading text-3xl font-bold leading-tight tracking-tight sm:text-5xl sm:leading-[1.15] lg:text-6xl"
             style={{ "--hero-delay": "120ms" } as React.CSSProperties}
           >
             {HERO_HEADING}
           </h1>
           <p
-            className="animate-hero mt-4 font-heading text-lg font-semibold text-gold-bright sm:text-xl"
+            className="animate-hero mt-4 font-heading text-base font-semibold text-gold-bright sm:text-xl"
             style={{ "--hero-delay": "180ms" } as React.CSSProperties}
           >
             {HERO_TAGLINE}
           </p>
           <p
-            className="animate-hero mt-6 max-w-xl text-base text-white/80 sm:text-lg sm:leading-8"
+            className="animate-hero mt-6 max-w-xl text-sm text-white/80 sm:text-lg sm:leading-8"
             style={{ "--hero-delay": "240ms" } as React.CSSProperties}
           >
             {HERO_SUBHEADING}
           </p>
-          {ctas.length > 0 && (
-            <div
-              className="animate-hero mt-8 flex flex-col gap-4 sm:flex-row"
-              style={{ "--hero-delay": "360ms" } as React.CSSProperties}
-            >
-              {ctas.map((cta) => (
-                <Link
-                  key={cta.url}
-                  href={cta.url}
-                  className={
-                    cta.primary
-                      ? "inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-wider text-navy transition-all duration-300 hover:brightness-110"
-                      : "inline-flex items-center justify-center gap-2 rounded-full border border-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white/10"
-                  }
-                >
-                  {cta.label}
-                </Link>
+        </div>
+
+        {/* Image marquee column */}
+        <div
+          className="animate-hero"
+          style={{ "--hero-delay": "300ms" } as React.CSSProperties}
+        >
+          <div className="hero-marquee overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+            <div className="hero-marquee__track flex">
+              {[0, 1].map((copy) => (
+                <div key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
+                  {[0, 1, 2].map((n) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      key={`${copy}-${n}`}
+                      src={heroImage}
+                      alt={n === 0 && copy === 0 ? "AIMU Global students abroad" : ""}
+                      width={1200}
+                      height={800}
+                      loading={copy === 0 && n === 0 ? "eager" : "lazy"}
+                      fetchPriority={copy === 0 && n === 0 ? "high" : "auto"}
+                      decoding="async"
+                      className="h-[260px] w-auto object-cover sm:h-[360px]"
+                    />
+                  ))}
+                </div>
               ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>

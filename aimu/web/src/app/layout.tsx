@@ -56,6 +56,8 @@ export default async function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer siteSettings={contactSettings} countries={countries} courses={courses} />
+        {/* Clears the fixed mobile bottom tab bar. */}
+        <div aria-hidden className="h-[60px] lg:hidden" />
         <FloatingActions
           phone={contactSettings.phone}
           whatsappNumber={SITE_CONTACT.phone}

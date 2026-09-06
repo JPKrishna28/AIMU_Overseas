@@ -40,6 +40,7 @@ export default async function Home() {
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar />
       <ValuePropsMarquee />
+      <FlightPath />
       {/* University search filter hidden — was <HomeFinder /> here. */}
       {/* Why AIMU sits above the admission process. */}
       <BentoGrid />
@@ -48,6 +49,7 @@ export default async function Home() {
       <JourneySteps />
       {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
       <ChairmanMessage />
+      <FlightPath />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
       {/* Scroll-driven vertical journey hidden — replaced by <JourneySteps /> above. */}

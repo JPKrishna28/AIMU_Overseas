@@ -202,20 +202,31 @@ h6 {
   position: absolute;
   top: 50%;
   left: 0;
-  width: 26px;
-  height: 26px;
-  margin-top: -13px;
+  width: 38px;
+  height: 38px;
+  margin-top: -19px;
   color: var(--color-gold);
-  animation: fly-across 14s linear infinite;
+  filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--color-navy) 30%, transparent));
+  animation: fly-across 13s linear infinite;
 }
 
 @keyframes fly-across {
   from {
-    transform: translateX(-40px);
+    transform: translateX(-48px);
   }
   to {
-    transform: translateX(calc(100vw + 40px));
+    transform: translateX(calc(100vw + 48px));
   }
+}
+
+/* Hero image marquee — track holds two copies, slides one copy-width */
+.hero-marquee__track {
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.hero-marquee:hover .hero-marquee__track {
+  animation-play-state: paused;
 }
 
 /* Carousel scroll behaviour */
@@ -252,6 +263,10 @@ h6 {
   .flightpath__plane {
     animation: none;
     display: none;
+  }
+
+  .hero-marquee__track {
+    animation: none;
   }
 
   .hover-lift,

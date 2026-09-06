@@ -1,8 +1,12 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/PageHeader";
 import { AuthWall } from "@/components/AuthWall";
 
 export const metadata = { title: "Student Portal — AIMU Global" };
+
+// Student Portal is temporarily hidden. Remove this flag and the notFound() guard to restore.
+const STUDENT_PORTAL_HIDDEN = true;
 
 const FEATURES = [
   { icon: "📋", title: "Application Tracking", description: "Follow your application status in real time, from submission to decision." },
@@ -13,6 +17,8 @@ const FEATURES = [
 ];
 
 export default function StudentPortalPage() {
+  if (STUDENT_PORTAL_HIDDEN) notFound();
+
   return (
     <>
       <PageHeader

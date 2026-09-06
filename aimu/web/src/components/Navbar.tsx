@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,8 +19,9 @@ const TOOLS_LINKS = [
   { href: "/cost-calculator", label: "Cost Calculator" },
   { href: "/intake-calendar", label: "Intake Calendar" },
   { href: "/visa-guidance", label: "Visa Guidance" },
-  { href: "/student-portal", label: "Student Portal" },
-  { href: "/student-chat", label: "Student Chat" },
+  // Temporarily hidden — restore by uncommenting.
+  // { href: "/student-portal", label: "Student Portal" },
+  // { href: "/student-chat", label: "Student Chat" },
 ];
 
 const SECONDARY_LINKS = [
@@ -32,168 +32,116 @@ const SECONDARY_LINKS = [
   // { href: "/contact", label: "Contact" },
 ];
 
+// Mobile bottom tab bar — icon-first navigation, replaces the hamburger menu.
+const MOBILE_TABS = [
+  { href: "/", label: "Home", icon: "home" },
+  { href: "/destinations", label: "Destinations", icon: "public" },
+  { href: "/universities", label: "Universities", icon: "school" },
+  { href: "/courses", label: "Courses", icon: "menu_book" },
+  { href: "/cost-calculator", label: "Tools", icon: "calculate" },
+  { href: "/login", label: "Sign in", icon: "person" },
+];
+
 export function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [toolsOpen, setToolsOpen] = useState(false);
   const pathname = usePathname();
-
-  // Close menu on navigation
-  useEffect(() => {
-    setMobileOpen(false);
-    setToolsOpen(false);
-  }, [pathname]);
-
-  // Lock body scroll while the mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
 
   const linkClass =
     "border-b-2 border-transparent pb-1 text-sm font-medium text-navy/80 transition-colors hover:text-navy";
   const activeLinkClass = "border-b-2 border-gold pb-1 text-sm font-semibold text-navy";
 
   function isActive(href: string) {
+    if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`);
   }
 
   const toolsActive = TOOLS_LINKS.some((link) => isActive(link.href));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-6 py-3 sm:px-8">
-        <Link href="/" aria-label="AIMU Global home" className="flex shrink-0 items-center text-navy">
-          <Image
-            src="/logo.png"
-            alt="AIMU Global - Dream Beyond Borders"
-            width={1536}
-            height={1024}
-            priority
-            /* width drives the size; height follows the 1536:1024 ratio */
-            className="h-auto w-[92px] sm:w-[104px] md:w-[112px] lg:w-[120px]"
-          />
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 lg:flex">
-          {PRIMARY_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
-              {link.label}
-            </Link>
-          ))}
-
-          <div className="group relative">
-            <button type="button" className={toolsActive ? activeLinkClass : linkClass}>
-              Tools ▾
-            </button>
-            <div className="invisible absolute left-0 top-full flex w-48 translate-y-1 flex-col gap-1 rounded-xl border border-light-gray bg-white p-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-              {TOOLS_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`rounded-lg px-3 py-2 text-sm transition-colors hover:bg-light-gray hover:text-navy ${
-                    isActive(link.href) ? "bg-gold/10 font-semibold text-navy" : "text-navy/80"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {SECONDARY_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <div className="hidden lg:flex">
-            <AuthNav />
-          </div>
-
-          {/* Hamburger */}
-          <button
-            type="button"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((open) => !open)}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg lg:hidden"
-          >
-            <span
-              className={`h-0.5 w-6 rounded bg-navy transition-transform duration-300 ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
+    <>
+      <header className="sticky top-0 z-50 border-b border-light-gray bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 px-4 py-3 sm:px-8">
+          <Link href="/" aria-label="AIMU Global home" className="flex shrink-0 items-center text-navy">
+            <Image
+              src="/logo.png"
+              alt="AIMU Global - Dream Beyond Borders"
+              width={1536}
+              height={1024}
+              priority
+              /* width drives the size; height follows the 1536:1024 ratio */
+              className="h-auto w-[84px] sm:w-[104px] md:w-[112px] lg:w-[120px]"
             />
-            <span className={`h-0.5 w-6 rounded bg-navy transition-opacity duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-            <span
-              className={`h-0.5 w-6 rounded bg-navy transition-transform duration-300 ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
-            />
-          </button>
-        </div>
-      </div>
+          </Link>
 
-      {/* Mobile menu */}
-      <div
-        className={`overflow-hidden border-t border-light-gray bg-white transition-all duration-300 ease-out lg:hidden ${
-          mobileOpen ? "max-h-[80vh] overflow-y-auto opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <nav className="flex flex-col gap-1 px-4 py-4">
-          {PRIMARY_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-light-gray hover:text-navy ${
-                isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/80"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          <button
-            type="button"
-            onClick={() => setToolsOpen((open) => !open)}
-            className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-navy/80 transition-colors hover:bg-light-gray hover:text-navy"
-          >
-            Tools
-            <span className={`transition-transform duration-300 ${toolsOpen ? "rotate-180" : ""}`}>▾</span>
-          </button>
-          <div
-            className={`overflow-hidden transition-all duration-300 ${toolsOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}`}
-          >
-            {TOOLS_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block rounded-lg px-6 py-2.5 text-sm transition-colors hover:bg-light-gray hover:text-navy ${
-                  isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/70"
-                }`}
-              >
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-8 lg:flex">
+            {PRIMARY_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
                 {link.label}
               </Link>
             ))}
-          </div>
 
-          {SECONDARY_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-light-gray hover:text-navy ${
-                isActive(link.href) ? "border-l-4 border-gold bg-gold/10 font-semibold text-navy" : "text-navy/80"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+            <div className="group relative">
+              <button type="button" className={toolsActive ? activeLinkClass : linkClass}>
+                Tools ▾
+              </button>
+              <div className="invisible absolute left-0 top-full flex w-48 translate-y-1 flex-col gap-1 rounded-xl border border-light-gray bg-white p-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {TOOLS_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`rounded-lg px-3 py-2 text-sm transition-colors hover:bg-light-gray hover:text-navy ${
+                      isActive(link.href) ? "bg-gold/10 font-semibold text-navy" : "text-navy/80"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-3 border-t border-light-gray px-3 pt-4">
-            <AuthNav onNavigate={() => setMobileOpen(false)} />
+            {SECONDARY_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className={isActive(link.href) ? activeLinkClass : linkClass}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden lg:flex">
+            <AuthNav />
           </div>
-        </nav>
-      </div>
-    </header>
+        </div>
+      </header>
+
+      {/* Mobile bottom tab bar */}
+      <nav
+        aria-label="Primary"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-light-gray bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+      >
+        <ul className="mx-auto flex max-w-lg items-stretch justify-between px-1">
+          {MOBILE_TABS.map((tab) => {
+            const active = isActive(tab.href);
+            return (
+              <li key={tab.href} className="flex-1">
+                <Link
+                  href={tab.href}
+                  className={`flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] font-medium transition-colors ${
+                    active ? "text-navy" : "text-navy/55 hover:text-navy"
+                  }`}
+                >
+                  <span
+                    className={`material-symbols-outlined text-[22px] ${active ? "text-gold" : ""}`}
+                    aria-hidden
+                  >
+                    {tab.icon}
+                  </span>
+                  {tab.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+    </>
   );
 }

@@ -65,7 +65,7 @@ export function AuthNav({ onNavigate }: { onNavigate?: () => void }) {
       <Link
         href={`/login?next=${encodeURIComponent(pathname)}`}
         onClick={onNavigate}
-        className="rounded-full px-4 py-2 text-sm font-semibold text-navy transition-colors hover:bg-light-gray"
+        className="rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
       >
         Sign in
       </Link>
