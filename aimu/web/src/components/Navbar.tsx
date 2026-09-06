@@ -27,8 +27,9 @@ const TOOLS_LINKS = [
 const SECONDARY_LINKS = [
   { href: "/blog", label: "Resources" },
   { href: "/about", label: "About" },
-  { href: "/success-stories", label: "Success Stories" },
-  { href: "/contact", label: "Contact" },
+  // Temporarily hidden — restore by uncommenting.
+  // { href: "/success-stories", label: "Success Stories" },
+  // { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {

@@ -1,21 +1,16 @@
 import { client } from "@/sanity/client";
-import { PAGE_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
+import { PAGE_QUERY } from "@/sanity/queries";
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
-import { HomeFinder } from "@/components/HomeFinder";
 import { BentoGrid } from "@/components/BentoGrid";
-import { GoogleReviewsMarquee } from "@/components/GoogleReviewsMarquee";
-import { JourneyAnimation } from "@/components/JourneyAnimation";
-import { UniversitiesMarquee } from "@/components/UniversitiesMarquee";
+import { JourneySteps } from "@/components/JourneySteps";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 import { PopularCourses } from "@/components/PopularCourses";
 import { ValuePropsMarquee } from "@/components/ValuePropsMarquee";
+import { FlightPath } from "@/components/FlightPath";
 
 export default async function Home() {
-  const [page, leadFormOptions] = await Promise.all([
-    client.fetch(PAGE_QUERY, { slug: "home" }),
-    client.fetch(LEAD_FORM_OPTIONS_QUERY),
-  ]);
+  const page = await client.fetch(PAGE_QUERY, { slug: "home" });
 
   if (!page) {
     return (
@@ -40,21 +35,23 @@ export default async function Home() {
       block._type !== "coursesBlock",
   );
 
-  const countries = (leadFormOptions.countries ?? []).filter((c): c is string => Boolean(c));
-  const courses = (leadFormOptions.courses ?? []).filter((c): c is string => Boolean(c));
-
   return (
     <>
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar />
       <ValuePropsMarquee />
-      <HomeFinder countries={countries} courses={courses} />
-      <GoogleReviewsMarquee />
+      {/* University search filter hidden — was <HomeFinder /> here. */}
+      {/* Why AIMU sits above the admission process. */}
+      <BentoGrid />
+      <FlightPath />
+      {/* Admission process — horizontal (left-to-right) timeline, moved up under the hero. */}
+      <JourneySteps />
+      {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
       <ChairmanMessage />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
-      <UniversitiesMarquee />
-      <JourneyAnimation />
-      <BentoGrid />
+      {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
+      {/* Scroll-driven vertical journey hidden — replaced by <JourneySteps /> above. */}
+      <FlightPath />
       <PopularCourses />
       <PageBuilder blocks={restBlocks} />
     </>

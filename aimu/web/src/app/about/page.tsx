@@ -286,7 +286,7 @@ export default async function AboutPage() {
               <div className="relative z-10 text-center text-white">
                 <span className="material-symbols-outlined text-7xl text-gold-bright">public</span>
                 <p className="mt-4 text-sm font-semibold uppercase tracking-widest text-white/70">
-                  Serving students across 20+ countries
+                  Serving students across 5+ countries
                 </p>
               </div>
             </div>
@@ -333,12 +333,7 @@ export default async function AboutPage() {
                 >
                   Book Free Consultation
                 </Link>
-                <Link
-                  href="/success-stories"
-                  className="rounded-full border border-white/30 px-10 py-5 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-white/10"
-                >
-                  View Success Stories
-                </Link>
+                {/* "View Success Stories" hidden while the section is offline. */}
               </div>
             </div>
           </div>

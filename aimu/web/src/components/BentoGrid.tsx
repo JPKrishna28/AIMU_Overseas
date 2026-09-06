@@ -112,37 +112,41 @@ export function BentoGrid() {
           </Link>
         </Reveal>
 
-        {/* University finder — sits below the destinations tile */}
-        <Reveal delay={90} className="h-full sm:col-span-2 lg:col-span-2">
-          <Link
-            href="/universities"
-            className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-navy p-8 text-white"
-          >
-            <span className="material-symbols-outlined text-4xl text-gold-bright">school</span>
-            <div className="mt-6">
-              <h3 className="font-heading text-xl font-semibold">Find Your University</h3>
-              <p className="mt-1 text-sm text-white/70">
-                Search globally ranked partner universities by country, ranking, and course.
-              </p>
-            </div>
-          </Link>
-        </Reveal>
+        {/* University finder — hidden. Flip to true to restore. */}
+        {false && (
+          <Reveal delay={90} className="h-full sm:col-span-2 lg:col-span-2">
+            <Link
+              href="/universities"
+              className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-navy p-8 text-white"
+            >
+              <span className="material-symbols-outlined text-4xl text-gold-bright">school</span>
+              <div className="mt-6">
+                <h3 className="font-heading text-xl font-semibold">Find Your University</h3>
+                <p className="mt-1 text-sm text-white/70">
+                  Search globally ranked partner universities by country, ranking, and course.
+                </p>
+              </div>
+            </Link>
+          </Reveal>
+        )}
 
-        {/* Success stories */}
-        <Reveal delay={90} className="h-full lg:col-span-2">
-          <Link
-            href="/success-stories"
-            className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-light-gray p-8"
-          >
-            <span className="material-symbols-outlined text-4xl text-emerald">verified</span>
-            <div className="mt-6">
-              <h3 className="font-heading text-lg font-semibold text-navy">Success Stories</h3>
-              <p className="mt-1 text-sm text-navy/60">
-                Real students, real visa approvals, real global careers.
-              </p>
-            </div>
-          </Link>
-        </Reveal>
+        {/* Success stories — hidden. Flip to true to restore. */}
+        {false && (
+          <Reveal delay={90} className="h-full lg:col-span-2">
+            <Link
+              href="/success-stories"
+              className="hover-lift group flex h-full flex-col justify-between rounded-2xl bg-light-gray p-8"
+            >
+              <span className="material-symbols-outlined text-4xl text-emerald">verified</span>
+              <div className="mt-6">
+                <h3 className="font-heading text-lg font-semibold text-navy">Success Stories</h3>
+                <p className="mt-1 text-sm text-navy/60">
+                  Real students, real visa approvals, real global careers.
+                </p>
+              </div>
+            </Link>
+          </Reveal>
+        )}
 
         {/* CTA tile */}
         <Reveal delay={180} className="h-full sm:col-span-2 lg:col-span-4">

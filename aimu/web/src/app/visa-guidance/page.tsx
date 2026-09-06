@@ -249,7 +249,8 @@ export default async function VisaGuidancePage() {
         </div>
       </section>
 
-      {/* Universal Document Library */}
+      {/* Universal Document Library — country-specific info hidden. Flip to true to restore. */}
+      {false && (
       <section className="bg-white px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <Reveal>
@@ -335,6 +336,7 @@ export default async function VisaGuidancePage() {
           )}
         </div>
       </section>
+      )}
 
       {/* Interview CTA */}
       <section className="bg-ink px-6 py-20 text-center text-white sm:py-28">

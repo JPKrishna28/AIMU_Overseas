@@ -69,6 +69,7 @@ export function AuthNav({ onNavigate }: { onNavigate?: () => void }) {
       >
         Sign in
       </Link>
+      {/* "Get Started" button hidden — restore by uncommenting.
       <Link
         href="/register"
         onClick={onNavigate}
@@ -76,6 +77,7 @@ export function AuthNav({ onNavigate }: { onNavigate?: () => void }) {
       >
         Get Started
       </Link>
+      */}
     </div>
   );
 }

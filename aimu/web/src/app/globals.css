@@ -181,6 +181,43 @@ h6 {
   animation-play-state: paused;
 }
 
+/* Flying plane — decorative divider between sections */
+.flightpath {
+  position: relative;
+  height: 44px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flightpath::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed color-mix(in srgb, var(--color-navy) 20%, transparent);
+}
+
+.flightpath__plane {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  color: var(--color-gold);
+  animation: fly-across 14s linear infinite;
+}
+
+@keyframes fly-across {
+  from {
+    transform: translateX(-40px);
+  }
+  to {
+    transform: translateX(calc(100vw + 40px));
+  }
+}
+
 /* Carousel scroll behaviour */
 .snap-carousel {
   scroll-snap-type: x mandatory;
@@ -210,6 +247,11 @@ h6 {
 
   .marquee-track {
     animation: none;
+  }
+
+  .flightpath__plane {
+    animation: none;
+    display: none;
   }
 
   .hover-lift,

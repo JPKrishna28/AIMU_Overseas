@@ -10,7 +10,7 @@ export function ChairmanMessage() {
               Leadership
             </span>
             <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
-              Chairman&rsquo;s Message
+              CEO
             </h2>
           </div>
         </Reveal>
@@ -24,7 +24,7 @@ export function ChairmanMessage() {
               <div className="text-center">
                 <p className="font-heading text-lg font-bold text-navy">AIMU Global</p>
                 <p className="text-sm font-semibold uppercase tracking-wide text-gold">
-                  Chairman &amp; CEO
+                  CEO
                 </p>
               </div>
             </div>

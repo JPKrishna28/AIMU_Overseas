@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
 import { TESTIMONIALS_QUERY } from "@/sanity/queries";
 import { Reveal } from "@/components/Reveal";
@@ -8,6 +9,10 @@ import { countryImage } from "@/lib/stitchImages";
 import type { TESTIMONIALS_QUERY_RESULT } from "../../../sanity.types";
 
 export const metadata = { title: "Success Stories — AIMU Global" };
+
+// Success Stories is temporarily hidden site-wide. Remove this flag (and the
+// notFound() guard below) to bring the page back.
+const SUCCESS_STORIES_HIDDEN = true;
 
 type Story = TESTIMONIALS_QUERY_RESULT[number];
 
@@ -102,6 +107,8 @@ function JourneyStory({ story, index }: { story: Story; index: number }) {
 }
 
 export default async function SuccessStoriesPage() {
+  if (SUCCESS_STORIES_HIDDEN) notFound();
+
   const testimonials = await client.fetch(TESTIMONIALS_QUERY);
   const videoStories = testimonials.filter((t) => t.videoUrl);
 

@@ -55,10 +55,10 @@ function DarkStoryCard({ story, reversed }: { story: SuccessStory; reversed: boo
           )}
         </p>
         <Link
-          href="/success-stories"
+          href="/contact"
           className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold transition-all hover:translate-x-2"
         >
-          Read Full Journey <span className="material-symbols-outlined">arrow_right_alt</span>
+          Talk to a Counsellor <span className="material-symbols-outlined">arrow_right_alt</span>
         </Link>
       </div>
     </div>

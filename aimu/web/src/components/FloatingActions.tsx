@@ -42,7 +42,7 @@ export function FloatingActions({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex h-12 items-center justify-center rounded-full bg-gold px-5 text-sm font-semibold text-navy shadow-lg transition-transform hover:scale-105"
+          className="flex h-9 items-center justify-center rounded-full bg-gold px-3.5 text-xs font-semibold text-navy shadow-lg transition-transform hover:scale-105 sm:h-12 sm:px-5 sm:text-sm"
         >
           Book Free Counseling
         </button>

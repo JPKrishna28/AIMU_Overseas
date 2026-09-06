@@ -7,14 +7,10 @@ export type Stat = { key: string; value: string; label: string };
    so the approved numbers can't be changed out from under the site by CMS content.
    Shared with the About page so both surfaces always show the same figures. */
 export const STATS: Stat[] = [
-  { key: "universities", value: "50+", label: "Partnered Universities" },
   { key: "countries", value: "5+", label: "Countries" },
   { key: "courses", value: "500+", label: "Courses" },
   { key: "satisfaction", value: "95%", label: "Client Satisfaction" },
   { key: "support", value: "24/7", label: "Support" },
-  { key: "guidance", value: "Personalized", label: "Guidance" },
-  { key: "process", value: "Transparent", label: "Process" },
-  { key: "e2e", value: "End-to-End", label: "Support" },
 ];
 
 export function StatsBar() {
