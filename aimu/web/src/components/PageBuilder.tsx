@@ -10,6 +10,7 @@ import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { VideoThumbnail } from "@/components/VideoThumbnail";
 import { GatedSection } from "@/components/GatedSection";
+import { HeroCarousel, type HeroSlide } from "@/components/HeroCarousel";
 import { STITCH_IMAGES } from "@/lib/stitchImages";
 
 type Blocks = NonNullable<NonNullable<PAGE_QUERY_RESULT>["pageBuilder"]>;
@@ -23,77 +24,43 @@ type CampusTour = NonNullable<Extract<Block, { _type: "campusToursBlock" }>["tou
 
 /* Hero copy is fixed in code and deliberately ignores the Sanity hero fields, so the
    approved wording can't be shadowed by older CMS content. */
-const HERO_HEADING = "Your Global Education Partner — From Dream to Destination";
-const HERO_EYEBROW = "Big Dreams Deserve the Right Direction";
-const HERO_TAGLINE = "From Dream to Degree. From Home to the World.";
-const HERO_SUBHEADING =
-  "Your future deserves more than just an application. We combine personalised counselling, global university partnerships, and expert visa support to help ambitious students achieve internationally recognised education and build successful careers without unnecessary complexity.";
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    image: STITCH_IMAGES.homeHero,
+    eyebrow: "Big Dreams Deserve the Right Direction",
+    heading: "Your Global Education Partner — From Dream to Destination",
+    tagline: "From Dream to Degree. From Home to the World.",
+    cta: { label: "Explore Destinations", href: "/destinations" },
+  },
+  {
+    image: "/images/uk.webp",
+    eyebrow: "Study in the UK, USA, Ireland & Europe",
+    heading: "World-Ranked Universities, One Trusted Partner",
+    tagline: "500+ courses across 5+ countries.",
+    cta: { label: "Browse Universities", href: "/universities" },
+  },
+  {
+    image: STITCH_IMAGES.visaPassport,
+    eyebrow: "Expert Visa & Application Support",
+    heading: "From Shortlist to Visa Stamp — We Handle It All",
+    tagline: "Personalised counselling at every step.",
+    cta: { label: "See Visa Guidance", href: "/visa-guidance" },
+  },
+  {
+    image: STITCH_IMAGES.destinationsHero,
+    eyebrow: "Scholarships & Finance Guidance",
+    heading: "Fund Your Future Without the Guesswork",
+    tagline: "Plan costs, compare scholarships, apply with confidence.",
+    cta: { label: "Open Cost Calculator", href: "/cost-calculator" },
+  },
+];
 
 function Hero(block: Extract<Block, { _type: "hero" }>) {
-  const heroImage = block.image ? urlFor(block.image).width(1200).url() : STITCH_IMAGES.homeHero;
+  const slides = block.image
+    ? [{ ...HERO_SLIDES[0], image: urlFor(block.image).width(1920).url() }, ...HERO_SLIDES.slice(1)]
+    : HERO_SLIDES;
 
-  return (
-    <section className="relative overflow-hidden bg-navy py-20 text-white sm:py-28">
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-6 sm:px-12 lg:grid-cols-2">
-        {/* Text column */}
-        <div className="max-w-2xl">
-          <p
-            className="animate-hero mb-3 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gold sm:text-sm"
-            style={{ "--hero-delay": "60ms" } as React.CSSProperties}
-          >
-            {HERO_EYEBROW}
-          </p>
-          <h1
-            className="animate-hero font-heading text-3xl font-bold leading-tight tracking-tight sm:text-5xl sm:leading-[1.15] lg:text-6xl"
-            style={{ "--hero-delay": "120ms" } as React.CSSProperties}
-          >
-            {HERO_HEADING}
-          </h1>
-          <p
-            className="animate-hero mt-4 font-heading text-base font-semibold text-gold-bright sm:text-xl"
-            style={{ "--hero-delay": "180ms" } as React.CSSProperties}
-          >
-            {HERO_TAGLINE}
-          </p>
-          <p
-            className="animate-hero mt-6 max-w-xl text-sm text-white/80 sm:text-lg sm:leading-8"
-            style={{ "--hero-delay": "240ms" } as React.CSSProperties}
-          >
-            {HERO_SUBHEADING}
-          </p>
-        </div>
-
-        {/* Image marquee column */}
-        <div
-          className="animate-hero"
-          style={{ "--hero-delay": "300ms" } as React.CSSProperties}
-        >
-          <div className="hero-marquee overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-            <div className="hero-marquee__track flex">
-              {[0, 1].map((copy) => (
-                <div key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
-                  {[0, 1, 2].map((n) => (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      key={`${copy}-${n}`}
-                      src={heroImage}
-                      alt={n === 0 && copy === 0 ? "AIMU Global students abroad" : ""}
-                      width={1200}
-                      height={800}
-                      loading={copy === 0 && n === 0 ? "eager" : "lazy"}
-                      fetchPriority={copy === 0 && n === 0 ? "high" : "auto"}
-                      decoding="async"
-                      className="h-[260px] w-auto object-cover sm:h-[360px]"
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <HeroCarousel slides={slides} />;
 }
 
 const FEATURE_ICONS = ["school", "visibility", "person_pin", "public", "workspace_premium", "support_agent"];
