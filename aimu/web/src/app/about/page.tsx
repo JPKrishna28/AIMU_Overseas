@@ -254,7 +254,7 @@ export default async function AboutPage() {
               <ul className="space-y-4">
                 <li className="flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-white">
                   <span className="material-symbols-outlined text-gold">location_on</span>
-                  <span className="text-sm font-medium text-navy">
+                  <span className="whitespace-pre-line text-sm font-medium text-navy">
                     {SITE_CONTACT.address}
                   </span>
                 </li>

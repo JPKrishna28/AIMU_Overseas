@@ -103,7 +103,7 @@ export function Footer({
           <ul className="mt-3 flex flex-col gap-2 text-sm text-white/70">
             {siteSettings?.phone && <li>{siteSettings.phone}</li>}
             {siteSettings?.email && <li>{siteSettings.email}</li>}
-            {siteSettings?.address && <li>{siteSettings.address}</li>}
+            {siteSettings?.address && <li className="whitespace-pre-line">{siteSettings.address}</li>}
           </ul>
         </div>
       </div>

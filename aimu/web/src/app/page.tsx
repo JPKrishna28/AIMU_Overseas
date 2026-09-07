@@ -31,7 +31,9 @@ export default async function Home() {
       block._type !== "destinationsBlock" &&
       block._type !== "trustIndicatorsBlock" &&
       block._type !== "trustBlock" &&
-      block._type !== "coursesBlock",
+      block._type !== "coursesBlock" &&
+      // Success stories section hidden on the home page — restore by removing this line.
+      block._type !== "testimonialsBlock",
   );
 
   return (

@@ -174,7 +174,7 @@ export default async function ContactPage() {
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
                       Visit Us
                     </h4>
-                    <p className="mt-1 text-lg font-semibold text-navy">{address}</p>
+                    <p className="mt-1 whitespace-pre-line text-lg font-semibold text-navy">{address}</p>
                   </div>
                 </div>
               </div>

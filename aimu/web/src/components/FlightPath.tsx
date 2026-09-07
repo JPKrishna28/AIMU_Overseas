@@ -72,14 +72,16 @@ export function FlightPath() {
         transitionDuration: `${GLIDE_MS}ms`,
       }}
     >
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="h-9 w-9 drop-shadow-[0_6px_10px_rgba(10,25,47,0.35)]"
-        style={{ transform: `rotate(${flight.angle}deg)` }}
+      <span
+        aria-hidden
+        className="material-symbols-outlined text-[40px] drop-shadow-[0_6px_10px_rgba(10,25,47,0.35)]"
+        style={{
+          fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 40",
+          transform: `rotate(${flight.angle + 45}deg)`,
+        }}
       >
-        <path d="M2.5 19.5 21 12 2.5 4.5 2.5 10 15 12 2.5 14 z" />
-      </svg>
+        flight
+      </span>
     </button>
   );
 }
