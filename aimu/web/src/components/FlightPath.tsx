@@ -5,12 +5,24 @@ import { useEffect, useState } from "react";
 // TODO: swap in the real Google Form URL.
 const GOOGLE_FORM_URL = "https://forms.gle/REPLACE_ME";
 
-const MOVE_EVERY_MS = 6000;
-const GLIDE_MS = 5000;
+const MIN_PAUSE_MS = 1200;
+const MAX_PAUSE_MS = 7000;
+const MIN_GLIDE_MS = 900;
+const MAX_GLIDE_MS = 5500;
+const EASINGS = [
+  "cubic-bezier(0.4, 0, 0.2, 1)", // smooth glide
+  "cubic-bezier(0.8, 0, 0.6, 1)", // sharp dart
+  "cubic-bezier(0.2, 0.8, 0.4, 1)", // swoop then settle
+  "linear",
+];
 const MARGIN = 60; // keep clear of screen edges
 
+function randomBetween(min: number, max: number) {
+  return min + Math.random() * (max - min);
+}
+
 type Point = { x: number; y: number };
-type FlightState = { pos: Point; facingLeft: boolean };
+type FlightState = { pos: Point; facingLeft: boolean; glideMs: number; easing: string };
 
 function randomPoint(): Point {
   const w = window.innerWidth;
@@ -25,7 +37,9 @@ function nextFlight(current: FlightState | null): FlightState {
   const pos = randomPoint();
   // Stays level (horizontal); only mirrors left/right to face the direction it's heading.
   const facingLeft = current ? pos.x < current.pos.x : false;
-  return { pos, facingLeft };
+  const glideMs = randomBetween(MIN_GLIDE_MS, MAX_GLIDE_MS);
+  const easing = EASINGS[Math.floor(Math.random() * EASINGS.length)];
+  return { pos, facingLeft, glideMs, easing };
 }
 
 /**
@@ -39,12 +53,16 @@ export function FlightPath() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Deferred so the first setState doesn't happen synchronously inside the effect body.
-    const kickoff = window.setTimeout(() => setFlight((current) => nextFlight(current)), 0);
+    let timeoutId: number;
 
-    const id = window.setInterval(() => {
+    function hop() {
       setFlight((current) => nextFlight(current));
-    }, MOVE_EVERY_MS);
+      // Random pause before the next hop — sometimes it darts off quickly, sometimes it lingers.
+      timeoutId = window.setTimeout(hop, randomBetween(MIN_PAUSE_MS, MAX_PAUSE_MS));
+    }
+
+    // Deferred so the first setState doesn't happen synchronously inside the effect body.
+    timeoutId = window.setTimeout(hop, 0);
 
     function onResize() {
       setFlight((current) => current ?? nextFlight(null));
@@ -52,8 +70,7 @@ export function FlightPath() {
     window.addEventListener("resize", onResize);
 
     return () => {
-      window.clearTimeout(kickoff);
-      window.clearInterval(id);
+      window.clearTimeout(timeoutId);
       window.removeEventListener("resize", onResize);
     };
   }, []);
@@ -66,11 +83,12 @@ export function FlightPath() {
       onClick={() => window.open(GOOGLE_FORM_URL, "_blank", "noopener,noreferrer")}
       aria-label="Open the enquiry form"
       title="Fill our quick form"
-      className="fixed z-40 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center transition-[left,top] ease-in-out hover:scale-125 sm:h-14 sm:w-14"
+      className="fixed z-40 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center transition-[left,top] hover:scale-125 sm:h-14 sm:w-14"
       style={{
         left: flight.pos.x,
         top: flight.pos.y,
-        transitionDuration: `${GLIDE_MS}ms`,
+        transitionDuration: `${flight.glideMs}ms`,
+        transitionTimingFunction: flight.easing,
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
