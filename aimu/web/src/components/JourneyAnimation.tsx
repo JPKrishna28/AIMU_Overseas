@@ -196,8 +196,8 @@ export function JourneyAnimation() {
               src="/images/flying-plane.svg"
               alt=""
               aria-hidden="true"
-              className="absolute top-1/2 h-7 w-7 -translate-y-1/2 -rotate-45 drop-shadow-[0_4px_6px_rgba(10,25,47,0.35)] transition-[left] duration-100 ease-out"
-              style={{ left: `calc(${Math.max(3, progress * 100)}% - 14px)` }}
+              className="absolute top-1/2 h-7 w-7 -translate-y-1/2 drop-shadow-[0_4px_6px_rgba(10,25,47,0.35)] transition-[left] duration-100 ease-out"
+              style={{ left: `calc(${Math.max(3, progress * 100)}% - 14px)`, transform: "translateY(-50%) rotate(45deg)" }}
             />
           </div>
         </div>

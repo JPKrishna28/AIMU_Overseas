@@ -98,7 +98,7 @@ export function FlightPath() {
         aria-hidden="true"
         draggable={false}
         className="h-[18px] w-[18px] drop-shadow-[0_6px_10px_rgba(10,25,47,0.4)] sm:h-full sm:w-full"
-        style={{ transform: flight.facingLeft ? "rotate(-45deg) scaleX(-1)" : "rotate(-45deg)" }}
+        style={{ transform: flight.facingLeft ? "rotate(45deg) scaleX(-1)" : "rotate(45deg)" }}
       />
     </button>
   );
