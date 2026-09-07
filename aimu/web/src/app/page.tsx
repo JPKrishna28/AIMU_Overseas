@@ -46,10 +46,10 @@ export default async function Home() {
       <BentoGrid />
       {/* Admission process — scroll-driven left-to-right journey, moved up under the hero. */}
       <JourneyAnimation />
-      {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
-      <ChairmanMessage />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
+      {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
+      <ChairmanMessage />
       <PopularCourses />
       <PageBuilder blocks={restBlocks} />
     </>
