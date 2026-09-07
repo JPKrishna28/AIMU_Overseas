@@ -45,9 +45,9 @@ export default async function Home() {
       <WhyAimuHeading />
       {/* Admission process — scroll-driven left-to-right journey, moved up under the hero. */}
       <JourneyAnimation />
+      <BentoGrid />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
-      <BentoGrid />
       {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
       <ChairmanMessage />
       <PopularCourses />
