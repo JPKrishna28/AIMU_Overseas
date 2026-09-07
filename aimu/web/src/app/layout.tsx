@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY, LEAD_FORM_OPTIONS_QUERY } from "@/sanity/queries";
 import { FloatingActions } from "@/components/FloatingActions";
+import { FlightPath } from "@/components/FlightPath";
 import { SITE_CONTACT } from "@/lib/siteContact";
 import "./globals.css";
 
@@ -64,6 +65,7 @@ export default async function RootLayout({
           countries={countries}
           courses={courses}
         />
+        <FlightPath />
       </body>
     </html>
   );

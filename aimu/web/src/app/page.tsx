@@ -7,7 +7,6 @@ import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 import { PopularCourses } from "@/components/PopularCourses";
 import { ValuePropsMarquee } from "@/components/ValuePropsMarquee";
-import { FlightPath } from "@/components/FlightPath";
 
 export default async function Home() {
   const page = await client.fetch(PAGE_QUERY, { slug: "home" });
@@ -40,19 +39,15 @@ export default async function Home() {
       <PageBuilder blocks={heroBlock ? [heroBlock] : []} />
       <StatsBar />
       <ValuePropsMarquee />
-      <FlightPath />
       {/* University search filter hidden — was <HomeFinder /> here. */}
       {/* Why AIMU sits above the admission process. */}
       <BentoGrid />
-      <FlightPath />
       {/* Admission process — scroll-driven left-to-right journey, moved up under the hero. */}
       <JourneyAnimation />
       {/* Google reviews hidden — was <GoogleReviewsMarquee /> here. */}
       <ChairmanMessage />
-      <FlightPath />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
       {/* University logo marquee hidden — was <UniversitiesMarquee /> here. */}
-      <FlightPath />
       <PopularCourses />
       <PageBuilder blocks={restBlocks} />
     </>
