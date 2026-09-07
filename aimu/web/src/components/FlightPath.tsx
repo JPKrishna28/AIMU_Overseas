@@ -65,23 +65,22 @@ export function FlightPath() {
       onClick={() => window.open(GOOGLE_FORM_URL, "_blank", "noopener,noreferrer")}
       aria-label="Open the enquiry form"
       title="Fill our quick form"
-      className="fixed z-40 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-gold transition-[left,top] ease-in-out hover:scale-125 hover:text-gold-bright"
+      className="fixed z-40 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center transition-[left,top] ease-in-out hover:scale-125"
       style={{
         left: flight.pos.x,
         top: flight.pos.y,
         transitionDuration: `${GLIDE_MS}ms`,
       }}
     >
-      <span
-        aria-hidden
-        className="material-symbols-outlined text-[40px] drop-shadow-[0_6px_10px_rgba(10,25,47,0.35)]"
-        style={{
-          fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 40",
-          transform: `rotate(${flight.angle + 45}deg)`,
-        }}
-      >
-        flight
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/flying-plane.svg"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="h-14 w-14 drop-shadow-[0_8px_14px_rgba(10,25,47,0.4)]"
+        style={{ transform: `rotate(${flight.angle + 45}deg)` }}
+      />
     </button>
   );
 }
