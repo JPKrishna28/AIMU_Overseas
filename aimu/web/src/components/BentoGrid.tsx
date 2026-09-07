@@ -2,11 +2,12 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { STITCH_IMAGES } from "@/lib/stitchImages";
 
-export function BentoGrid() {
+/** Section intro — kept separate so it can sit right after the hero, above the journey. */
+export function WhyAimuHeading() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+    <section className="mx-auto max-w-7xl px-6 pt-20 sm:pt-28">
       <Reveal>
-        <div className="mb-12 space-y-2 text-center">
+        <div className="space-y-2 text-center">
           <h2 className="font-heading text-3xl font-semibold text-navy sm:text-4xl">Why AIMU Global</h2>
           <p className="mx-auto max-w-lg text-navy/60">
             A global network across 5+ countries — explore destinations, compare costs, plan your
@@ -14,7 +15,13 @@ export function BentoGrid() {
           </p>
         </div>
       </Reveal>
+    </section>
+  );
+}
 
+export function BentoGrid() {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
       <div className="grid auto-rows-[minmax(160px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Destinations — large visual tile */}
         <Reveal className="h-full sm:col-span-2 lg:col-span-4">

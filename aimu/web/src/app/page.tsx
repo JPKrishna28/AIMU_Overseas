@@ -2,7 +2,7 @@ import { client } from "@/sanity/client";
 import { PAGE_QUERY } from "@/sanity/queries";
 import { PageBuilder } from "@/components/PageBuilder";
 import { StatsBar } from "@/components/StatsBar";
-import { BentoGrid } from "@/components/BentoGrid";
+import { BentoGrid, WhyAimuHeading } from "@/components/BentoGrid";
 import { JourneyAnimation } from "@/components/JourneyAnimation";
 import { ChairmanMessage } from "@/components/ChairmanMessage";
 import { PopularCourses } from "@/components/PopularCourses";
@@ -42,6 +42,7 @@ export default async function Home() {
       <StatsBar />
       <ValuePropsMarquee />
       {/* University search filter hidden — was <HomeFinder /> here. */}
+      <WhyAimuHeading />
       {/* Admission process — scroll-driven left-to-right journey, moved up under the hero. */}
       <JourneyAnimation />
       <PageBuilder blocks={destinationsBlock ? [destinationsBlock] : []} />
