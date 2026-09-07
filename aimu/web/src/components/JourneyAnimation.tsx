@@ -159,7 +159,7 @@ export function JourneyAnimation() {
   }, []);
 
   return (
-    <section ref={pinRef} className="relative" style={{ height: "260vh" }}>
+    <section ref={pinRef} className="relative h-[170vh] sm:h-[260vh]">
       <div className="sticky top-0 flex h-[calc(100vh-60px)] flex-col justify-center overflow-hidden py-10 sm:h-screen sm:py-20">
         <div className="mx-auto w-full max-w-7xl px-6">
           <Reveal>
