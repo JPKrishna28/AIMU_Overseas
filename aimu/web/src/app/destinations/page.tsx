@@ -217,8 +217,8 @@ export default async function DestinationsPage() {
         )}
       </section>
 
-      {/* Top Ranked Partner Universities */}
-      {rankedUniversities.length > 0 && (
+      {/* Top Ranked Partner Universities — hidden. Flip to true to restore. */}
+      {false && rankedUniversities.length > 0 && (
         <section className="bg-light-gray/60 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-6">
             <Reveal>
