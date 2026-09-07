@@ -10,7 +10,7 @@ export function ChairmanMessage() {
               Leadership
             </span>
             <h2 className="mt-4 font-heading text-3xl font-semibold text-navy sm:text-4xl">
-              CEO
+              A Message from Our CEO
             </h2>
           </div>
         </Reveal>
@@ -19,12 +19,12 @@ export function ChairmanMessage() {
           <div className="flex flex-col items-center gap-10 rounded-2xl bg-white p-8 shadow-[0_10px_30px_-10px_rgba(10,25,47,0.1)] sm:p-12 md:flex-row md:items-start">
             <div className="flex shrink-0 flex-col items-center gap-4">
               <span className="flex h-36 w-36 items-center justify-center rounded-full bg-navy font-heading text-5xl font-bold text-gold-bright">
-                A
+                M
               </span>
               <div className="text-center">
-                <p className="font-heading text-lg font-bold text-navy">AIMU Global</p>
+                <p className="font-heading text-lg font-bold text-navy">Meghana</p>
                 <p className="text-sm font-semibold uppercase tracking-wide text-gold">
-                  CEO
+                  Chief Executive Officer
                 </p>
               </div>
             </div>
@@ -38,17 +38,24 @@ export function ChairmanMessage() {
               </span>
               <blockquote className="space-y-4 pt-6 text-navy/75 leading-[1.7]">
                 <p>
-                  Every student who walks through our doors carries a dream — and behind that dream,
-                  the hopes of an entire family. Our responsibility is to honour both. For over a
-                  decade, AIMU Global has guided students to universities across the UK, USA,
-                  Ireland, Germany, France, and beyond, with honesty and transparency at every step.
+                  Every great journey begins with a dream—and every dream deserves the right
+                  direction.
                 </p>
                 <p>
-                  We measure our success not in applications filed, but in visas approved, careers
-                  launched, and lives transformed. Wherever in the world your ambition takes you, our
-                  team will be behind you — from your first counselling session to the day you land
-                  on campus.
+                  At AIMU Global, we believe your background should never limit your future.
+                  Studying abroad is more than earning a degree; it is an opportunity to discover
+                  your potential, build confidence and create a life you once only imagined.
                 </p>
+                <p>
+                  The journey may feel challenging, but you do not have to face it alone. Our team
+                  is here to guide you with honesty, care and personal support—from your first
+                  consultation until you confidently begin your new chapter abroad.
+                </p>
+                <p>
+                  Believe in your ambition. Take the first step. Your dream is possible, and AIMU
+                  Global is here to help you turn it into reality.
+                </p>
+                <p>Your journey begins today. Let us shape your future together.</p>
               </blockquote>
             </div>
           </div>

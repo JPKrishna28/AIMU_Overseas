@@ -22,9 +22,9 @@ export function WhyAimuHeading() {
 export function BentoGrid() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-      <div className="grid auto-rows-[minmax(160px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid auto-rows-[minmax(160px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* Destinations — large visual tile */}
-        <Reveal className="h-full sm:col-span-2 lg:col-span-4">
+        <Reveal className="h-full sm:col-span-2 lg:col-span-3">
           <Link
             href="/destinations"
             className="hover-lift group relative flex h-full min-h-[340px] flex-col justify-end overflow-hidden rounded-2xl"
@@ -156,7 +156,7 @@ export function BentoGrid() {
         )}
 
         {/* CTA tile */}
-        <Reveal delay={180} className="h-full sm:col-span-2 lg:col-span-4">
+        <Reveal delay={180} className="h-full sm:col-span-2 lg:col-span-3">
           <div className="hover-lift relative flex h-full flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl bg-ink p-8 text-white sm:flex-row sm:items-center">
             <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gold/20 blur-3xl" />
             <div className="relative z-10">
