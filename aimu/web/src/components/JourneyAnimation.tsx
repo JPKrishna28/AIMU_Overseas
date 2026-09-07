@@ -178,27 +178,28 @@ export function JourneyAnimation() {
           {/* Runway progress bar — a plane taxis along it as you scroll */}
           <div className="relative mb-8 h-8 w-full">
             {/* asphalt */}
-            <div className="absolute inset-x-0 top-1/2 h-2.5 -translate-y-1/2 rounded-full bg-navy/10" />
+            <div className="absolute inset-x-0 top-1/2 h-3 -translate-y-1/2 rounded-sm bg-[#1a1a1a]" />
             {/* runway centre markings */}
             <div
               aria-hidden
-              className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[repeating-linear-gradient(90deg,theme(colors.white)_0_10px,transparent_10px_22px)] opacity-70"
+              className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[repeating-linear-gradient(90deg,theme(colors.white)_0_10px,transparent_10px_22px)]"
             />
             {/* covered distance */}
             <div
               aria-hidden
-              className="absolute inset-y-0 left-0 top-1/2 h-2.5 -translate-y-1/2 rounded-full bg-gradient-to-r from-emerald to-gold-bright transition-[width] duration-100 ease-out"
+              className="absolute inset-y-0 left-0 top-1/2 h-3 -translate-y-1/2 rounded-sm bg-white/25 transition-[width] duration-100 ease-out"
               style={{ width: `${Math.max(3, progress * 100)}%` }}
             />
             {/* the plane */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/flying-plane.svg"
-              alt=""
+            <svg
+              viewBox="0 0 64 24"
+              fill="currentColor"
               aria-hidden="true"
-              className="absolute top-1/2 h-7 w-7 -translate-y-1/2 -rotate-45 drop-shadow-[0_4px_6px_rgba(10,25,47,0.35)] transition-[left] duration-100 ease-out"
-              style={{ left: `calc(${Math.max(3, progress * 100)}% - 14px)` }}
-            />
+              className="absolute top-1/2 h-6 w-9 -translate-y-1/2 text-[#1a1a1a] drop-shadow-[0_4px_6px_rgba(10,25,47,0.35)] transition-[left] duration-100 ease-out"
+              style={{ left: `calc(${Math.max(3, progress * 100)}% - 18px)` }}
+            >
+              <path d="M2 13.2c0-.7.6-1.2 1.3-1.1l14.2 1.9 8-8.6c.3-.3.7-.5 1.1-.5h2.6c.5 0 .8.5.6.9l-4.3 8.6 13.6.4 4.6-4.1c.2-.2.5-.3.8-.3h2c.4 0 .7.4.5.8l-2.6 5.1 2.6 5.1c.2.4-.1.8-.5.8h-2c-.3 0-.6-.1-.8-.3l-4.6-4.1-13.6.4 4.3 8.6c.2.4-.1.9-.6.9h-2.6c-.4 0-.8-.2-1.1-.5l-8-8.6-14.2 1.9C2.6 20.4 2 19.9 2 19.2v-6z" />
+            </svg>
           </div>
         </div>
 
